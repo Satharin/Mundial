@@ -38,3 +38,91 @@ INSERT INTO `Teams` (`id_team`, `name`, `group_name`, `points`) VALUES ('29', 'P
 INSERT INTO `Teams` (`id_team`, `name`, `group_name`, `points`) VALUES ('30', 'Senegal', 'H', '0');
 INSERT INTO `Teams` (`id_team`, `name`, `group_name`, `points`) VALUES ('31', 'Kolumbia', 'H', '0');
 INSERT INTO `Teams` (`id_team`, `name`, `group_name`, `points`) VALUES ('32', 'Japonia', 'H', '0');
+
+CREATE TABLE Group_A
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);
+
+CREATE TABLE Group_B
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);
+
+CREATE TABLE Group_C
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);
+
+CREATE TABLE Group_D
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);
+
+CREATE TABLE Group_E
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);
+
+CREATE TABLE Group_F
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);
+
+CREATE TABLE Group_G
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);
+
+CREATE TABLE Group_H
+(
+    id_group INT PRIMARY KEY,
+    team VARCHAR(20),
+    matches INT,
+    goals_scored INT,
+    goals_lost INT,
+    balance INT,
+    points INT
+);

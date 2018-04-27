@@ -1,18 +1,15 @@
 package com.example.rharasimiuk.mundial;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,24 +19,77 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
-import android.content.DialogInterface;
-import android.view.View;
-
 public class TablesActivity extends AppCompatActivity {
+
+    private ProgressDialog loadingMatches;
+
+    String group;
+
+    RequestQueue requestQueue;
+
+    private TextView team;
+
+    String[] table, teams, matches, goals_scored, goals_lost, balances, points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
+
+        team = (TextView) findViewById(R.id.textViewTeam1);
+
+    }
+
+    public void getTableA (View view) {
+
+        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+        String url = ConfigTableA.DATA_URL;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadingMatches.dismiss();
+                showJSON(response);
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(TablesActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void showJSON(String json) {
+
+        ConfigTableA pj = new ConfigTableA(json);
+        pj.ConfigTableA();
+
+        teams = new String[ConfigTableA.teams.length];
+        matches = new String[ConfigTableA.matches.length];
+        goals_scored = new String[ConfigTableA.goals_scored.length];
+        goals_lost = new String[ConfigTableA.goals_lost.length];
+        balances = new String[ConfigTableA.balances.length];
+        points = new String[ConfigTableA.points.length];
+
+        for (int i = 0; i < ConfigTableA.teams.length; i++) {
+
+            teams[i] = ConfigTableA.teams[i];
+            matches[i] = ConfigTableA.matches[i];
+            goals_scored[i] = ConfigTableA.goals_scored[i];
+            goals_lost[i] = ConfigTableA.goals_lost[i];
+            balances[i] = ConfigTableA.balances[i];
+            points[i] = ConfigTableA.points[i];
+
+        }
+
+        team.setText(teams[0]);
 
     }
 
