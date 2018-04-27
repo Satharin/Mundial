@@ -9,6 +9,7 @@
 		$sql = "SELECT team_a, team_b FROM Matches 
 		WHERE stage = 'ko' 
 		ORDER BY date_match, time_match";
+		
 	
 		
 		$r = mysqli_query($con,$sql);
