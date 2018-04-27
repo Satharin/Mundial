@@ -6,10 +6,15 @@
 		
 		require_once('dbConnect.php');
 		
-		$sql = "SELECT team_a, team_b, date_match FROM Matches
-		WHERE date_match > '".$date."' OR date_match = '".$date."'
-		ORDER BY date_match
-        LIMIT 3;"
+		$sql = "SELECT Teams.name AS team_a, teams_b.team_b, Matches.date_match, TIME_FORMAT(Matches.time_match, '%H:%i') AS time_match FROM Matches
+        LEFT JOIN Teams ON Teams.id_team = Matches.team_a
+        LEFT JOIN (SELECT Matches.id_match, Teams.name AS team_b, date_match, time_match FROM Matches
+        LEFT JOIN Teams ON Teams.id_team = Matches.team_b) as teams_b ON teams_b.id_match = Matches.id_match
+        WHERE Matches.date_match > '".$date."' OR Matches.date_match = '".$date."'
+        ORDER BY Matches.date_match, Matches.time_match
+        LIMIT 3";
+        
+        
 		
 		$r = mysqli_query($con,$sql);
                 

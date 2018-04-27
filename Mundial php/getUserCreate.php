@@ -7,7 +7,7 @@
 		
 		require_once('dbConnect.php');
 		
-		$sql = "SELECT name FROM PUsers WHERE login='".$login."'";
+		$sql = "SELECT login FROM Users WHERE login='".$login."'";
 		
 		$r = mysqli_query($con,$sql);
 		
