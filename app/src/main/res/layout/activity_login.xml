@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.rharasimiuk.mundial.LoginActivity"
+    android:background="#457247">
+
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/login"
+        android:onClick="login"
+        android:layout_above="@+id/newAccount" android:layout_alignEnd="@+id/newAccount"
+        android:layout_alignStart="@+id/newAccount"/>
+
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New account"
+        android:onClick="newAccount"
+        android:id="@+id/newAccount"
+        android:layout_above="@+id/about" android:layout_centerHorizontal="true"
+        android:layout_marginBottom="95dp"/>
+
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        android:id="@+id/exit"
+        android:onClick="exit"
+        android:layout_alignParentBottom="true" android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/newAccount"/>
+
+    <Button
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:id="@+id/about"
+        android:onClick="about"
+        android:layout_alignParentBottom="true" android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/newAccount"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:id="@+id/editPassword"
+        android:background="#ffffff"
+        android:textAlignment="center"
+        android:maxLength="20" android:layout_above="@+id/textView" android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editName"
+        android:background="#ffffff"
+        android:textAlignment="center"
+        android:maxLength="20"
+        android:layout_above="@+id/login" android:layout_alignStart="@+id/editPassword"
+        android:layout_marginBottom="53dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Login"
+        android:id="@+id/password"
+        android:textAlignment="center"
+        android:layout_above="@+id/editPassword" android:layout_centerHorizontal="true"/>
+    <TextView
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_above="@+id/editName"
+        android:layout_centerHorizontal="true" android:id="@+id/textView"/>
+
+</RelativeLayout>

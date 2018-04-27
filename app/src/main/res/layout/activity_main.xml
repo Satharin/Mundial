@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.rharasimiuk.mundial.MainActivity"
+    android:background="#457247">
+
+
+    <TextView
+        android:id="@+id/textViewNextMatch"
+        android:layout_width="382dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="1dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Next matches"
+        android:textSize="30sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="60dp"
+         />
+
+    <Button
+        android:id="@+id/buttonBet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BET"
+        android:onClick="bet"
+        tools:layout_editor_absoluteY="291dp"
+        tools:layout_editor_absoluteX="148dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/buttonTable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tables"
+        android:onClick="tables"
+        tools:layout_editor_absoluteY="339dp"
+        tools:layout_editor_absoluteX="148dp"
+        android:layout_alignTop="@+id/buttonBet"
+        android:layout_alignStart="@+id/buttonBet"
+        android:layout_marginTop="49dp" />
+
+    <Button
+        android:id="@+id/buttonAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="logout"
+        android:text="Logout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/buttonExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        android:onClick="exit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonBet"
+        android:layout_alignStart="@+id/textViewNextMatch"
+        android:layout_below="@+id/textViewNextMatch" />
+
+</RelativeLayout>

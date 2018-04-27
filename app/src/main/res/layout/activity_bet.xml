@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.rharasimiuk.mundial.BetActivity"
+    android:background="#457247">
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:textAlignment="center"
+        android:layout_height="379dp"
+        android:layout_above="@+id/buttonGroups" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="back"
+        android:text="Back" />
+
+    <Button
+        android:id="@+id/buttonExit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        android:onClick="exit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/buttonGroups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Groups"
+        android:onClick="groups"
+        android:layout_alignTop="@+id/buttonKO"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonBack" />
+
+    <Button
+        android:id="@+id/buttonKO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="KO stage"
+        android:onClick="ko"
+        android:layout_above="@+id/buttonExit"
+        android:layout_alignStart="@+id/buttonExit" />
+
+
+</RelativeLayout>
