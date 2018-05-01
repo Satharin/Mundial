@@ -10,7 +10,7 @@ public class ConfigGroups {
 
     public static String[] teams_a, teams_b, dates, times;
 
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getGroups?date_match=";
+    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getGroups.php?date_match=";
     public static final String KEY_TEAM_A = "team_a";
     public static final String KEY_TEAM_B = "team_b";
     public static final String KEY_DATE_MATCH = "date_match";

@@ -158,6 +158,8 @@ public class BetActivity extends ListActivity {
 
             teams_a[i] = ConfigGroups.teams_a[i];
             teams_b[i] = ConfigGroups.teams_b[i];
+            dates[i] = ConfigGroups.dates[i];
+            times[i] = ConfigGroups.times[i];
 
         }
 
@@ -203,28 +205,36 @@ public class BetActivity extends ListActivity {
         ConfigKo pj = new ConfigKo(json);
         pj.ConfigKo();
 
-        teams_a = new String[ConfigKo.teams_a.length];
-        teams_b = new String[ConfigKo.teams_b.length];
-        dates = new String[ConfigKo.dates.length];
-        times = new String[ConfigKo.times.length];
-        matches = new String[ConfigKo.teams_a.length];
+        if(ConfigKo.teams_a != null) {
+            teams_a = new String[ConfigKo.teams_a.length];
+            teams_b = new String[ConfigKo.teams_b.length];
+            dates = new String[ConfigKo.dates.length];
+            times = new String[ConfigKo.times.length];
+            matches = new String[ConfigKo.teams_a.length];
 
-        for (int i = 0; i < ConfigKo.teams_a.length; i++) {
+            for (int i = 0; i < ConfigKo.teams_a.length; i++) {
 
-            teams_a[i] = ConfigKo.teams_a[i];
-            teams_b[i] = ConfigKo.teams_b[i];
+                teams_a[i] = ConfigKo.teams_a[i];
+                teams_b[i] = ConfigKo.teams_b[i];
+                dates[i] = ConfigKo.dates[i];
+                times[i] = ConfigKo.times[i];
 
+            }
+
+            for (int i = 0; i < ConfigKo.teams_a.length; i++) {
+
+                matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
+
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+            getListView().setAdapter(adapter);
+        }else {
+            matches = new String[1];
+            matches[0] = "No KO stage yet";
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+            getListView().setAdapter(adapter);
         }
-
-        for (int i = 0; i < ConfigKo.teams_a.length; i++){
-
-            matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
-
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
-        getListView().setAdapter(adapter);
-
     }
 
     public void ko (View view) {
