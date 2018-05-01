@@ -21,9 +21,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class BetActivity extends ListActivity {
 
-    String[] matches, teams_a, teams_b;
+    String[] matches, teams_a, teams_b, dates, times;
+
+    String todayDate = "", localTime = "";
 
     private ProgressDialog loadingMatches;
 
@@ -31,6 +39,18 @@ public class BetActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bet);
 
+        //Date date = new Date();
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        todayDate = dateFormat.format(date);
+
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
+        Date currentLocalTime = cal.getTime();
+        DateFormat time = new SimpleDateFormat("HH:mm");
+        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
+
+        localTime = time.format(currentLocalTime);
 
     }
 
@@ -101,7 +121,7 @@ public class BetActivity extends ListActivity {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigGroups.DATA_URL;
+        String url = ConfigGroups.DATA_URL + todayDate + "&time_match=" + localTime;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -128,20 +148,22 @@ public class BetActivity extends ListActivity {
         ConfigGroups pj = new ConfigGroups(json);
         pj.ConfigGroups();
 
-        teams_a = new String[ConfigNextMatches.teams_a.length];
-        teams_b = new String[ConfigNextMatches.teams_b.length];
-        matches = new String[ConfigNextMatches.teams_a.length];
+        teams_a = new String[ConfigGroups.teams_a.length];
+        teams_b = new String[ConfigGroups.teams_b.length];
+        dates = new String[ConfigGroups.dates.length];
+        times = new String[ConfigGroups.times.length];
+        matches = new String[ConfigGroups.teams_a.length];
 
-        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++) {
+        for (int i = 0; i < ConfigGroups.teams_a.length; i++) {
 
-            teams_a[i] = ConfigNextMatches.teams_a[i];
-            teams_b[i] = ConfigNextMatches.teams_b[i];
+            teams_a[i] = ConfigGroups.teams_a[i];
+            teams_b[i] = ConfigGroups.teams_b[i];
 
         }
 
-        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++){
+        for (int i = 0; i < ConfigGroups.teams_a.length; i++){
 
-            matches[i] = teams_a[i] + " - " + teams_b[i];
+            matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
 
         }
 
@@ -154,7 +176,7 @@ public class BetActivity extends ListActivity {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigKo.DATA_URL;
+        String url = ConfigKo.DATA_URL + todayDate + "&time_match=" + localTime;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -183,6 +205,8 @@ public class BetActivity extends ListActivity {
 
         teams_a = new String[ConfigKo.teams_a.length];
         teams_b = new String[ConfigKo.teams_b.length];
+        dates = new String[ConfigKo.dates.length];
+        times = new String[ConfigKo.times.length];
         matches = new String[ConfigKo.teams_a.length];
 
         for (int i = 0; i < ConfigKo.teams_a.length; i++) {
@@ -194,7 +218,7 @@ public class BetActivity extends ListActivity {
 
         for (int i = 0; i < ConfigKo.teams_a.length; i++){
 
-            matches[i] = teams_a[i] + " - " + teams_b[i];
+            matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
 
         }
 

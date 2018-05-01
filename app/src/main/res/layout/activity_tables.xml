@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/button"
         android:layout_toStartOf="@+id/buttonExit"
+        android:onClick="getTableB"
         android:text="Group B" />
 
     <Button
@@ -52,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button5"
         android:layout_toEndOf="@+id/buttonBack"
+        android:onClick="getTableC"
         android:text="Group C" />
 
     <Button
@@ -60,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/button2"
         android:layout_alignTop="@+id/button3"
+        android:onClick="getTableD"
         android:text="Group D" />
 
     <Button
@@ -68,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button9"
         android:layout_toEndOf="@+id/buttonBack"
+        android:onClick="getTableE"
         android:text="Group E" />
 
     <Button
@@ -76,6 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/button2"
         android:layout_alignTop="@+id/button5"
+        android:onClick="getTableF"
         android:text="Group F" />
 
     <Button
@@ -85,6 +90,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="114dp"
         android:layout_toEndOf="@+id/buttonBack"
+        android:onClick="getTableG"
         android:text="Group G" />
 
     <Button
@@ -93,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/button9"
         android:layout_toStartOf="@+id/buttonExit"
+        android:onClick="getTableH"
         android:text="Group H" />
 
     <TableLayout
@@ -166,42 +173,42 @@
                 android:id="@+id/textViewPoints1"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="12"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewBalance1"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="4"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGL1"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="3"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGS1"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="7"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewM1"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="4"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewTeam1"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="Senegal"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
@@ -217,42 +224,42 @@
                 android:id="@+id/textViewPoints2"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="8"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewBalance2"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="10"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGL2"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="2"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGS2"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="12"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewM2"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="4"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewTeam2"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="Arabia Saudyjska"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
@@ -268,42 +275,42 @@
                 android:id="@+id/textViewPoints3"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="6"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewBalance3"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="6"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGL3"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="2"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGS3"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="8"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewM3"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="4"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewTeam3"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="Rosja"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
@@ -319,42 +326,42 @@
                 android:id="@+id/textViewPoints4"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="2"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewBalance4"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="3"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGL4"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="3"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewGS4"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="6"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewM4"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="4"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewTeam4"
                 android:gravity="right"
                 android:padding="3dip"
-                android:text="Egipt"
+                android:text=""
                 android:textSize="15sp" />
 
             <TextView
@@ -381,6 +388,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </TableLayout>
+
+    <TextView
+        android:id="@+id/textViewGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="-176dp"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_toStartOf="@+id/button2"
+        android:text="GROUP" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="resetTable"
+        android:text="Clear" />
 
 
 </RelativeLayout>

@@ -6,11 +6,11 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class ConfigTableA {
+public class ConfigTableG {
 
     public static String[] teams, matches, goals_scored, goals_lost, balances, points;
 
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getTableA.php";
+    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getTableG.php";
     public static final String KEY_TEAM = "team";
     public static final String KEY_MATCHES = "matches";
     public static final String KEY_GOALS_SCORED = "goals_scored";
@@ -23,11 +23,11 @@ public class ConfigTableA {
 
     private String json;
 
-    public ConfigTableA(String json){
+    public ConfigTableG(String json){
         this.json = json;
     }
 
-    protected void ConfigTableA() {
+    protected void ConfigTableG() {
 
         JSONObject jsonObject = null;
 
