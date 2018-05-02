@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -88,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Check if name and password exist in database
         if(login2.equals(login) && password2.equals(password)){
-            //saveGame();
+            saveLogin();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }else{
@@ -117,6 +118,16 @@ public class LoginActivity extends AppCompatActivity {
         about.setMessage("                     App made by Haraś.");
 
         about.show();
+
+    }
+
+    //Save player_name
+    public void saveLogin() {
+
+        SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
+        SharedPreferences.Editor save = saveGame.edit();
+        save.putString("login", login);
+        save.apply();
 
     }
 
