@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.app.AlertDialog.Builder;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -45,14 +46,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class BetActivity extends ListActivity {
 
-    String[] matches, teams_a, teams_b, dates, times, id_matches;
+    String[] matches, teams_a, teams_b, dates, times, id_matches, bets_aCheck, bets_bCheck;
 
-    String todayDate = "", localTime = "", login, bet_a, bet_b, id_match, betLeft, betRight;
+    String todayDate = "", localTime = "", login, bet_a, bet_b, id_match, betLeft, betRight, bet_aCheck, bet_bCheck;
 
     public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/saveBet.php";
+    public static final String DATA_URL_UPDATE = "https://mundial2018.000webhostapp.com/mundial/updateBet.php";
 
     private EditText editTextLeft, editTextRight;
 
@@ -77,6 +80,8 @@ public class BetActivity extends ListActivity {
 
         localTime = time.format(currentLocalTime);
 
+        requestQueue = Volley.newRequestQueue(BetActivity.this);
+
         loadLogin();
 
         final ListView grid = (ListView) findViewById(android.R.id.list);
@@ -84,6 +89,15 @@ public class BetActivity extends ListActivity {
         grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+
+                id_match = id_matches[pos];
+                checkBet();
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        // Actions to do after 10 seconds
+
 
                 final Dialog dialog = new Dialog(BetActivity.this);
                 dialog.setTitle("Bet");
@@ -96,34 +110,57 @@ public class BetActivity extends ListActivity {
                 Button close = (Button) dialog.findViewById(R.id.buttonClose);
                 TextView left = (TextView) dialog.findViewById(R.id.textViewLeft);
                 TextView right = (TextView) dialog.findViewById(R.id.textViewRight);
-                TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
+                final TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
                 EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                 EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
+
+
+                System.out.println(bets_aCheck);
+
+                if(bet_aCheck != null)
+                    current.setText("Current bet: " + bet_aCheck + ":" + bet_bCheck);
+                else
+                    current.setText("Current bet: No bet yet");
 
                 save.setText("Save");
                 close.setText("Close");
                 left.setText(teams_a[pos]);
                 right.setText(teams_b[pos]);
-                current.setText("Current bet: 3:1");
+
 
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                         EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
-                        betLeft = leftEdit.getText().toString();
-                        betRight = rightEdit.getText().toString();
-                        saveBets(betLeft, betRight, id_matches[pos]);
+                        bet_a = leftEdit.getText().toString();
+                        bet_b = rightEdit.getText().toString();
+                        id_match = id_matches[pos];
+
+                        if(bet_aCheck != null)
+                            updateBets();
+                        else
+                            saveBets();
                     }
                 });
 
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        current.setText("Current bet: No bet yet");
+                        bet_aCheck = null;
+                        bet_bCheck = null;
+                        id_match = null;
                         dialog.dismiss();
+                        System.out.println("--------------------------------------");
+                        System.out.println(bet_aCheck);
                     }
                 });
 
+
+
+                    }
+                }, 2000);
                 return true;
             }
         });
@@ -261,24 +298,11 @@ public class BetActivity extends ListActivity {
 
     }
 
-    public void saveBet(String id_match) {
-
-        editTextLeft = (EditText) findViewById(R.id.editTextLeft);
-        editTextRight = (EditText) findViewById(R.id.editTextRight);
-        bet_a = betLeft;
-        bet_b = betRight;
-
-
-        //Check if fields are filled
-        if(bet_a.equals("")){
-            Toast.makeText(BetActivity.this, "Bet is empty.", Toast.LENGTH_LONG).show();
-        }else if(bet_b.equals("")) {
-            Toast.makeText(BetActivity.this, "Bet is empty.", Toast.LENGTH_LONG).show();
-        }else{
+    public void checkBet() {
 
             loadingMatches = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
 
-            String url = ConfigBet.DATA_URL + login + "&bet_a=" + bet_a + "&bet_b=" + bet_b + "&id_match=" + id_match;
+            String url = ConfigBet.DATA_URL + login + "&id_match=" + id_match;
 
             StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
                 @Override
@@ -297,39 +321,74 @@ public class BetActivity extends ListActivity {
 
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
-        }
+
 
     }
 
     private void showJSONbet(String json) {
 
-        //bet_a = editTextLeft.getText().toString();
-        //bet_b = editTextRight.getText().toString();
+        ConfigBet pj = new ConfigBet(json);
+        pj.ConfigBet();
 
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONArray result = jsonObject.getJSONArray(ConfigBet.JSON_ARRAY);//name of class
-            JSONObject collegeData = result.getJSONObject(0);
-            login = collegeData.getString(ConfigBet.KEY_LOGIN);
-            bet_a = collegeData.getString(ConfigBet.KEY_BET_A);
-            bet_b = collegeData.getString(ConfigBet.KEY_BET_B);
-            id_match = collegeData.getString(ConfigBet.KEY_ID_MATCH);
+        if(ConfigBet.logins != null) {
+            bets_aCheck = new String[ConfigBet.bets_a.length];
+            bets_bCheck = new String[ConfigBet.bets_b.length];
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            for (int i = 0; i < ConfigBet.bets_a.length; i++) {
+
+                bets_aCheck[i] = ConfigBet.bets_a[i];
+                bets_bCheck[i] = ConfigBet.bets_b[i];
+
+            }
+
+                bet_aCheck = bets_aCheck[0];
+                bet_bCheck = bets_bCheck[0];
+
+
+
+
+        }else{
+            bet_aCheck = null;
+            bet_bCheck = null;
         }
 
-
-        Toast.makeText(BetActivity.this, "Registration completed.", Toast.LENGTH_LONG).show();
-        //saveBets(); //Player is added to database
-        finish();
 
 
     }
 
-    public void saveBets(final String bet_a, final String bet_b, final String id_match){
+    public void saveBets(){
 
         StringRequest request = new StringRequest(Request.Method.POST, DATA_URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println(response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+                parameters.put("login", login);
+                parameters.put("bet_a", bet_a);
+                parameters.put("bet_b", bet_b);
+                parameters.put("id_match", id_match);
+
+                return parameters;
+            }
+        };
+
+        requestQueue.add(request);
+
+    }
+
+    public void updateBets(){
+
+        StringRequest request = new StringRequest(Request.Method.POST, DATA_URL_UPDATE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
