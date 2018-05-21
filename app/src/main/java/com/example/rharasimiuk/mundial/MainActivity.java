@@ -92,7 +92,7 @@ public class MainActivity extends ListActivity {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigNextMatches.DATA_URL + todayDate + "&time=" + localTime;
+        String url = ConfigNextMatches.DATA_URL + todayDate + "&time_match=" + localTime;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
