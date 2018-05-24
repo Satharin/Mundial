@@ -132,7 +132,7 @@ public class AdminActivity extends ListActivity {
 
                                 updateScore();
 
-                                dialog.dismiss();
+                                //dialog.dismiss();
                             }
                         });
 
@@ -140,7 +140,7 @@ public class AdminActivity extends ListActivity {
                             @Override
                             public void onClick(View v) {
                                 id_match = id_matches[pos];
-                                updatePoints();
+                                updatePoints(id_match);
                                 //dialog.dismiss();
                                 update.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                                 update.setEnabled(false);
@@ -230,10 +230,10 @@ public class AdminActivity extends ListActivity {
 
     }
 
-    public void updatePoints() {
+    public void updatePoints(String idMatch) {
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigBetsGet.DATA_URL;
+        String url = ConfigBetsGet.DATA_URL+idMatch;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -288,13 +288,13 @@ public class AdminActivity extends ListActivity {
                     points[i] = "5";
                     exactResult[i] = "1";
                 }else if(Integer.parseInt(bets_aBets[i]) > Integer.parseInt(bets_bBets[i]) && Integer.parseInt(results_aBets[i]) > Integer.parseInt(results_bBets[i])){
-                    points[i] = "3";
+                    points[i] = "2";
                     exactResult[i] = "0";
                 }else if(Integer.parseInt(bets_aBets[i]) < Integer.parseInt(bets_bBets[i]) && Integer.parseInt(results_aBets[i]) < Integer.parseInt(results_bBets[i])){
-                    points[i] = "3";
+                    points[i] = "2";
                     exactResult[i] = "0";
                 }else if(Integer.parseInt(bets_aBets[i]) == Integer.parseInt(bets_bBets[i]) && Integer.parseInt(results_aBets[i]) == Integer.parseInt(results_bBets[i])){
-                    points[i] = "3";
+                    points[i] = "2";
                     exactResult[i] = "0";
                 }else{
                     points[i] = "0";

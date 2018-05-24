@@ -10,7 +10,7 @@ public class ConfigBetsGet {
 
     public static String[] logins, id_matches, bets_a, bets_b, results_a, results_b, id_bets;
 
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getBetsWithScores.php?id_match=1";
+    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getBetsWithScores.php?id_match=";
     public static final String KEY_LOGIN = "login";
     public static final String KEY_ID_MATCH = "id_match";
     public static final String KEY_BET_A = "bet_a";

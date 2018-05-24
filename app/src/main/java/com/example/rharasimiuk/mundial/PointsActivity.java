@@ -72,8 +72,8 @@ public class PointsActivity extends ListActivity{
 
     private void showJSON(String json) {
 
-        ConfigNextMatches pj = new ConfigNextMatches(json);
-        pj.ConfigNextMatches();
+        ConfigGetPoints pj = new ConfigGetPoints(json);
+        pj.ConfigGetPoints();
 
         users = new String[ConfigGetPoints.users.length];
         points = new String[ConfigGetPoints.points.length];
@@ -90,7 +90,7 @@ public class PointsActivity extends ListActivity{
 
         for (int i = 0; i < ConfigGetPoints.users.length; i++){
 
-            matches[i] = users[i] + " : " + points[i] + " : " + exact_results[i];
+            matches[i] = users[i] + "   :   " + points[i] + "   :   " + exact_results[i];
 
         }
 

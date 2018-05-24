@@ -151,17 +151,8 @@ public class BetActivity extends ListActivity {
 
 
 
-                            try {
-                                Date matchTime = format.parse(dates[pos] + " " + times[pos]);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-
-                            try {
-                                Date currentTime = format.parse(todayDate + " " + localTime);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                        Date matchTime = dateOfMatch(dates[pos],times[pos]);
+                        Date currentTime = dateOfNow(todayDate, localTime);
 
                         time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
                         EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
@@ -171,7 +162,11 @@ public class BetActivity extends ListActivity {
                         id_match = id_matches[pos];
                         localTime = time.format(currentLocalTime);
 
-                        boolean isBefore = currentTime.isBefore(matchTime);
+                        boolean isBefore = currentTime.before(matchTime);
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println(isBefore);
+                        System.out.println("--------------------------------------------");
 
                         if(isBefore){
                             if(bet_aCheck != null)
@@ -212,14 +207,26 @@ public class BetActivity extends ListActivity {
 
     }
 
-    public Date DataDzis(String dateMatch, String timeMatch){
+    public Date dateOfMatch(String dateMatch, String timeMatch){
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         try {
             Date matchTime = format.parse(dateMatch + " " + timeMatch);
+            return matchTime;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return matchTime;
+        return null;
+    }
+
+    public Date dateOfNow(String dateMatch, String timeMatch){
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            Date matchTime = format.parse(dateMatch + " " + timeMatch);
+            return matchTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -287,9 +294,32 @@ public class BetActivity extends ListActivity {
 
     }
 
+    public String getDateToday(){
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+        todayDate = dateFormat.format(date);
+
+        return todayDate;
+    }
+
+    public String getTimeToday(){
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
+        Date currentLocalTime = cal.getTime();
+        DateFormat time = new SimpleDateFormat("HH:mm");
+        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
+
+        localTime = time.format(currentLocalTime);
+
+        return localTime;
+    }
+
     public void getGroups () {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+        todayDate = getDateToday();
+        localTime = getTimeToday();
 
         String url = ConfigGroups.DATA_URL + todayDate + "&time_match=" + localTime;
 
