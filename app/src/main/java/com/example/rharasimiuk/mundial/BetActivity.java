@@ -40,7 +40,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -52,7 +54,7 @@ public class BetActivity extends ListActivity {
 
     String[] matches, teams_a, teams_b, dates, times, id_matches, bets_aCheck, bets_bCheck;
 
-    String todayDate = "", localTime = "", login, bet_a, bet_b, id_match, betLeft, betRight, bet_aCheck, bet_bCheck;
+    String time_match, todayDate = "", localTime = "", login, bet_a, bet_b, id_match, betLeft, betRight, bet_aCheck, bet_bCheck;
 
     public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/saveBet.php";
     public static final String DATA_URL_UPDATE = "https://mundial2018.000webhostapp.com/mundial/updateBet.php";
@@ -69,7 +71,7 @@ public class BetActivity extends ListActivity {
 
         //Date date = new Date();
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         todayDate = dateFormat.format(date);
 
@@ -90,6 +92,7 @@ public class BetActivity extends ListActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
+                bet_aCheck = null;
                 id_match = id_matches[pos];
                 checkBet();
 
@@ -114,8 +117,8 @@ public class BetActivity extends ListActivity {
                 EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                 EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
-
-                System.out.println(bets_aCheck);
+                System.out.println("--------------------------------------");
+                System.out.println(bet_aCheck);
 
                 if(bet_aCheck != null)
                     current.setText("Current bet: " + bet_aCheck + ":" + bet_bCheck);
@@ -131,16 +134,57 @@ public class BetActivity extends ListActivity {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
+                        Date currentLocalTime = cal.getTime();
+                        DateFormat time = new SimpleDateFormat("HH:mm");
+                        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
+
+                        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+                        localTime = time.format(currentLocalTime);
+
+                        Date date = Calendar.getInstance().getTime();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+                        todayDate = dateFormat.format(date);
+
+
+
+                            try {
+                                Date matchTime = format.parse(dates[pos] + " " + times[pos]);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                Date currentTime = format.parse(todayDate + " " + localTime);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
                         EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                         EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
                         bet_a = leftEdit.getText().toString();
                         bet_b = rightEdit.getText().toString();
                         id_match = id_matches[pos];
+                        localTime = time.format(currentLocalTime);
 
-                        if(bet_aCheck != null)
-                            updateBets();
-                        else
-                            saveBets();
+                        boolean isBefore = currentTime.isBefore(matchTime);
+
+                        if(isBefore){
+                            if(bet_aCheck != null)
+                                updateBets();
+                            else
+                                saveBets();
+                        }else{
+                            Toast.makeText(BetActivity.this,"Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                        }
+
+
+                        current.setText("Current bet: " + bet_a + ":" + bet_b);
+                        dialog.dismiss();
                     }
                 });
 
@@ -167,6 +211,18 @@ public class BetActivity extends ListActivity {
 
 
     }
+
+    public Date DataDzis(String dateMatch, String timeMatch){
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            Date matchTime = format.parse(dateMatch + " " + timeMatch);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return matchTime;
+    }
+
+
 
     public void back(View view) {
 
@@ -330,7 +386,7 @@ public class BetActivity extends ListActivity {
         ConfigBet pj = new ConfigBet(json);
         pj.ConfigBet();
 
-        if(ConfigBet.logins != null) {
+        if(ConfigBet.bets_a != null) {
             bets_aCheck = new String[ConfigBet.bets_a.length];
             bets_bCheck = new String[ConfigBet.bets_b.length];
 

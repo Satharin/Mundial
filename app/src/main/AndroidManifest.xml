@@ -26,6 +26,14 @@
             android:label="Bet"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".AdminActivity"
+            android:label="Admin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PointsActivity"
+            android:label="Admin"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".TablesActivity"
             android:label="Tables"
             android:screenOrientation="portrait" />

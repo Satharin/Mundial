@@ -71,4 +71,22 @@
         android:layout_alignStart="@+id/textViewNextMatch"
         android:layout_below="@+id/textViewNextMatch" />
 
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="admin"
+        android:text="admin only" />
+
+    <Button
+        android:id="@+id/button11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonTable"
+        android:layout_centerHorizontal="true"
+        android:onClick="points"
+        android:text="Points" />
+
 </RelativeLayout>

@@ -8,13 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.app.AlertDialog.Builder;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -23,112 +19,36 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class MainActivity extends ListActivity {
+public class PointsActivity extends ListActivity{
+
+    String login;
+    String[] users, points, exact_results, matches;
 
     private ProgressDialog loadingMatches;
 
     RequestQueue requestQueue;
 
-    String login, team_a, team_b, date, time, todayDate = "", localTime = "";
-
-    String[] matches, teams_a, teams_b, dates, times;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //Date date = new Date();
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        todayDate = dateFormat.format(date);
-
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
-        Date currentLocalTime = cal.getTime();
-        DateFormat time = new SimpleDateFormat("HH:mm");
-        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
-
-        localTime = time.format(currentLocalTime);
+        setContentView(R.layout.activity_points);
 
         getNextMatch();
         loadLogin();
 
-
-
-    }
-
-    public void loadLogin() {
-
-        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
-        login = loadGame.getString("login", "");
-
-    }
-
-    public void bet (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), BetActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void admin (View view) {
-        if(haveNetworkConnection()) {
-
-            System.out.println(login);
-            if(login.equals("Haras")) {
-                startActivity(new Intent(getApplicationContext(), AdminActivity.class));
-                finish();
-            }else{
-                Toast.makeText(MainActivity.this,"Only Haras can access here.", Toast.LENGTH_LONG).show();
-            }
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void points (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), PointsActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void tables (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), TablesActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
     }
 
     public void getNextMatch () {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigNextMatches.DATA_URL + todayDate + "&time_match=" + localTime;
+        String url = ConfigGetPoints.DATA_URL;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -141,7 +61,7 @@ public class MainActivity extends ListActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(PointsActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -155,24 +75,22 @@ public class MainActivity extends ListActivity {
         ConfigNextMatches pj = new ConfigNextMatches(json);
         pj.ConfigNextMatches();
 
-        teams_a = new String[ConfigNextMatches.teams_a.length];
-        teams_b = new String[ConfigNextMatches.teams_b.length];
-        dates = new String[ConfigNextMatches.dates.length];
-        times = new String[ConfigNextMatches.times.length];
-        matches = new String[ConfigNextMatches.teams_a.length];
+        users = new String[ConfigGetPoints.users.length];
+        points = new String[ConfigGetPoints.points.length];
+        exact_results = new String[ConfigGetPoints.exact_results.length];
+        matches = new String[ConfigGetPoints.users.length];
 
-        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++) {
+        for (int i = 0; i < ConfigGetPoints.users.length; i++) {
 
-            teams_a[i] = ConfigNextMatches.teams_a[i];
-            teams_b[i] = ConfigNextMatches.teams_b[i];
-            dates[i] = ConfigNextMatches.dates[i];
-            times[i] = ConfigNextMatches.times[i];
+            users[i] = ConfigGetPoints.users[i];
+            points[i] = ConfigGetPoints.points[i];
+            exact_results[i] = ConfigGetPoints.exact_results[i];
 
         }
 
-        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++){
+        for (int i = 0; i < ConfigGetPoints.users.length; i++){
 
-            matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
+            matches[i] = users[i] + " : " + points[i] + " : " + exact_results[i];
 
         }
 
@@ -181,10 +99,22 @@ public class MainActivity extends ListActivity {
 
     }
 
-    public void logout(View view) {
+    //Load game
+    public void loadLogin() {
 
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
+        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        login = loadGame.getString("login", "");
+
+    }
+
+    public void back(View view) {
+
+        if(haveNetworkConnection()) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }else{
+            Toast.makeText(PointsActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
 
     }
 
