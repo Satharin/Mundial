@@ -2,14 +2,19 @@
 
 	if($_SERVER['REQUEST_METHOD']=='GET'){
 		
-		$output = null;
+		$date  = $_GET['date_match'];
+		$time  = $_GET['time_match'];
 		
 		require_once('dbConnect.php');
 		
-		$sql = "SELECT team_a, team_b FROM Matches 
-		WHERE stage = 'group' 
-		ORDER BY date_match, time_match";
-	
+		$sql = "SELECT Teams.name AS team_a, teams_b.team_b, DATE_FORMAT(Matches.date_match, '%d-%m-%Y') AS date_match, TIME_FORMAT(Matches.time_match, '%H:%i') AS time_match, Matches.id_match FROM Matches
+        LEFT JOIN Teams ON Teams.id_team = Matches.team_a
+        LEFT JOIN (SELECT Matches.id_match, Teams.name AS team_b, date_match, time_match FROM Matches
+        LEFT JOIN Teams ON Teams.id_team = Matches.team_b) as teams_b ON teams_b.id_match = Matches.id_match
+        WHERE Matches.stage = 'group' AND IF(Matches.date_match = '".$date."', (Matches.date_match = '".$date."' AND (Matches.time_match > '".$time."' OR Matches.time_match = '".$time."')),Matches.date_match > '".$date."')
+        ORDER BY Matches.date_match, Matches.time_match";
+        
+        
 		
 		$r = mysqli_query($con,$sql);
                 
