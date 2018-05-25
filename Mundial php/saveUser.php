@@ -5,7 +5,7 @@ require_once('dbConnect.php');
 $name = $_POST['login'];
 $password = $_POST['password'];
  
-$sql = "INSERT INTO Players (login, password) 
+$sql = "INSERT INTO Users (login, password) 
         VALUES ('$login','$password')";
   if(mysqli_query($con,$sql)){
     echo 'success';
