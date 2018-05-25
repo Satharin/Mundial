@@ -102,6 +102,19 @@ public class MainActivity extends ListActivity {
         }
     }
 
+    public void checkBets (View view){
+
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), CheckBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     public void points (View view) {
         if(haveNetworkConnection()) {
 

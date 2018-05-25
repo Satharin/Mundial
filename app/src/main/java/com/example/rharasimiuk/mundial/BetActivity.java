@@ -229,8 +229,6 @@ public class BetActivity extends ListActivity {
         return null;
     }
 
-
-
     public void back(View view) {
 
         if(haveNetworkConnection()) {
@@ -296,7 +294,7 @@ public class BetActivity extends ListActivity {
 
     public String getDateToday(){
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         todayDate = dateFormat.format(date);
 
@@ -312,6 +310,14 @@ public class BetActivity extends ListActivity {
         localTime = time.format(currentLocalTime);
 
         return localTime;
+    }
+
+    //Load game
+    public void loadLogin() {
+
+        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        login = loadGame.getString("login", "");
+
     }
 
     public void getGroups () {
@@ -340,14 +346,6 @@ public class BetActivity extends ListActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
-    }
-
-    //Load game
-    public void loadLogin() {
-
-        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
-        login = loadGame.getString("login", "");
 
     }
 
@@ -538,6 +536,7 @@ public class BetActivity extends ListActivity {
             teams_b = new String[ConfigKo.teams_b.length];
             dates = new String[ConfigKo.dates.length];
             times = new String[ConfigKo.times.length];
+            id_matches = new String[ConfigKo.id_matches.length];
             matches = new String[ConfigKo.teams_a.length];
 
             for (int i = 0; i < ConfigKo.teams_a.length; i++) {
@@ -546,6 +545,7 @@ public class BetActivity extends ListActivity {
                 teams_b[i] = ConfigKo.teams_b[i];
                 dates[i] = ConfigKo.dates[i];
                 times[i] = ConfigKo.times[i];
+                id_matches[i] = ConfigKo.id_matches[i];
 
             }
 

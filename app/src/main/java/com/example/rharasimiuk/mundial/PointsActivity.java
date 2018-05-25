@@ -75,27 +75,38 @@ public class PointsActivity extends ListActivity{
         ConfigGetPoints pj = new ConfigGetPoints(json);
         pj.ConfigGetPoints();
 
-        users = new String[ConfigGetPoints.users.length];
-        points = new String[ConfigGetPoints.points.length];
-        exact_results = new String[ConfigGetPoints.exact_results.length];
-        matches = new String[ConfigGetPoints.users.length];
+        if(ConfigGetPoints.users != null) {
 
-        for (int i = 0; i < ConfigGetPoints.users.length; i++) {
+            users = new String[ConfigGetPoints.users.length];
+            points = new String[ConfigGetPoints.points.length];
+            exact_results = new String[ConfigGetPoints.exact_results.length];
+            matches = new String[ConfigGetPoints.users.length];
 
-            users[i] = ConfigGetPoints.users[i];
-            points[i] = ConfigGetPoints.points[i];
-            exact_results[i] = ConfigGetPoints.exact_results[i];
+            for (int i = 0; i < ConfigGetPoints.users.length; i++) {
+
+                users[i] = ConfigGetPoints.users[i];
+                points[i] = ConfigGetPoints.points[i];
+                exact_results[i] = ConfigGetPoints.exact_results[i];
+
+            }
+
+            for (int i = 0; i < ConfigGetPoints.users.length; i++) {
+
+                matches[i] = users[i] + "   -   " + points[i] + "   -   " + exact_results[i];
+
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+            getListView().setAdapter(adapter);
+
+        }else{
+
+            matches = new String[1];
+            matches[0] = "No bets yet.";
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+            getListView().setAdapter(adapter);
 
         }
-
-        for (int i = 0; i < ConfigGetPoints.users.length; i++){
-
-            matches[i] = users[i] + "   :   " + points[i] + "   :   " + exact_results[i];
-
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
-        getListView().setAdapter(adapter);
 
     }
 

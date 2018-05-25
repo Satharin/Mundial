@@ -34,6 +34,10 @@
             android:label="Admin"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".CheckBetsActivity"
+            android:label="CheckBets"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".TablesActivity"
             android:label="Tables"
             android:screenOrientation="portrait" />

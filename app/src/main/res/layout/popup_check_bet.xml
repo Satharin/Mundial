@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#457247"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/textViewLeft"
+            android:layout_width="163dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="TextViewLeft"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewScoreLeft"
+            android:layout_width="30dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="17dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text=":" />
+
+        <TextView
+            android:id="@+id/textViewScoreRight"
+            android:layout_width="30dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number" />
+
+        <TextView
+            android:id="@+id/textViewRight"
+            android:layout_width="161dp"
+            android:layout_height="44dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="TextViewRight"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="292dp">
+
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonClose" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/buttonClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewCurrent"
+            android:layout_toEndOf="@+id/editTextRight"
+            android:layout_toStartOf="@+id/editTextRight"
+            android:text="Button"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+</LinearLayout>
