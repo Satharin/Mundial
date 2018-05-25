@@ -15,11 +15,11 @@
 
         <TextView
             android:id="@+id/textViewLeft"
-            android:layout_width="163dp"
+            android:layout_width="134dp"
             android:layout_height="42dp"
             android:gravity="center"
             android:text="TextViewLeft"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <EditText
             android:id="@+id/editTextLeft"
@@ -50,11 +50,11 @@
 
         <TextView
             android:id="@+id/textViewRight"
-            android:layout_width="161dp"
+            android:layout_width="131dp"
             android:layout_height="44dp"
             android:gravity="center"
             android:text="TextViewRight"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 

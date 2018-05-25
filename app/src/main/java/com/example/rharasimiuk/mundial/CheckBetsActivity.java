@@ -70,9 +70,9 @@ public class CheckBetsActivity extends ListActivity {
         final ListView grid = (ListView) findViewById(android.R.id.list);
         final ListView grid2 = (ListView) findViewById(R.id.listView2);
 
-        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
                 if(id_matches != null) {
                     id_match = id_matches[pos];
@@ -102,9 +102,8 @@ public class CheckBetsActivity extends ListActivity {
                             }
 
                         }
-                    }, 2000);
+                    }, 1000);
                 }
-                    return true;
 
             }
         });

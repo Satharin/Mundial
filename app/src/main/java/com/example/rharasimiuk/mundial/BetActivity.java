@@ -12,17 +12,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
-import android.app.AlertDialog.Builder;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,20 +30,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 public class BetActivity extends ListActivity {
 
@@ -88,9 +77,9 @@ public class BetActivity extends ListActivity {
 
         final ListView grid = (ListView) findViewById(android.R.id.list);
 
-        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
                 bet_aCheck = null;
                 id_match = id_matches[pos];
@@ -179,28 +168,25 @@ public class BetActivity extends ListActivity {
 
 
                         current.setText("Current bet: " + bet_a + ":" + bet_b);
-                        dialog.dismiss();
+                        Toast.makeText(BetActivity.this,"Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                        leftEdit.setText("");
+                        rightEdit.setText("");
+                        //dialog.dismiss();
                     }
                 });
 
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        current.setText("Current bet: No bet yet");
-                        bet_aCheck = null;
-                        bet_bCheck = null;
-                        id_match = null;
                         dialog.dismiss();
-                        System.out.println("--------------------------------------");
-                        System.out.println(bet_aCheck);
                     }
                 });
 
 
 
                     }
-                }, 2000);
-                return true;
+                }, 1000);
+
             }
         });
 
@@ -503,6 +489,9 @@ public class BetActivity extends ListActivity {
     public void getKo () {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+        todayDate = getDateToday();
+        localTime = getTimeToday();
 
         String url = ConfigKo.DATA_URL + todayDate + "&time_match=" + localTime;
 

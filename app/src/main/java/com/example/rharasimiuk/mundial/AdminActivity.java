@@ -79,9 +79,9 @@ public class AdminActivity extends ListActivity {
 
         final ListView grid = (ListView) findViewById(android.R.id.list);
 
-        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
                 bet_aCheck = null;
                 id_match = id_matches[pos];
@@ -140,7 +140,11 @@ public class AdminActivity extends ListActivity {
                             @Override
                             public void onClick(View v) {
                                 id_match = id_matches[pos];
-                                updatePoints(id_match);
+                                if(ConfigBetsGet.results_a != null){
+                                    updatePoints(id_match);
+                                }else{
+                                    Toast.makeText(AdminActivity.this,"No results yet.", Toast.LENGTH_LONG).show();
+                                }
                                 //dialog.dismiss();
                                 update.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                                 update.setEnabled(false);
@@ -150,13 +154,7 @@ public class AdminActivity extends ListActivity {
                         close.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                current.setText("Current bet: No bet yet");
-                                bet_aCheck = null;
-                                bet_bCheck = null;
-                                id_match = null;
                                 dialog.dismiss();
-                                System.out.println("--------------------------------------");
-                                System.out.println(bet_aCheck);
                             }
                         });
 
@@ -164,7 +162,6 @@ public class AdminActivity extends ListActivity {
 
                     }
                 }, 1000);
-                return true;
             }
         });
 
