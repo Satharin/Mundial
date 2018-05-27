@@ -140,11 +140,12 @@ public class AdminActivity extends ListActivity {
                             @Override
                             public void onClick(View v) {
                                 id_match = id_matches[pos];
-                                if(ConfigBetsGet.results_a != null){
+                                updatePoints(id_match);
+                                /*if(ConfigBetsGet.results_a != null){
                                     updatePoints(id_match);
                                 }else{
                                     Toast.makeText(AdminActivity.this,"No results yet.", Toast.LENGTH_LONG).show();
-                                }
+                                }*/
                                 //dialog.dismiss();
                                 update.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
                                 update.setEnabled(false);
@@ -312,10 +313,7 @@ public class AdminActivity extends ListActivity {
 
 
         }else {
-            matches = new String[1];
-            matches[0] = "NULL";
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
-            getListView().setAdapter(adapter);
+            Toast.makeText(AdminActivity.this, "No results yet.", Toast.LENGTH_LONG).show();
         }
 
     }
