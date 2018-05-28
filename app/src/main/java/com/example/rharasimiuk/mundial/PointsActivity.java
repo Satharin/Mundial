@@ -5,7 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,20 +19,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 public class PointsActivity extends ListActivity{
-
-    String login;
-    String[] users, points, exact_results, matches;
-
-    private ProgressDialog loadingMatches;
-
-    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +28,12 @@ public class PointsActivity extends ListActivity{
         setContentView(R.layout.activity_points);
 
         getNextMatch();
-        loadLogin();
 
     }
 
     public void getNextMatch () {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigGetPoints.DATA_URL;
 
@@ -77,22 +64,11 @@ public class PointsActivity extends ListActivity{
 
         if(ConfigGetPoints.users != null) {
 
-            users = new String[ConfigGetPoints.users.length];
-            points = new String[ConfigGetPoints.points.length];
-            exact_results = new String[ConfigGetPoints.exact_results.length];
-            matches = new String[ConfigGetPoints.users.length];
+            String[] matches = new String[ConfigGetPoints.users.length];
 
             for (int i = 0; i < ConfigGetPoints.users.length; i++) {
 
-                users[i] = ConfigGetPoints.users[i];
-                points[i] = ConfigGetPoints.points[i];
-                exact_results[i] = ConfigGetPoints.exact_results[i];
-
-            }
-
-            for (int i = 0; i < ConfigGetPoints.users.length; i++) {
-
-                matches[i] = users[i] + "   -   " + points[i] + "   -   " + exact_results[i];
+                matches[i] = ConfigGetPoints.users[i] + "   -   " + ConfigGetPoints.points[i] + "   -   " + ConfigGetPoints.exact_results[i];
 
             }
 
@@ -101,20 +77,12 @@ public class PointsActivity extends ListActivity{
 
         }else{
 
-            matches = new String[1];
+            String[] matches = new String[1];
             matches[0] = "No bets yet.";
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
             getListView().setAdapter(adapter);
 
         }
-
-    }
-
-    //Load game
-    public void loadLogin() {
-
-        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
-        login = loadGame.getString("login", "");
 
     }
 

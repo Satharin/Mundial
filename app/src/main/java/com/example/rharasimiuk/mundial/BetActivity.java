@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,39 +40,19 @@ import java.util.TimeZone;
 
 public class BetActivity extends ListActivity {
 
-    String[] matches, teams_a, teams_b, dates, times, id_matches, bets_aCheck, bets_bCheck;
-
-    String time_match, todayDate = "", localTime = "", login, bet_a, bet_b, id_match, betLeft, betRight, bet_aCheck, bet_bCheck;
-
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/saveBet.php";
-    public static final String DATA_URL_UPDATE = "https://mundial2018.000webhostapp.com/mundial/updateBet.php";
-
-    private EditText editTextLeft, editTextRight;
+    String[] checkBets;
 
     RequestQueue requestQueue;
-
-    private ProgressDialog loadingMatches;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bet);
 
-        //Date date = new Date();
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-        todayDate = dateFormat.format(date);
-
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
-        Date currentLocalTime = cal.getTime();
-        DateFormat time = new SimpleDateFormat("HH:mm");
-        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
-
-        localTime = time.format(currentLocalTime);
-
         requestQueue = Volley.newRequestQueue(BetActivity.this);
 
-        loadLogin();
+        getGroups(getDateToday(), getTimeToday());
+
+        final String login = loadLogin();
 
         final ListView grid = (ListView) findViewById(android.R.id.list);
 
@@ -81,97 +60,67 @@ public class BetActivity extends ListActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
-                bet_aCheck = null;
-                id_match = id_matches[pos];
-                checkBet();
+                final String id_match = ConfigGroups.id_matches[pos];
+                checkBet(login, id_match);
 
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
+
                     public void run() {
-                        // Actions to do after 10 seconds
 
+                    final Dialog dialog = new Dialog(BetActivity.this);
+                    dialog.setTitle("Bet");
+                    dialog.setContentView(R.layout.popup_bet);
+                    dialog.show();
+                    dialog.setCancelable(false);
+                    dialog.setCanceledOnTouchOutside(false);
 
-                final Dialog dialog = new Dialog(BetActivity.this);
-                dialog.setTitle("Bet");
-                dialog.setContentView(R.layout.popup_bet);
-                dialog.show();
-                dialog.setCancelable(false);
-                dialog.setCanceledOnTouchOutside(false);
+                    Button save = (Button) dialog.findViewById(R.id.buttonSave);
+                    Button close = (Button) dialog.findViewById(R.id.buttonClose);
+                    TextView left = (TextView) dialog.findViewById(R.id.textViewLeft);
+                    TextView right = (TextView) dialog.findViewById(R.id.textViewRight);
+                    final TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
+                    final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
+                    final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
-                Button save = (Button) dialog.findViewById(R.id.buttonSave);
-                Button close = (Button) dialog.findViewById(R.id.buttonClose);
-                TextView left = (TextView) dialog.findViewById(R.id.textViewLeft);
-                TextView right = (TextView) dialog.findViewById(R.id.textViewRight);
-                final TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
-                EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
-                EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
+                    checkBet(login, id_match);
 
-                System.out.println("--------------------------------------");
-                System.out.println(bet_aCheck);
+                    if(checkBets[0] != null)
+                        current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
+                    else
+                        current.setText("Current bet: No bet yet");
 
-                if(bet_aCheck != null)
-                    current.setText("Current bet: " + bet_aCheck + ":" + bet_bCheck);
-                else
-                    current.setText("Current bet: No bet yet");
+                    save.setText("Save");
+                    close.setText("Close");
 
-                save.setText("Save");
-                close.setText("Close");
-                left.setText(teams_a[pos]);
-                right.setText(teams_b[pos]);
+                    left.setText(ConfigGroups.teams_a[pos]);
+                    right.setText(ConfigGroups.teams_b[pos]);
 
+                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
-                save.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                            Date matchTime = checkDate(ConfigGroups.dates[pos],ConfigGroups.times[pos]);
+                            Date currentTime = checkDate(getDateToday(), getTimeToday());
 
-                        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
-                        Date currentLocalTime = cal.getTime();
-                        DateFormat time = new SimpleDateFormat("HH:mm");
-                        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
+                            String bet_a = leftEdit.getText().toString();
+                            String bet_b = rightEdit.getText().toString();
 
-                        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                            boolean isBefore = currentTime.before(matchTime);
 
-                        localTime = time.format(currentLocalTime);
+                            if(isBefore){
+                                if(checkBets[0] != null)
+                                    updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
+                                else
+                                    saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
+                            }else{
+                                Toast.makeText(BetActivity.this,"Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                            }
 
-                        Date date = Calendar.getInstance().getTime();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-                        todayDate = dateFormat.format(date);
-
-
-
-                        Date matchTime = dateOfMatch(dates[pos],times[pos]);
-                        Date currentTime = dateOfNow(todayDate, localTime);
-
-                        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
-                        EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
-                        EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
-                        bet_a = leftEdit.getText().toString();
-                        bet_b = rightEdit.getText().toString();
-                        id_match = id_matches[pos];
-                        localTime = time.format(currentLocalTime);
-
-                        boolean isBefore = currentTime.before(matchTime);
-
-                        System.out.println("--------------------------------------------");
-                        System.out.println(isBefore);
-                        System.out.println("--------------------------------------------");
-
-                        if(isBefore){
-                            if(bet_aCheck != null)
-                                updateBets();
-                            else
-                                saveBets();
-                        }else{
-                            Toast.makeText(BetActivity.this,"Match already started. You can't bet.", Toast.LENGTH_LONG).show();
-                        }
-
-
-                        current.setText("Current bet: " + bet_a + ":" + bet_b);
-                        Toast.makeText(BetActivity.this,"Bet successfully added to data base.", Toast.LENGTH_LONG).show();
-                        leftEdit.setText("");
-                        rightEdit.setText("");
-                        //dialog.dismiss();
+                            current.setText("Current bet: " + bet_a + ":" + bet_b);
+                            Toast.makeText(BetActivity.this,"Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                            leftEdit.setText("");
+                            rightEdit.setText("");
                     }
                 });
 
@@ -182,8 +131,6 @@ public class BetActivity extends ListActivity {
                     }
                 });
 
-
-
                     }
                 }, 1000);
 
@@ -193,18 +140,8 @@ public class BetActivity extends ListActivity {
 
     }
 
-    public Date dateOfMatch(String dateMatch, String timeMatch){
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        try {
-            Date matchTime = format.parse(dateMatch + " " + timeMatch);
-            return matchTime;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    public Date checkDate(String dateMatch, String timeMatch){
 
-    public Date dateOfNow(String dateMatch, String timeMatch){
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         try {
             Date matchTime = format.parse(dateMatch + " " + timeMatch);
@@ -268,21 +205,11 @@ public class BetActivity extends ListActivity {
         exit.show();
     }
 
-    public void groups (View view) {
-
-        if(haveNetworkConnection()) {
-            getGroups();
-        }else{
-            Toast.makeText(BetActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
     public String getDateToday(){
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        todayDate = dateFormat.format(date);
+        String todayDate = dateFormat.format(date);
 
         return todayDate;
     }
@@ -293,25 +220,23 @@ public class BetActivity extends ListActivity {
         DateFormat time = new SimpleDateFormat("HH:mm");
         time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
 
-        localTime = time.format(currentLocalTime);
+        String localTime = time.format(currentLocalTime);
 
         return localTime;
     }
 
-    //Load game
-    public void loadLogin() {
+    public String loadLogin() {
 
         SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
-        login = loadGame.getString("login", "");
+        String login = loadGame.getString("login", "");
+
+        return login;
 
     }
 
-    public void getGroups () {
+    public void getGroups (String todayDate, String localTime) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
-
-        todayDate = getDateToday();
-        localTime = getTimeToday();
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigGroups.DATA_URL + todayDate + "&time_match=" + localTime;
 
@@ -340,26 +265,11 @@ public class BetActivity extends ListActivity {
         ConfigGroups pj = new ConfigGroups(json);
         pj.ConfigGroups();
 
-        teams_a = new String[ConfigGroups.teams_a.length];
-        teams_b = new String[ConfigGroups.teams_b.length];
-        dates = new String[ConfigGroups.dates.length];
-        times = new String[ConfigGroups.times.length];
-        id_matches = new String[ConfigGroups.id_matches.length];
-        matches = new String[ConfigGroups.teams_a.length];
-
-        for (int i = 0; i < ConfigGroups.teams_a.length; i++) {
-
-            teams_a[i] = ConfigGroups.teams_a[i];
-            teams_b[i] = ConfigGroups.teams_b[i];
-            dates[i] = ConfigGroups.dates[i];
-            times[i] = ConfigGroups.times[i];
-            id_matches[i] = ConfigGroups.id_matches[i];
-
-        }
+        String[] matches = new String[ConfigGroups.teams_a.length];
 
         for (int i = 0; i < ConfigGroups.teams_a.length; i++){
 
-            matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
+            matches[i] = ConfigGroups.teams_a[i] + " - " + ConfigGroups.teams_b[i] + " " + ConfigGroups.dates[i] + " " + ConfigGroups.times[i];
 
         }
 
@@ -368,9 +278,9 @@ public class BetActivity extends ListActivity {
 
     }
 
-    public void checkBet() {
+    public void checkBet(String login, String id_match) {
 
-            loadingMatches = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
+            final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
 
             String url = ConfigBet.DATA_URL + login + "&id_match=" + id_match;
 
@@ -378,7 +288,7 @@ public class BetActivity extends ListActivity {
                 @Override
                 public void onResponse(String response) {
                     loadingMatches.dismiss();
-                    showJSONbet(response);
+                    checkBets = showJSONbet(response);
 
                 }
             },
@@ -392,43 +302,34 @@ public class BetActivity extends ListActivity {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
 
-
     }
 
-    private void showJSONbet(String json) {
+    private String[] showJSONbet(String json) {
 
         ConfigBet pj = new ConfigBet(json);
         pj.ConfigBet();
 
+        String bet_aCheck;
+        String bet_bCheck;
+
         if(ConfigBet.bets_a != null) {
-            bets_aCheck = new String[ConfigBet.bets_a.length];
-            bets_bCheck = new String[ConfigBet.bets_b.length];
 
-            for (int i = 0; i < ConfigBet.bets_a.length; i++) {
-
-                bets_aCheck[i] = ConfigBet.bets_a[i];
-                bets_bCheck[i] = ConfigBet.bets_b[i];
-
-            }
-
-                bet_aCheck = bets_aCheck[0];
-                bet_bCheck = bets_bCheck[0];
-
-
-
+            bet_aCheck = ConfigBet.bets_a[0];
+            bet_bCheck = ConfigBet.bets_b[0];
 
         }else{
+
             bet_aCheck = null;
             bet_bCheck = null;
         }
 
-
+        return new String[] {bet_aCheck, bet_bCheck};
 
     }
 
-    public void saveBets(){
+    public void saveBets(String url, final String login, final String bet_a, final String bet_b, final String id_match){
 
-        StringRequest request = new StringRequest(Request.Method.POST, DATA_URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -456,9 +357,9 @@ public class BetActivity extends ListActivity {
 
     }
 
-    public void updateBets(){
+    public void updateBets(String url, final String login, final String bet_a, final String bet_b, final String id_match){
 
-        StringRequest request = new StringRequest(Request.Method.POST, DATA_URL_UPDATE, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -483,95 +384,6 @@ public class BetActivity extends ListActivity {
         };
 
         requestQueue.add(request);
-
-    }
-
-    public void getKo () {
-
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
-
-        todayDate = getDateToday();
-        localTime = getTimeToday();
-
-        String url = ConfigKo.DATA_URL + todayDate + "&time_match=" + localTime;
-
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                loadingMatches.dismiss();
-                showJSONko(response);
-
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(BetActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-    }
-
-    private void showJSONko(String json) {
-
-        ConfigKo pj = new ConfigKo(json);
-        pj.ConfigKo();
-
-        if(ConfigKo.teams_a != null) {
-            teams_a = new String[ConfigKo.teams_a.length];
-            teams_b = new String[ConfigKo.teams_b.length];
-            dates = new String[ConfigKo.dates.length];
-            times = new String[ConfigKo.times.length];
-            id_matches = new String[ConfigKo.id_matches.length];
-            matches = new String[ConfigKo.teams_a.length];
-
-            for (int i = 0; i < ConfigKo.teams_a.length; i++) {
-
-                teams_a[i] = ConfigKo.teams_a[i];
-                teams_b[i] = ConfigKo.teams_b[i];
-                dates[i] = ConfigKo.dates[i];
-                times[i] = ConfigKo.times[i];
-                id_matches[i] = ConfigKo.id_matches[i];
-
-            }
-
-            for (int i = 0; i < ConfigKo.teams_a.length; i++) {
-
-                matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
-
-            }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
-            getListView().setAdapter(adapter);
-        }else {
-            matches = new String[1];
-            matches[0] = "No KO stage yet";
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
-            getListView().setAdapter(adapter);
-        }
-    }
-
-    public void ko (View view) {
-
-        if(haveNetworkConnection()) {
-            getKo();
-        }else{
-            Toast.makeText(BetActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    public void bet (View view){
-
-        final Dialog dialog = new Dialog(BetActivity.this);
-        dialog.setTitle("Bet");
-        dialog.setContentView(R.layout.popup_bet);
-        dialog.show();
-
-
 
     }
 

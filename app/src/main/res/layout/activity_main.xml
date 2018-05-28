@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BET"
-        android:onClick="bet"
+        android:onClick="goToBet"
         tools:layout_editor_absoluteY="291dp"
         tools:layout_editor_absoluteX="148dp"
         android:layout_centerVertical="true"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tables"
-        android:onClick="tables"
+        android:onClick="goToTables"
         tools:layout_editor_absoluteY="339dp"
         tools:layout_editor_absoluteX="148dp"
         android:layout_alignTop="@+id/buttonBet"
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="admin"
+        android:onClick="goToAdmin"
         android:text="admin only" />
 
     <Button
@@ -86,7 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonTable"
         android:layout_centerHorizontal="true"
-        android:onClick="points"
+        android:onClick="goToPoints"
         android:text="Points" />
 
     <Button
