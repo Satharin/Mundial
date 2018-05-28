@@ -25,15 +25,9 @@ import java.util.Map;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    String login, password, confirm, login2 = "";
-
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/saveUser.php";
-
     private EditText editName, editTextPassword, editTextConfirm;
 
     RequestQueue requestQueue;
-
-    private ProgressDialog loadingCreate;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +42,9 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     public void createAccount(View view) {
 
-        login = editName.getText().toString();
-        password = editTextPassword.getText().toString();
-        confirm = editTextConfirm.getText().toString();
+        final String login = editName.getText().toString();
+        final String password = editTextPassword.getText().toString();
+        final String confirm = editTextConfirm.getText().toString();
 
         //Check if fields are filled
         if(login.equals("")){
@@ -61,7 +55,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             Toast.makeText(CreateAccountActivity.this, "Field 'Confirm password' is empty.", Toast.LENGTH_LONG).show();
         }else{
 
-            loadingCreate = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
+            final ProgressDialog loadingCreate = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
 
             String url = ConfigCreate.DATA_URL + login;
 
@@ -69,7 +63,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     loadingCreate.dismiss();
-                    showJSON(response);
+                    showJSON(response, login, password, confirm);
 
                 }
             },
@@ -86,15 +80,16 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     }
 
-    private void showJSON(String json) {
+    private void showJSON(String json, String login, String password, String confirm) {
 
         login = editName.getText().toString();
         password = editTextPassword.getText().toString();
         confirm = editTextConfirm.getText().toString();
+        String login2 = "";
 
         try {
             JSONObject jsonObject = new JSONObject(json);
-            JSONArray result = jsonObject.getJSONArray(ConfigCreate.JSON_ARRAY);//name of class
+            JSONArray result = jsonObject.getJSONArray(ConfigCreate.JSON_ARRAY);
             JSONObject collegeData = result.getJSONObject(0);
             login2 = collegeData.getString(ConfigCreate.KEY_LOGIN);
 
@@ -102,7 +97,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //Check inserted data
         if(login2.equals(login)) {
             Toast.makeText(CreateAccountActivity.this, "Login " + login + " already registered.", Toast.LENGTH_LONG).show();
             editName.setText("");
@@ -110,7 +104,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             editTextConfirm.setText("");
         }else if(password.equals(confirm)&&!password.equals("")){
             Toast.makeText(CreateAccountActivity.this, "Registration completed.", Toast.LENGTH_LONG).show();
-            savePlayer(); //Player is added to database
+            savePlayer("https://mundial2018.000webhostapp.com/mundial/saveUser.php", login, password);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }else{
@@ -121,9 +115,9 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     }
 
-    public void savePlayer(){
+    public void savePlayer(String url, final String login, final String password){
 
-        StringRequest request = new StringRequest(Request.Method.POST, DATA_URL, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 

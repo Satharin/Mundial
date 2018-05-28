@@ -9,10 +9,8 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.concurrent.TimeUnit;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -21,12 +19,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class TablesActivity extends AppCompatActivity {
-
-    private ProgressDialog loadingMatches;
-
-    String group;
-
-    RequestQueue requestQueue;
 
     private TextView team1, m1, gs1, gl1, balance1, points1,
             team2, m2, gs2, gl2, balance2, points2,
@@ -75,7 +67,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableA (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableA.DATA_URL;
 
@@ -111,44 +103,33 @@ public class TablesActivity extends AppCompatActivity {
         balances = new String[ConfigTableA.balances.length];
         points = new String[ConfigTableA.points.length];
 
-        for (int i = 0; i < ConfigTableA.teams.length; i++) {
+        team1.setText(ConfigTableA.teams[0]);
+        m1.setText(ConfigTableA.matches[0]);
+        gs1.setText(ConfigTableA.goals_scored[0]);
+        gl1.setText(ConfigTableA.goals_lost[0]);
+        balance1.setText(ConfigTableA.balances[0]);
+        points1.setText(ConfigTableA.points[0]);
 
-            teams[i] = ConfigTableA.teams[i];
-            matches[i] = ConfigTableA.matches[i];
-            goals_scored[i] = ConfigTableA.goals_scored[i];
-            goals_lost[i] = ConfigTableA.goals_lost[i];
-            balances[i] = ConfigTableA.balances[i];
-            points[i] = ConfigTableA.points[i];
+        team2.setText(ConfigTableA.teams[1]);
+        m2.setText(ConfigTableA.matches[1]);
+        gs2.setText(ConfigTableA.goals_scored[1]);
+        gl2.setText(ConfigTableA.goals_lost[1]);
+        balance2.setText(ConfigTableA.balances[1]);
+        points2.setText(ConfigTableA.points[1]);
 
-        }
+        team3.setText(ConfigTableA.teams[2]);
+        m3.setText(ConfigTableA.matches[2]);
+        gs3.setText(ConfigTableA.goals_scored[2]);
+        gl3.setText(ConfigTableA.goals_lost[2]);
+        balance3.setText(ConfigTableA.balances[2]);
+        points3.setText(ConfigTableA.points[2]);
 
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableA.teams[3]);
+        m4.setText(ConfigTableA.matches[3]);
+        gs4.setText(ConfigTableA.goals_scored[3]);
+        gl4.setText(ConfigTableA.goals_lost[3]);
+        balance4.setText(ConfigTableA.balances[3]);
+        points4.setText(ConfigTableA.points[3]);
 
         groupName.setText("GROUP A");
 
@@ -156,7 +137,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableB (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableB.DATA_URL;
 
@@ -185,51 +166,33 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableB pj = new ConfigTableB(json);
         pj.ConfigTableB();
 
-        teams = new String[ConfigTableB.teams.length];
-        matches = new String[ConfigTableB.matches.length];
-        goals_scored = new String[ConfigTableB.goals_scored.length];
-        goals_lost = new String[ConfigTableB.goals_lost.length];
-        balances = new String[ConfigTableB.balances.length];
-        points = new String[ConfigTableB.points.length];
+        team1.setText(ConfigTableB.teams[0]);
+        m1.setText(ConfigTableB.matches[0]);
+        gs1.setText(ConfigTableB.goals_scored[0]);
+        gl1.setText(ConfigTableB.goals_lost[0]);
+        balance1.setText(ConfigTableB.balances[0]);
+        points1.setText(ConfigTableB.points[0]);
 
-        for (int i = 0; i < ConfigTableB.teams.length; i++) {
+        team2.setText(ConfigTableB.teams[1]);
+        m2.setText(ConfigTableB.matches[1]);
+        gs2.setText(ConfigTableB.goals_scored[1]);
+        gl2.setText(ConfigTableB.goals_lost[1]);
+        balance2.setText(ConfigTableB.balances[1]);
+        points2.setText(ConfigTableB.points[1]);
 
-            teams[i] = ConfigTableB.teams[i];
-            matches[i] = ConfigTableB.matches[i];
-            goals_scored[i] = ConfigTableB.goals_scored[i];
-            goals_lost[i] = ConfigTableB.goals_lost[i];
-            balances[i] = ConfigTableB.balances[i];
-            points[i] = ConfigTableB.points[i];
+        team3.setText(ConfigTableB.teams[2]);
+        m3.setText(ConfigTableB.matches[2]);
+        gs3.setText(ConfigTableB.goals_scored[2]);
+        gl3.setText(ConfigTableB.goals_lost[2]);
+        balance3.setText(ConfigTableB.balances[2]);
+        points3.setText(ConfigTableB.points[2]);
 
-        }
-
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableB.teams[3]);
+        m4.setText(ConfigTableB.matches[3]);
+        gs4.setText(ConfigTableB.goals_scored[3]);
+        gl4.setText(ConfigTableB.goals_lost[3]);
+        balance4.setText(ConfigTableB.balances[3]);
+        points4.setText(ConfigTableB.points[3]);
 
         groupName.setText("GROUP B");
 
@@ -237,7 +200,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableC (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableC.DATA_URL;
 
@@ -266,51 +229,33 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableC pj = new ConfigTableC(json);
         pj.ConfigTableC();
 
-        teams = new String[ConfigTableC.teams.length];
-        matches = new String[ConfigTableC.matches.length];
-        goals_scored = new String[ConfigTableC.goals_scored.length];
-        goals_lost = new String[ConfigTableC.goals_lost.length];
-        balances = new String[ConfigTableC.balances.length];
-        points = new String[ConfigTableC.points.length];
+        team1.setText(ConfigTableC.teams[0]);
+        m1.setText(ConfigTableC.matches[0]);
+        gs1.setText(ConfigTableC.goals_scored[0]);
+        gl1.setText(ConfigTableC.goals_lost[0]);
+        balance1.setText(ConfigTableC.balances[0]);
+        points1.setText(ConfigTableC.points[0]);
 
-        for (int i = 0; i < ConfigTableC.teams.length; i++) {
+        team2.setText(ConfigTableC.teams[1]);
+        m2.setText(ConfigTableC.matches[1]);
+        gs2.setText(ConfigTableC.goals_scored[1]);
+        gl2.setText(ConfigTableC.goals_lost[1]);
+        balance2.setText(ConfigTableC.balances[1]);
+        points2.setText(ConfigTableC.points[1]);
 
-            teams[i] = ConfigTableC.teams[i];
-            matches[i] = ConfigTableC.matches[i];
-            goals_scored[i] = ConfigTableC.goals_scored[i];
-            goals_lost[i] = ConfigTableC.goals_lost[i];
-            balances[i] = ConfigTableC.balances[i];
-            points[i] = ConfigTableC.points[i];
+        team3.setText(ConfigTableC.teams[2]);
+        m3.setText(ConfigTableC.matches[2]);
+        gs3.setText(ConfigTableC.goals_scored[2]);
+        gl3.setText(ConfigTableC.goals_lost[2]);
+        balance3.setText(ConfigTableC.balances[2]);
+        points3.setText(ConfigTableC.points[2]);
 
-        }
-
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableC.teams[3]);
+        m4.setText(ConfigTableC.matches[3]);
+        gs4.setText(ConfigTableC.goals_scored[3]);
+        gl4.setText(ConfigTableC.goals_lost[3]);
+        balance4.setText(ConfigTableC.balances[3]);
+        points4.setText(ConfigTableC.points[3]);
 
         groupName.setText("GROUP C");
 
@@ -318,7 +263,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableD (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableD.DATA_URL;
 
@@ -347,51 +292,33 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableD pj = new ConfigTableD(json);
         pj.ConfigTableD();
 
-        teams = new String[ConfigTableD.teams.length];
-        matches = new String[ConfigTableD.matches.length];
-        goals_scored = new String[ConfigTableD.goals_scored.length];
-        goals_lost = new String[ConfigTableD.goals_lost.length];
-        balances = new String[ConfigTableD.balances.length];
-        points = new String[ConfigTableD.points.length];
+        team1.setText(ConfigTableD.teams[0]);
+        m1.setText(ConfigTableD.matches[0]);
+        gs1.setText(ConfigTableD.goals_scored[0]);
+        gl1.setText(ConfigTableD.goals_lost[0]);
+        balance1.setText(ConfigTableD.balances[0]);
+        points1.setText(ConfigTableD.points[0]);
 
-        for (int i = 0; i < ConfigTableD.teams.length; i++) {
+        team2.setText(ConfigTableD.teams[1]);
+        m2.setText(ConfigTableD.matches[1]);
+        gs2.setText(ConfigTableD.goals_scored[1]);
+        gl2.setText(ConfigTableD.goals_lost[1]);
+        balance2.setText(ConfigTableD.balances[1]);
+        points2.setText(ConfigTableD.points[1]);
 
-            teams[i] = ConfigTableD.teams[i];
-            matches[i] = ConfigTableD.matches[i];
-            goals_scored[i] = ConfigTableD.goals_scored[i];
-            goals_lost[i] = ConfigTableD.goals_lost[i];
-            balances[i] = ConfigTableD.balances[i];
-            points[i] = ConfigTableD.points[i];
+        team3.setText(ConfigTableD.teams[2]);
+        m3.setText(ConfigTableD.matches[2]);
+        gs3.setText(ConfigTableD.goals_scored[2]);
+        gl3.setText(ConfigTableD.goals_lost[2]);
+        balance3.setText(ConfigTableD.balances[2]);
+        points3.setText(ConfigTableD.points[2]);
 
-        }
-
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableD.teams[3]);
+        m4.setText(ConfigTableD.matches[3]);
+        gs4.setText(ConfigTableD.goals_scored[3]);
+        gl4.setText(ConfigTableD.goals_lost[3]);
+        balance4.setText(ConfigTableD.balances[3]);
+        points4.setText(ConfigTableD.points[3]);
 
         groupName.setText("GROUP D");
 
@@ -399,7 +326,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableE (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableE.DATA_URL;
 
@@ -428,51 +355,33 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableE pj = new ConfigTableE(json);
         pj.ConfigTableE();
 
-        teams = new String[ConfigTableE.teams.length];
-        matches = new String[ConfigTableE.matches.length];
-        goals_scored = new String[ConfigTableE.goals_scored.length];
-        goals_lost = new String[ConfigTableE.goals_lost.length];
-        balances = new String[ConfigTableE.balances.length];
-        points = new String[ConfigTableE.points.length];
+        team1.setText(ConfigTableE.teams[0]);
+        m1.setText(ConfigTableE.matches[0]);
+        gs1.setText(ConfigTableE.goals_scored[0]);
+        gl1.setText(ConfigTableE.goals_lost[0]);
+        balance1.setText(ConfigTableE.balances[0]);
+        points1.setText(ConfigTableE.points[0]);
 
-        for (int i = 0; i < ConfigTableE.teams.length; i++) {
+        team2.setText(ConfigTableE.teams[1]);
+        m2.setText(ConfigTableE.matches[1]);
+        gs2.setText(ConfigTableE.goals_scored[1]);
+        gl2.setText(ConfigTableE.goals_lost[1]);
+        balance2.setText(ConfigTableE.balances[1]);
+        points2.setText(ConfigTableE.points[1]);
 
-            teams[i] = ConfigTableE.teams[i];
-            matches[i] = ConfigTableE.matches[i];
-            goals_scored[i] = ConfigTableE.goals_scored[i];
-            goals_lost[i] = ConfigTableE.goals_lost[i];
-            balances[i] = ConfigTableE.balances[i];
-            points[i] = ConfigTableE.points[i];
+        team3.setText(ConfigTableE.teams[2]);
+        m3.setText(ConfigTableE.matches[2]);
+        gs3.setText(ConfigTableE.goals_scored[2]);
+        gl3.setText(ConfigTableE.goals_lost[2]);
+        balance3.setText(ConfigTableE.balances[2]);
+        points3.setText(ConfigTableE.points[2]);
 
-        }
-
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableE.teams[3]);
+        m4.setText(ConfigTableE.matches[3]);
+        gs4.setText(ConfigTableE.goals_scored[3]);
+        gl4.setText(ConfigTableE.goals_lost[3]);
+        balance4.setText(ConfigTableE.balances[3]);
+        points4.setText(ConfigTableE.points[3]);
 
         groupName.setText("GROUP E");
 
@@ -480,7 +389,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableF (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableF.DATA_URL;
 
@@ -509,51 +418,33 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableF pj = new ConfigTableF(json);
         pj.ConfigTableF();
 
-        teams = new String[ConfigTableF.teams.length];
-        matches = new String[ConfigTableF.matches.length];
-        goals_scored = new String[ConfigTableF.goals_scored.length];
-        goals_lost = new String[ConfigTableF.goals_lost.length];
-        balances = new String[ConfigTableF.balances.length];
-        points = new String[ConfigTableF.points.length];
+        team1.setText(ConfigTableF.teams[0]);
+        m1.setText(ConfigTableF.matches[0]);
+        gs1.setText(ConfigTableF.goals_scored[0]);
+        gl1.setText(ConfigTableF.goals_lost[0]);
+        balance1.setText(ConfigTableF.balances[0]);
+        points1.setText(ConfigTableF.points[0]);
 
-        for (int i = 0; i < ConfigTableF.teams.length; i++) {
+        team2.setText(ConfigTableF.teams[1]);
+        m2.setText(ConfigTableF.matches[1]);
+        gs2.setText(ConfigTableF.goals_scored[1]);
+        gl2.setText(ConfigTableF.goals_lost[1]);
+        balance2.setText(ConfigTableF.balances[1]);
+        points2.setText(ConfigTableF.points[1]);
 
-            teams[i] = ConfigTableF.teams[i];
-            matches[i] = ConfigTableF.matches[i];
-            goals_scored[i] = ConfigTableF.goals_scored[i];
-            goals_lost[i] = ConfigTableF.goals_lost[i];
-            balances[i] = ConfigTableF.balances[i];
-            points[i] = ConfigTableF.points[i];
+        team3.setText(ConfigTableF.teams[2]);
+        m3.setText(ConfigTableF.matches[2]);
+        gs3.setText(ConfigTableF.goals_scored[2]);
+        gl3.setText(ConfigTableF.goals_lost[2]);
+        balance3.setText(ConfigTableF.balances[2]);
+        points3.setText(ConfigTableF.points[2]);
 
-        }
-
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableF.teams[3]);
+        m4.setText(ConfigTableF.matches[3]);
+        gs4.setText(ConfigTableF.goals_scored[3]);
+        gl4.setText(ConfigTableF.goals_lost[3]);
+        balance4.setText(ConfigTableF.balances[3]);
+        points4.setText(ConfigTableF.points[3]);
 
         groupName.setText("GROUP F");
 
@@ -561,7 +452,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableG (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableG.DATA_URL;
 
@@ -590,51 +481,33 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableG pj = new ConfigTableG(json);
         pj.ConfigTableG();
 
-        teams = new String[ConfigTableG.teams.length];
-        matches = new String[ConfigTableG.matches.length];
-        goals_scored = new String[ConfigTableG.goals_scored.length];
-        goals_lost = new String[ConfigTableG.goals_lost.length];
-        balances = new String[ConfigTableG.balances.length];
-        points = new String[ConfigTableG.points.length];
+        team1.setText(ConfigTableG.teams[0]);
+        m1.setText(ConfigTableG.matches[0]);
+        gs1.setText(ConfigTableG.goals_scored[0]);
+        gl1.setText(ConfigTableG.goals_lost[0]);
+        balance1.setText(ConfigTableG.balances[0]);
+        points1.setText(ConfigTableG.points[0]);
 
-        for (int i = 0; i < ConfigTableG.teams.length; i++) {
+        team2.setText(ConfigTableG.teams[1]);
+        m2.setText(ConfigTableG.matches[1]);
+        gs2.setText(ConfigTableG.goals_scored[1]);
+        gl2.setText(ConfigTableG.goals_lost[1]);
+        balance2.setText(ConfigTableG.balances[1]);
+        points2.setText(ConfigTableG.points[1]);
 
-            teams[i] = ConfigTableG.teams[i];
-            matches[i] = ConfigTableG.matches[i];
-            goals_scored[i] = ConfigTableG.goals_scored[i];
-            goals_lost[i] = ConfigTableG.goals_lost[i];
-            balances[i] = ConfigTableG.balances[i];
-            points[i] = ConfigTableG.points[i];
+        team3.setText(ConfigTableG.teams[2]);
+        m3.setText(ConfigTableG.matches[2]);
+        gs3.setText(ConfigTableG.goals_scored[2]);
+        gl3.setText(ConfigTableG.goals_lost[2]);
+        balance3.setText(ConfigTableG.balances[2]);
+        points3.setText(ConfigTableG.points[2]);
 
-        }
-
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableG.teams[3]);
+        m4.setText(ConfigTableG.matches[3]);
+        gs4.setText(ConfigTableG.goals_scored[3]);
+        gl4.setText(ConfigTableG.goals_lost[3]);
+        balance4.setText(ConfigTableG.balances[3]);
+        points4.setText(ConfigTableG.points[3]);
 
         groupName.setText("GROUP G");
 
@@ -642,7 +515,7 @@ public class TablesActivity extends AppCompatActivity {
 
     public void getTableH (View view) {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigTableH.DATA_URL;
 
@@ -671,51 +544,33 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableH pj = new ConfigTableH(json);
         pj.ConfigTableH();
 
-        teams = new String[ConfigTableH.teams.length];
-        matches = new String[ConfigTableH.matches.length];
-        goals_scored = new String[ConfigTableH.goals_scored.length];
-        goals_lost = new String[ConfigTableH.goals_lost.length];
-        balances = new String[ConfigTableH.balances.length];
-        points = new String[ConfigTableH.points.length];
+        team1.setText(ConfigTableH.teams[0]);
+        m1.setText(ConfigTableH.matches[0]);
+        gs1.setText(ConfigTableH.goals_scored[0]);
+        gl1.setText(ConfigTableH.goals_lost[0]);
+        balance1.setText(ConfigTableH.balances[0]);
+        points1.setText(ConfigTableH.points[0]);
 
-        for (int i = 0; i < ConfigTableH.teams.length; i++) {
+        team2.setText(ConfigTableH.teams[1]);
+        m2.setText(ConfigTableH.matches[1]);
+        gs2.setText(ConfigTableH.goals_scored[1]);
+        gl2.setText(ConfigTableH.goals_lost[1]);
+        balance2.setText(ConfigTableH.balances[1]);
+        points2.setText(ConfigTableH.points[1]);
 
-            teams[i] = ConfigTableH.teams[i];
-            matches[i] = ConfigTableH.matches[i];
-            goals_scored[i] = ConfigTableH.goals_scored[i];
-            goals_lost[i] = ConfigTableH.goals_lost[i];
-            balances[i] = ConfigTableH.balances[i];
-            points[i] = ConfigTableH.points[i];
+        team3.setText(ConfigTableH.teams[2]);
+        m3.setText(ConfigTableH.matches[2]);
+        gs3.setText(ConfigTableH.goals_scored[2]);
+        gl3.setText(ConfigTableH.goals_lost[2]);
+        balance3.setText(ConfigTableH.balances[2]);
+        points3.setText(ConfigTableH.points[2]);
 
-        }
-
-        team1.setText(teams[0]);
-        m1.setText(matches[0]);
-        gs1.setText(goals_scored[0]);
-        gl1.setText(goals_lost[0]);
-        balance1.setText(balances[0]);
-        points1.setText(points[0]);
-
-        team2.setText(teams[1]);
-        m2.setText(matches[1]);
-        gs2.setText(goals_scored[1]);
-        gl2.setText(goals_lost[1]);
-        balance2.setText(balances[1]);
-        points2.setText(points[1]);
-
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
-
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableH.teams[3]);
+        m4.setText(ConfigTableH.matches[3]);
+        gs4.setText(ConfigTableH.goals_scored[3]);
+        gl4.setText(ConfigTableH.goals_lost[3]);
+        balance4.setText(ConfigTableH.balances[3]);
+        points4.setText(ConfigTableH.points[3]);
 
         groupName.setText("GROUP H");
 

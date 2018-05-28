@@ -25,8 +25,7 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editName, editPassword;
-    String login, password;
-    private ProgressDialog loadingLogin;
+
     RequestQueue requestQueue;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,10 @@ public class LoginActivity extends AppCompatActivity {
 
         if(haveNetworkConnection() == true) {
 
-            login = editName.getText().toString();
-            password = editPassword.getText().toString();
+            final String login = editName.getText().toString();
+            final String password = editPassword.getText().toString();
 
-            loadingLogin = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+            final ProgressDialog loadingLogin = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
             String url = ConfigLogin.DATA_URL + login + "&password=" + password;
 
@@ -53,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(String response) {
                     loadingLogin.dismiss();
-                    showJSON(response);
+                    showJSON(response, login, password);
 
                 }
             },
@@ -72,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void showJSON(String json) {
+    private void showJSON(String json, String login, String password) {
 
         String login2 = "", password2 = "";
 
@@ -89,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Check if name and password exist in database
         if(login2.equals(login) && password2.equals(password)){
-            saveLogin();
+            saveLogin(login);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }else{
@@ -122,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //Save player_name
-    public void saveLogin() {
+    public void saveLogin(String login) {
 
         SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
         SharedPreferences.Editor save = saveGame.edit();

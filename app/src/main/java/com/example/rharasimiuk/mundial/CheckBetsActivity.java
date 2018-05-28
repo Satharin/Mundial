@@ -1,23 +1,18 @@
 package com.example.rharasimiuk.mundial;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,84 +31,48 @@ import java.util.TimeZone;
 
 public class CheckBetsActivity extends ListActivity {
 
-    String[] matches,matchesBet, teams_a, teams_b, dates, times, id_matches, result_a, result_b, bets_a, bets_b, betsUser_a, betsUser_b, users, matchesUsers, results_a, results_b;
-
-    String todayDate = "", localTime = "", login, id_match, bet_aCheck;
-
-    public ListView listView1, listView2;
-
     RequestQueue requestQueue;
-
-    private ProgressDialog loadingMatches;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_bets);
 
-        //Date date = new Date();
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-        todayDate = dateFormat.format(date);
-
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
-        Date currentLocalTime = cal.getTime();
-        DateFormat time = new SimpleDateFormat("HH:mm");
-        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
-
-        localTime = time.format(currentLocalTime);
-
         requestQueue = Volley.newRequestQueue(CheckBetsActivity.this);
 
         getGroups();
 
-        final ListView grid = (ListView) findViewById(android.R.id.list);
-        final ListView grid2 = (ListView) findViewById(R.id.listView2);
+        final ListView matches = (ListView) findViewById(android.R.id.list);
+        final ListView bets = (ListView) findViewById(R.id.listView2);
 
-        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        matches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
-                if(id_matches != null) {
-                    id_match = id_matches[pos];
+                if(ConfigCheckBets.id_matches != null) {
+
+                    final String id_match = ConfigCheckBets.id_matches[pos];
 
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            // Actions to do after 10 seconds
 
                             TextView score = (TextView) findViewById(R.id.textViewScore);
-
-
                             checkBets(id_match);
-
-                            score.setText(teams_a[pos] + " " + results_a[pos] + " : " + results_b[pos] + " " + teams_b[pos]);
-
-                            if(ConfigCheckUserBets.logins != null) {
-
-                                //ArrayAdapter<String> adapter = new ArrayAdapter<String>(grid2.getContext(), R.layout.my_custom_layout, matchesUsers);
-                                //grid2.setAdapter(adapter);
-                            }else{
-                                matches = new String[1];
-                                matches[0] = "Not started or finished matches yet.";
-                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(grid2.getContext(), R.layout.my_custom_layout, matches);
-                                grid2.setAdapter(adapter);
-
-                            }
+                            score.setText(ConfigCheckBets.teams_a[pos] + " " + ConfigCheckBets.results_a[pos] + " : " + ConfigCheckBets.results_b[pos] + " " + ConfigCheckBets.teams_b[pos]);
 
                         }
                     }, 1000);
+
                 }
 
             }
         });
 
-
     }
 
     public void checkBets(String idMatch){
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
         String url = ConfigCheckUserBets.DATA_URL + idMatch;
 
@@ -144,33 +103,25 @@ public class CheckBetsActivity extends ListActivity {
 
         if(ConfigCheckUserBets.logins != null) {
 
-            users = new String[ConfigCheckUserBets.logins.length];
-            betsUser_a = new String[ConfigCheckUserBets.bets_a.length];
-            betsUser_b = new String[ConfigCheckUserBets.bets_b.length];
-            matchesUsers = new String[ConfigCheckUserBets.logins.length];
+            String[] matchesUsers = new String[ConfigCheckUserBets.logins.length];
 
             for (int i = 0; i < ConfigCheckUserBets.logins.length; i++) {
 
-                users[i] = ConfigCheckUserBets.logins[i];
-                betsUser_a[i] = ConfigCheckUserBets.bets_a[i];
-                betsUser_b[i] = ConfigCheckUserBets.bets_b[i];
+                matchesUsers[i] = ConfigCheckUserBets.logins[i] + " " + ConfigCheckUserBets.bets_a[i] + " : " + ConfigCheckUserBets.bets_b[i];
 
             }
 
-            for (int i = 0; i < ConfigCheckUserBets.logins.length; i++) {
-
-                matchesUsers[i] = users[i] + " " + betsUser_a[i] + " : " + betsUser_b[i];
-
-            }
             final ListView grid2 = (ListView) findViewById(R.id.listView2);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(grid2.getContext(), R.layout.my_custom_layout, matchesUsers);
             grid2.setAdapter(adapter);
 
         }else{
-            matches = new String[1];
+
+            String[] matches = new String[1];
             matches[0] = "Not started or finished matches yet.";
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
             getListView().setAdapter(adapter);
+
         }
 
     }
@@ -179,7 +130,7 @@ public class CheckBetsActivity extends ListActivity {
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        todayDate = dateFormat.format(date);
+        String todayDate = dateFormat.format(date);
 
         return todayDate;
     }
@@ -190,19 +141,16 @@ public class CheckBetsActivity extends ListActivity {
         DateFormat time = new SimpleDateFormat("HH:mm");
         time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
 
-        localTime = time.format(currentLocalTime);
+        String localTime = time.format(currentLocalTime);
 
         return localTime;
     }
 
-    public void getGroups () {
+    public void getGroups() {
 
-        loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        todayDate = getDateToday();
-        localTime = getTimeToday();
-
-        String url = ConfigCheckBets.DATA_URL + todayDate + "&time_match=" + localTime;
+        String url = ConfigCheckBets.DATA_URL + getDateToday() + "&time_match=" + getTimeToday();
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -231,30 +179,11 @@ public class CheckBetsActivity extends ListActivity {
 
         if(ConfigCheckBets.teams_a != null) {
 
-            teams_a = new String[ConfigCheckBets.teams_a.length];
-            teams_b = new String[ConfigCheckBets.teams_b.length];
-            dates = new String[ConfigCheckBets.dates.length];
-            times = new String[ConfigCheckBets.times.length];
-            id_matches = new String[ConfigCheckBets.id_matches.length];
-            results_a = new String[ConfigCheckBets.results_a.length];
-            results_b = new String[ConfigCheckBets.results_b.length];
-            matches = new String[ConfigCheckBets.teams_a.length];
+            String[] matches = new String[ConfigCheckBets.teams_a.length];
 
             for (int i = 0; i < ConfigCheckBets.teams_a.length; i++) {
 
-                teams_a[i] = ConfigCheckBets.teams_a[i];
-                teams_b[i] = ConfigCheckBets.teams_b[i];
-                dates[i] = ConfigCheckBets.dates[i];
-                times[i] = ConfigCheckBets.times[i];
-                id_matches[i] = ConfigCheckBets.id_matches[i];
-                results_a[i] = ConfigCheckBets.results_a[i];
-                results_b[i] = ConfigCheckBets.results_b[i];
-
-            }
-
-            for (int i = 0; i < ConfigCheckBets.teams_a.length; i++) {
-
-                matches[i] = teams_a[i] + " - " + teams_b[i] + " " + dates[i] + " " + times[i];
+                matches[i] = ConfigCheckBets.teams_a[i] + " - " + ConfigCheckBets.teams_b[i] + " " + ConfigCheckBets.dates[i] + " " + ConfigCheckBets.times[i];
 
             }
 
@@ -262,10 +191,12 @@ public class CheckBetsActivity extends ListActivity {
             getListView().setAdapter(adapter);
 
         }else{
-            matches = new String[1];
+
+            String[] matches = new String[1];
             matches[0] = "Not started or finished matches yet.";
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
             getListView().setAdapter(adapter);
+
         }
 
     }
@@ -286,14 +217,6 @@ public class CheckBetsActivity extends ListActivity {
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
-
-    }
-
-    //Load game
-    public void loadLogin() {
-
-        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
-        login = loadGame.getString("login", "");
 
     }
 
