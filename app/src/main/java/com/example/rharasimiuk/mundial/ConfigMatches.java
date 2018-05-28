@@ -6,11 +6,11 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-public class ConfigKo {
+public class ConfigMatches {
 
     public static String[] teams_a, teams_b, dates, times, id_matches;
 
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getKo.php?date_match=";
+    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getMatches.php";
     public static final String KEY_TEAM_A = "team_a";
     public static final String KEY_TEAM_B = "team_b";
     public static final String KEY_DATE_MATCH = "date_match";
@@ -22,11 +22,11 @@ public class ConfigKo {
 
     private String json;
 
-    public ConfigKo(String json){
+    public ConfigMatches(String json){
         this.json = json;
     }
 
-    protected void ConfigKo() {
+    protected void ConfigMatches() {
 
         JSONObject jsonObject = null;
 

@@ -12,17 +12,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
-import android.app.AlertDialog.Builder;
 import android.os.Handler;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,24 +30,20 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 public class BetActivity extends ListActivity {
 
     String[] matches, teams_a, teams_b, dates, times, id_matches, bets_aCheck, bets_bCheck;
 
-    String todayDate = "", localTime = "", login, bet_a, bet_b, id_match, betLeft, betRight, bet_aCheck, bet_bCheck;
+    String time_match, todayDate = "", localTime = "", login, bet_a, bet_b, id_match, betLeft, betRight, bet_aCheck, bet_bCheck;
 
     public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/saveBet.php";
     public static final String DATA_URL_UPDATE = "https://mundial2018.000webhostapp.com/mundial/updateBet.php";
@@ -69,7 +60,7 @@ public class BetActivity extends ListActivity {
 
         //Date date = new Date();
         Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         todayDate = dateFormat.format(date);
 
@@ -86,10 +77,11 @@ public class BetActivity extends ListActivity {
 
         final ListView grid = (ListView) findViewById(android.R.id.list);
 
-        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+            public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
+                bet_aCheck = null;
                 id_match = id_matches[pos];
                 checkBet();
 
@@ -114,8 +106,8 @@ public class BetActivity extends ListActivity {
                 EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                 EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
-
-                System.out.println(bets_aCheck);
+                System.out.println("--------------------------------------");
+                System.out.println(bet_aCheck);
 
                 if(bet_aCheck != null)
                     current.setText("Current bet: " + bet_aCheck + ":" + bet_bCheck);
@@ -131,41 +123,96 @@ public class BetActivity extends ListActivity {
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
+                        Date currentLocalTime = cal.getTime();
+                        DateFormat time = new SimpleDateFormat("HH:mm");
+                        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
+
+                        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+                        localTime = time.format(currentLocalTime);
+
+                        Date date = Calendar.getInstance().getTime();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+                        todayDate = dateFormat.format(date);
+
+
+
+                        Date matchTime = dateOfMatch(dates[pos],times[pos]);
+                        Date currentTime = dateOfNow(todayDate, localTime);
+
+                        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
                         EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                         EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
                         bet_a = leftEdit.getText().toString();
                         bet_b = rightEdit.getText().toString();
                         id_match = id_matches[pos];
+                        localTime = time.format(currentLocalTime);
 
-                        if(bet_aCheck != null)
-                            updateBets();
-                        else
-                            saveBets();
+                        boolean isBefore = currentTime.before(matchTime);
+
+                        System.out.println("--------------------------------------------");
+                        System.out.println(isBefore);
+                        System.out.println("--------------------------------------------");
+
+                        if(isBefore){
+                            if(bet_aCheck != null)
+                                updateBets();
+                            else
+                                saveBets();
+                        }else{
+                            Toast.makeText(BetActivity.this,"Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                        }
+
+
+                        current.setText("Current bet: " + bet_a + ":" + bet_b);
+                        Toast.makeText(BetActivity.this,"Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                        leftEdit.setText("");
+                        rightEdit.setText("");
+                        //dialog.dismiss();
                     }
                 });
 
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        current.setText("Current bet: No bet yet");
-                        bet_aCheck = null;
-                        bet_bCheck = null;
-                        id_match = null;
                         dialog.dismiss();
-                        System.out.println("--------------------------------------");
-                        System.out.println(bet_aCheck);
                     }
                 });
 
 
 
                     }
-                }, 2000);
-                return true;
+                }, 1000);
+
             }
         });
 
 
+    }
+
+    public Date dateOfMatch(String dateMatch, String timeMatch){
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            Date matchTime = format.parse(dateMatch + " " + timeMatch);
+            return matchTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Date dateOfNow(String dateMatch, String timeMatch){
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            Date matchTime = format.parse(dateMatch + " " + timeMatch);
+            return matchTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void back(View view) {
@@ -231,9 +278,40 @@ public class BetActivity extends ListActivity {
 
     }
 
+    public String getDateToday(){
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        todayDate = dateFormat.format(date);
+
+        return todayDate;
+    }
+
+    public String getTimeToday(){
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
+        Date currentLocalTime = cal.getTime();
+        DateFormat time = new SimpleDateFormat("HH:mm");
+        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
+
+        localTime = time.format(currentLocalTime);
+
+        return localTime;
+    }
+
+    //Load game
+    public void loadLogin() {
+
+        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        login = loadGame.getString("login", "");
+
+    }
+
     public void getGroups () {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+        todayDate = getDateToday();
+        localTime = getTimeToday();
 
         String url = ConfigGroups.DATA_URL + todayDate + "&time_match=" + localTime;
 
@@ -254,14 +332,6 @@ public class BetActivity extends ListActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
-    }
-
-    //Load game
-    public void loadLogin() {
-
-        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
-        login = loadGame.getString("login", "");
 
     }
 
@@ -330,7 +400,7 @@ public class BetActivity extends ListActivity {
         ConfigBet pj = new ConfigBet(json);
         pj.ConfigBet();
 
-        if(ConfigBet.logins != null) {
+        if(ConfigBet.bets_a != null) {
             bets_aCheck = new String[ConfigBet.bets_a.length];
             bets_bCheck = new String[ConfigBet.bets_b.length];
 
@@ -420,6 +490,9 @@ public class BetActivity extends ListActivity {
 
         loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
+        todayDate = getDateToday();
+        localTime = getTimeToday();
+
         String url = ConfigKo.DATA_URL + todayDate + "&time_match=" + localTime;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
@@ -452,6 +525,7 @@ public class BetActivity extends ListActivity {
             teams_b = new String[ConfigKo.teams_b.length];
             dates = new String[ConfigKo.dates.length];
             times = new String[ConfigKo.times.length];
+            id_matches = new String[ConfigKo.id_matches.length];
             matches = new String[ConfigKo.teams_a.length];
 
             for (int i = 0; i < ConfigKo.teams_a.length; i++) {
@@ -460,6 +534,7 @@ public class BetActivity extends ListActivity {
                 teams_b[i] = ConfigKo.teams_b[i];
                 dates[i] = ConfigKo.dates[i];
                 times[i] = ConfigKo.times[i];
+                id_matches[i] = ConfigKo.id_matches[i];
 
             }
 

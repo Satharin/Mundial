@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.app.AlertDialog.Builder;
@@ -38,7 +39,7 @@ public class MainActivity extends ListActivity {
 
     RequestQueue requestQueue;
 
-    String team_a, team_b, date, time, todayDate = "", localTime = "";
+    String login, team_a, team_b, date, time, todayDate = "", localTime = "";
 
     String[] matches, teams_a, teams_b, dates, times;
 
@@ -61,8 +62,16 @@ public class MainActivity extends ListActivity {
         localTime = time.format(currentLocalTime);
 
         getNextMatch();
+        loadLogin();
 
 
+
+    }
+
+    public void loadLogin() {
+
+        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        login = loadGame.getString("login", "");
 
     }
 
@@ -70,6 +79,46 @@ public class MainActivity extends ListActivity {
         if(haveNetworkConnection()) {
 
             startActivity(new Intent(getApplicationContext(), BetActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void admin (View view) {
+        if(haveNetworkConnection()) {
+
+            System.out.println(login);
+            if(login.equals("Haras")) {
+                startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                finish();
+            }else{
+                Toast.makeText(MainActivity.this,"Only Haras can access here.", Toast.LENGTH_LONG).show();
+            }
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void checkBets (View view){
+
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), CheckBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void points (View view) {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), PointsActivity.class));
             finish();
 
         }else {

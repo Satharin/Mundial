@@ -15,63 +15,59 @@
 
         <TextView
             android:id="@+id/textViewLeft"
-            android:layout_width="134dp"
+            android:layout_width="163dp"
             android:layout_height="42dp"
-            android:gravity="center"
+            android:gravity="center_vertical|center_horizontal"
             android:text="TextViewLeft"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
-        <EditText
-            android:id="@+id/editTextLeft"
+        <TextView
+            android:id="@+id/textViewScoreLeft"
             android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:layout_weight="1"
             android:ems="10"
             android:gravity="center"
-            android:inputType="number"
-            android:background="#ffffff" />
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="   " />
-
-        <EditText
-            android:id="@+id/editTextRight"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_width="17dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:text=":" />
+
+        <TextView
+            android:id="@+id/textViewScoreRight"
+            android:layout_width="30dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
             android:ems="10"
-            android:inputType="number"
-            android:background="#ffffff" />
+            android:gravity="center"
+            android:inputType="number" />
 
         <TextView
             android:id="@+id/textViewRight"
-            android:layout_width="131dp"
+            android:layout_width="161dp"
             android:layout_height="44dp"
-            android:gravity="center"
+            android:gravity="center_vertical|center_horizontal"
             android:text="TextViewRight"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="292dp">
 
 
-        <TextView
-            android:id="@+id/textViewCurrent"
+        <ListView
+            android:id="@android:id/list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="TextView"
-            android:textSize="15sp" />
-
+            android:layout_height="match_parent"
+            android:layout_above="@+id/buttonClose" />
 
 
     </LinearLayout>
@@ -81,17 +77,6 @@
         android:layout_width="match_parent"
         android:gravity="center_horizontal"
         android:layout_height="wrap_content">
-
-
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewCurrent"
-            android:layout_toEndOf="@+id/editTextRight"
-            android:layout_toStartOf="@+id/editTextRight"
-            android:gravity="center"
-            android:text="Button" />
 
 
         <Button

@@ -31,15 +31,13 @@ public class ConfigBet {
 
         try {
             jsonObject = new JSONObject(json);
-            if (!JSON_ARRAY.equals("null")) {
+            if (!JSON_ARRAY.equals("")) {
                 table = jsonObject.getJSONArray(JSON_ARRAY);
 
                 logins = new String[table.length()];
                 bets_a = new String[table.length()];
                 bets_b = new String[table.length()];
                 id_matches = new String[table.length()];
-
-
 
                 for (int i = 0; i < table.length(); i++) {
                     JSONObject jo = table.getJSONObject(i);
@@ -50,8 +48,8 @@ public class ConfigBet {
 
                 }
             } else {
-                if (logins != null) {
-                    Arrays.fill(logins, null);
+                if (bets_a != null) {
+                    Arrays.fill(bets_a, null);
                 }
             }
 
