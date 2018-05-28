@@ -117,19 +117,19 @@ public class TablesActivity extends AppCompatActivity {
         balance2.setText(ConfigTableA.balances[1]);
         points2.setText(ConfigTableA.points[1]);
 
-        team3.setText(teams[2]);
-        m3.setText(matches[2]);
-        gs3.setText(goals_scored[2]);
-        gl3.setText(goals_lost[2]);
-        balance3.setText(balances[2]);
-        points3.setText(points[2]);
+        team3.setText(ConfigTableA.teams[2]);
+        m3.setText(ConfigTableA.matches[2]);
+        gs3.setText(ConfigTableA.goals_scored[2]);
+        gl3.setText(ConfigTableA.goals_lost[2]);
+        balance3.setText(ConfigTableA.balances[2]);
+        points3.setText(ConfigTableA.points[2]);
 
-        team4.setText(teams[3]);
-        m4.setText(matches[3]);
-        gs4.setText(goals_scored[3]);
-        gl4.setText(goals_lost[3]);
-        balance4.setText(balances[3]);
-        points4.setText(points[3]);
+        team4.setText(ConfigTableA.teams[3]);
+        m4.setText(ConfigTableA.matches[3]);
+        gs4.setText(ConfigTableA.goals_scored[3]);
+        gl4.setText(ConfigTableA.goals_lost[3]);
+        balance4.setText(ConfigTableA.balances[3]);
+        points4.setText(ConfigTableA.points[3]);
 
         groupName.setText("GROUP A");
 

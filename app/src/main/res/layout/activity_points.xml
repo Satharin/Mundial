@@ -42,7 +42,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:gravity="bottom"
-        android:text="Name : Points : Exact results"
+        android:text="Name - Points - Exact results"
         android:textAlignment="center"
         android:textSize="20dp" />
 
