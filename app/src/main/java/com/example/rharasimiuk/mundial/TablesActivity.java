@@ -20,13 +20,13 @@ import com.android.volley.toolbox.Volley;
 
 public class TablesActivity extends AppCompatActivity {
 
-    private TextView team1, m1, gs1, gl1, balance1, points1,
+    public TextView team1, m1, gs1, gl1, balance1, points1,
             team2, m2, gs2, gl2, balance2, points2,
             team3, m3, gs3, gl3, balance3, points3,
             team4, m4, gs4, gl4, balance4, points4,
             groupName;
 
-    String[] table, teams, matches, goals_scored, goals_lost, balances, points;
+    TextView[] textViewTeams, textViewMatches, textViewGoalsScored, textViewGoalsLost, textViewBalances, textViewPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,13 @@ public class TablesActivity extends AppCompatActivity {
         gl4 = (TextView) findViewById(R.id.textViewGL4);
         balance4 = (TextView) findViewById(R.id.textViewBalance4);
         points4 = (TextView) findViewById(R.id.textViewPoints4);
+
+        textViewTeams = new TextView[]{team1, team2, team3, team4};
+        textViewMatches= new TextView[]{m1, m2, m3, m4};
+        textViewGoalsScored = new TextView[]{gs1, gs2, gs3, gs4};
+        textViewGoalsLost = new TextView[]{gl1, gl2, gl3, gl4};
+        textViewBalances = new TextView[]{balance1, balance2, balance3, balance4};
+        textViewPoints = new TextView[]{points1, points2, points3, points4};
 
         groupName = (TextView) findViewById(R.id.textViewGroupName);
 
@@ -96,42 +103,16 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableA pj = new ConfigTableA(json);
         pj.ConfigTableA();
 
-        teams = new String[ConfigTableA.teams.length];
-        matches = new String[ConfigTableA.matches.length];
-        goals_scored = new String[ConfigTableA.goals_scored.length];
-        goals_lost = new String[ConfigTableA.goals_lost.length];
-        balances = new String[ConfigTableA.balances.length];
-        points = new String[ConfigTableA.points.length];
-
-        team1.setText(ConfigTableA.teams[0]);
-        m1.setText(ConfigTableA.matches[0]);
-        gs1.setText(ConfigTableA.goals_scored[0]);
-        gl1.setText(ConfigTableA.goals_lost[0]);
-        balance1.setText(ConfigTableA.balances[0]);
-        points1.setText(ConfigTableA.points[0]);
-
-        team2.setText(ConfigTableA.teams[1]);
-        m2.setText(ConfigTableA.matches[1]);
-        gs2.setText(ConfigTableA.goals_scored[1]);
-        gl2.setText(ConfigTableA.goals_lost[1]);
-        balance2.setText(ConfigTableA.balances[1]);
-        points2.setText(ConfigTableA.points[1]);
-
-        team3.setText(ConfigTableA.teams[2]);
-        m3.setText(ConfigTableA.matches[2]);
-        gs3.setText(ConfigTableA.goals_scored[2]);
-        gl3.setText(ConfigTableA.goals_lost[2]);
-        balance3.setText(ConfigTableA.balances[2]);
-        points3.setText(ConfigTableA.points[2]);
-
-        team4.setText(ConfigTableA.teams[3]);
-        m4.setText(ConfigTableA.matches[3]);
-        gs4.setText(ConfigTableA.goals_scored[3]);
-        gl4.setText(ConfigTableA.goals_lost[3]);
-        balance4.setText(ConfigTableA.balances[3]);
-        points4.setText(ConfigTableA.points[3]);
-
         groupName.setText("GROUP A");
+
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableA.teams[i]);
+            textViewMatches[i].setText(ConfigTableA.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableA.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableA.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableA.balances[i]);
+            textViewPoints[i].setText(ConfigTableA.points[i]);
+        }
 
     }
 
@@ -166,35 +147,16 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableB pj = new ConfigTableB(json);
         pj.ConfigTableB();
 
-        team1.setText(ConfigTableB.teams[0]);
-        m1.setText(ConfigTableB.matches[0]);
-        gs1.setText(ConfigTableB.goals_scored[0]);
-        gl1.setText(ConfigTableB.goals_lost[0]);
-        balance1.setText(ConfigTableB.balances[0]);
-        points1.setText(ConfigTableB.points[0]);
-
-        team2.setText(ConfigTableB.teams[1]);
-        m2.setText(ConfigTableB.matches[1]);
-        gs2.setText(ConfigTableB.goals_scored[1]);
-        gl2.setText(ConfigTableB.goals_lost[1]);
-        balance2.setText(ConfigTableB.balances[1]);
-        points2.setText(ConfigTableB.points[1]);
-
-        team3.setText(ConfigTableB.teams[2]);
-        m3.setText(ConfigTableB.matches[2]);
-        gs3.setText(ConfigTableB.goals_scored[2]);
-        gl3.setText(ConfigTableB.goals_lost[2]);
-        balance3.setText(ConfigTableB.balances[2]);
-        points3.setText(ConfigTableB.points[2]);
-
-        team4.setText(ConfigTableB.teams[3]);
-        m4.setText(ConfigTableB.matches[3]);
-        gs4.setText(ConfigTableB.goals_scored[3]);
-        gl4.setText(ConfigTableB.goals_lost[3]);
-        balance4.setText(ConfigTableB.balances[3]);
-        points4.setText(ConfigTableB.points[3]);
-
         groupName.setText("GROUP B");
+
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableB.teams[i]);
+            textViewMatches[i].setText(ConfigTableB.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableB.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableB.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableB.balances[i]);
+            textViewPoints[i].setText(ConfigTableB.points[i]);
+        }
 
     }
 
@@ -229,35 +191,15 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableC pj = new ConfigTableC(json);
         pj.ConfigTableC();
 
-        team1.setText(ConfigTableC.teams[0]);
-        m1.setText(ConfigTableC.matches[0]);
-        gs1.setText(ConfigTableC.goals_scored[0]);
-        gl1.setText(ConfigTableC.goals_lost[0]);
-        balance1.setText(ConfigTableC.balances[0]);
-        points1.setText(ConfigTableC.points[0]);
-
-        team2.setText(ConfigTableC.teams[1]);
-        m2.setText(ConfigTableC.matches[1]);
-        gs2.setText(ConfigTableC.goals_scored[1]);
-        gl2.setText(ConfigTableC.goals_lost[1]);
-        balance2.setText(ConfigTableC.balances[1]);
-        points2.setText(ConfigTableC.points[1]);
-
-        team3.setText(ConfigTableC.teams[2]);
-        m3.setText(ConfigTableC.matches[2]);
-        gs3.setText(ConfigTableC.goals_scored[2]);
-        gl3.setText(ConfigTableC.goals_lost[2]);
-        balance3.setText(ConfigTableC.balances[2]);
-        points3.setText(ConfigTableC.points[2]);
-
-        team4.setText(ConfigTableC.teams[3]);
-        m4.setText(ConfigTableC.matches[3]);
-        gs4.setText(ConfigTableC.goals_scored[3]);
-        gl4.setText(ConfigTableC.goals_lost[3]);
-        balance4.setText(ConfigTableC.balances[3]);
-        points4.setText(ConfigTableC.points[3]);
-
         groupName.setText("GROUP C");
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableC.teams[i]);
+            textViewMatches[i].setText(ConfigTableC.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableC.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableC.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableC.balances[i]);
+            textViewPoints[i].setText(ConfigTableC.points[i]);
+        }
 
     }
 
@@ -292,35 +234,16 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableD pj = new ConfigTableD(json);
         pj.ConfigTableD();
 
-        team1.setText(ConfigTableD.teams[0]);
-        m1.setText(ConfigTableD.matches[0]);
-        gs1.setText(ConfigTableD.goals_scored[0]);
-        gl1.setText(ConfigTableD.goals_lost[0]);
-        balance1.setText(ConfigTableD.balances[0]);
-        points1.setText(ConfigTableD.points[0]);
-
-        team2.setText(ConfigTableD.teams[1]);
-        m2.setText(ConfigTableD.matches[1]);
-        gs2.setText(ConfigTableD.goals_scored[1]);
-        gl2.setText(ConfigTableD.goals_lost[1]);
-        balance2.setText(ConfigTableD.balances[1]);
-        points2.setText(ConfigTableD.points[1]);
-
-        team3.setText(ConfigTableD.teams[2]);
-        m3.setText(ConfigTableD.matches[2]);
-        gs3.setText(ConfigTableD.goals_scored[2]);
-        gl3.setText(ConfigTableD.goals_lost[2]);
-        balance3.setText(ConfigTableD.balances[2]);
-        points3.setText(ConfigTableD.points[2]);
-
-        team4.setText(ConfigTableD.teams[3]);
-        m4.setText(ConfigTableD.matches[3]);
-        gs4.setText(ConfigTableD.goals_scored[3]);
-        gl4.setText(ConfigTableD.goals_lost[3]);
-        balance4.setText(ConfigTableD.balances[3]);
-        points4.setText(ConfigTableD.points[3]);
-
         groupName.setText("GROUP D");
+
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableD.teams[i]);
+            textViewMatches[i].setText(ConfigTableD.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableD.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableD.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableD.balances[i]);
+            textViewPoints[i].setText(ConfigTableD.points[i]);
+        }
 
     }
 
@@ -355,35 +278,16 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableE pj = new ConfigTableE(json);
         pj.ConfigTableE();
 
-        team1.setText(ConfigTableE.teams[0]);
-        m1.setText(ConfigTableE.matches[0]);
-        gs1.setText(ConfigTableE.goals_scored[0]);
-        gl1.setText(ConfigTableE.goals_lost[0]);
-        balance1.setText(ConfigTableE.balances[0]);
-        points1.setText(ConfigTableE.points[0]);
-
-        team2.setText(ConfigTableE.teams[1]);
-        m2.setText(ConfigTableE.matches[1]);
-        gs2.setText(ConfigTableE.goals_scored[1]);
-        gl2.setText(ConfigTableE.goals_lost[1]);
-        balance2.setText(ConfigTableE.balances[1]);
-        points2.setText(ConfigTableE.points[1]);
-
-        team3.setText(ConfigTableE.teams[2]);
-        m3.setText(ConfigTableE.matches[2]);
-        gs3.setText(ConfigTableE.goals_scored[2]);
-        gl3.setText(ConfigTableE.goals_lost[2]);
-        balance3.setText(ConfigTableE.balances[2]);
-        points3.setText(ConfigTableE.points[2]);
-
-        team4.setText(ConfigTableE.teams[3]);
-        m4.setText(ConfigTableE.matches[3]);
-        gs4.setText(ConfigTableE.goals_scored[3]);
-        gl4.setText(ConfigTableE.goals_lost[3]);
-        balance4.setText(ConfigTableE.balances[3]);
-        points4.setText(ConfigTableE.points[3]);
-
         groupName.setText("GROUP E");
+
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableE.teams[i]);
+            textViewMatches[i].setText(ConfigTableE.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableE.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableE.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableE.balances[i]);
+            textViewPoints[i].setText(ConfigTableE.points[i]);
+        }
 
     }
 
@@ -418,35 +322,16 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableF pj = new ConfigTableF(json);
         pj.ConfigTableF();
 
-        team1.setText(ConfigTableF.teams[0]);
-        m1.setText(ConfigTableF.matches[0]);
-        gs1.setText(ConfigTableF.goals_scored[0]);
-        gl1.setText(ConfigTableF.goals_lost[0]);
-        balance1.setText(ConfigTableF.balances[0]);
-        points1.setText(ConfigTableF.points[0]);
-
-        team2.setText(ConfigTableF.teams[1]);
-        m2.setText(ConfigTableF.matches[1]);
-        gs2.setText(ConfigTableF.goals_scored[1]);
-        gl2.setText(ConfigTableF.goals_lost[1]);
-        balance2.setText(ConfigTableF.balances[1]);
-        points2.setText(ConfigTableF.points[1]);
-
-        team3.setText(ConfigTableF.teams[2]);
-        m3.setText(ConfigTableF.matches[2]);
-        gs3.setText(ConfigTableF.goals_scored[2]);
-        gl3.setText(ConfigTableF.goals_lost[2]);
-        balance3.setText(ConfigTableF.balances[2]);
-        points3.setText(ConfigTableF.points[2]);
-
-        team4.setText(ConfigTableF.teams[3]);
-        m4.setText(ConfigTableF.matches[3]);
-        gs4.setText(ConfigTableF.goals_scored[3]);
-        gl4.setText(ConfigTableF.goals_lost[3]);
-        balance4.setText(ConfigTableF.balances[3]);
-        points4.setText(ConfigTableF.points[3]);
-
         groupName.setText("GROUP F");
+
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableF.teams[i]);
+            textViewMatches[i].setText(ConfigTableF.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableF.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableF.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableF.balances[i]);
+            textViewPoints[i].setText(ConfigTableF.points[i]);
+        }
 
     }
 
@@ -481,35 +366,16 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableG pj = new ConfigTableG(json);
         pj.ConfigTableG();
 
-        team1.setText(ConfigTableG.teams[0]);
-        m1.setText(ConfigTableG.matches[0]);
-        gs1.setText(ConfigTableG.goals_scored[0]);
-        gl1.setText(ConfigTableG.goals_lost[0]);
-        balance1.setText(ConfigTableG.balances[0]);
-        points1.setText(ConfigTableG.points[0]);
-
-        team2.setText(ConfigTableG.teams[1]);
-        m2.setText(ConfigTableG.matches[1]);
-        gs2.setText(ConfigTableG.goals_scored[1]);
-        gl2.setText(ConfigTableG.goals_lost[1]);
-        balance2.setText(ConfigTableG.balances[1]);
-        points2.setText(ConfigTableG.points[1]);
-
-        team3.setText(ConfigTableG.teams[2]);
-        m3.setText(ConfigTableG.matches[2]);
-        gs3.setText(ConfigTableG.goals_scored[2]);
-        gl3.setText(ConfigTableG.goals_lost[2]);
-        balance3.setText(ConfigTableG.balances[2]);
-        points3.setText(ConfigTableG.points[2]);
-
-        team4.setText(ConfigTableG.teams[3]);
-        m4.setText(ConfigTableG.matches[3]);
-        gs4.setText(ConfigTableG.goals_scored[3]);
-        gl4.setText(ConfigTableG.goals_lost[3]);
-        balance4.setText(ConfigTableG.balances[3]);
-        points4.setText(ConfigTableG.points[3]);
-
         groupName.setText("GROUP G");
+
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableG.teams[i]);
+            textViewMatches[i].setText(ConfigTableG.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableG.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableG.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableG.balances[i]);
+            textViewPoints[i].setText(ConfigTableG.points[i]);
+        }
 
     }
 
@@ -544,35 +410,16 @@ public class TablesActivity extends AppCompatActivity {
         ConfigTableH pj = new ConfigTableH(json);
         pj.ConfigTableH();
 
-        team1.setText(ConfigTableH.teams[0]);
-        m1.setText(ConfigTableH.matches[0]);
-        gs1.setText(ConfigTableH.goals_scored[0]);
-        gl1.setText(ConfigTableH.goals_lost[0]);
-        balance1.setText(ConfigTableH.balances[0]);
-        points1.setText(ConfigTableH.points[0]);
-
-        team2.setText(ConfigTableH.teams[1]);
-        m2.setText(ConfigTableH.matches[1]);
-        gs2.setText(ConfigTableH.goals_scored[1]);
-        gl2.setText(ConfigTableH.goals_lost[1]);
-        balance2.setText(ConfigTableH.balances[1]);
-        points2.setText(ConfigTableH.points[1]);
-
-        team3.setText(ConfigTableH.teams[2]);
-        m3.setText(ConfigTableH.matches[2]);
-        gs3.setText(ConfigTableH.goals_scored[2]);
-        gl3.setText(ConfigTableH.goals_lost[2]);
-        balance3.setText(ConfigTableH.balances[2]);
-        points3.setText(ConfigTableH.points[2]);
-
-        team4.setText(ConfigTableH.teams[3]);
-        m4.setText(ConfigTableH.matches[3]);
-        gs4.setText(ConfigTableH.goals_scored[3]);
-        gl4.setText(ConfigTableH.goals_lost[3]);
-        balance4.setText(ConfigTableH.balances[3]);
-        points4.setText(ConfigTableH.points[3]);
-
         groupName.setText("GROUP H");
+
+        for(int i = 0; i < 4; i++){
+            textViewTeams[i].setText(ConfigTableH.teams[i]);
+            textViewMatches[i].setText(ConfigTableH.matches[i]);
+            textViewGoalsScored[i].setText(ConfigTableH.goals_scored[i]);
+            textViewGoalsLost[i].setText(ConfigTableH.goals_lost[i]);
+            textViewBalances[i].setText(ConfigTableH.balances[i]);
+            textViewPoints[i].setText(ConfigTableH.points[i]);
+        }
 
     }
 
