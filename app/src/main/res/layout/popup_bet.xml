@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#457247"
+    android:layout_height="110dp"
+    android:background="@drawable/backdialog"
     android:orientation="vertical">
 
 
@@ -16,9 +16,11 @@
         <TextView
             android:id="@+id/textViewLeft"
             android:layout_width="134dp"
-            android:layout_height="42dp"
+            android:layout_height="44dp"
+            android:background="#8000"
             android:gravity="center"
             android:text="TextViewLeft"
+            android:textColor="#FFFFFF"
             android:textSize="12sp" />
 
         <EditText
@@ -36,7 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="   " />
+            android:text="   "
+            android:textColor="#FFFFFF" />
 
         <EditText
             android:id="@+id/editTextRight"
@@ -52,8 +55,10 @@
             android:id="@+id/textViewRight"
             android:layout_width="131dp"
             android:layout_height="44dp"
+            android:background="#8000"
             android:gravity="center"
             android:text="TextViewRight"
+            android:textColor="#FFFFFF"
             android:textSize="12sp" />
 
     </LinearLayout>
@@ -68,8 +73,10 @@
             android:id="@+id/textViewCurrent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#8000"
             android:gravity="center"
             android:text="TextView"
+            android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
 
@@ -91,7 +98,9 @@
             android:layout_toEndOf="@+id/editTextRight"
             android:layout_toStartOf="@+id/editTextRight"
             android:gravity="center"
-            android:text="Button" />
+            android:text="Button"
+            android:background="@drawable/buttonshape"
+            android:textColor="#E5E5E5" />
 
 
         <Button
@@ -102,6 +111,8 @@
             android:layout_toEndOf="@+id/editTextRight"
             android:layout_toStartOf="@+id/editTextRight"
             android:text="Button"
+            android:background="@drawable/buttonshape"
+            android:textColor="#E5E5E5"
             tools:ignore="ButtonStyle" />
 
     </LinearLayout>

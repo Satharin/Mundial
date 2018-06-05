@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.rharasimiuk.mundial.CheckBetsActivity"
-    android:background="#457247">
+    android:background="@drawable/back">
 
 
     <TextView
@@ -15,37 +15,45 @@
         android:layout_width="382dp"
         android:layout_height="120dp"
         android:layout_marginLeft="1dp"
+        android:background="#8000"
         android:gravity="center_vertical|center_horizontal"
         android:text="Started and finished matches"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteY="60dp"
-        />
+        tools:layout_editor_absoluteY="60dp" />
 
     <Button
         android:id="@+id/buttonAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/buttonshape"
         android:onClick="back"
         android:text="Back"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/buttonExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exit"
-        android:onClick="exit"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/buttonshape"
+        android:onClick="exit"
+        android:text="Exit"
+        android:textColor="#E5E5E5" />
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_alignStart="@+id/textViewNextMatch"
-        android:layout_below="@+id/textViewNextMatch" />
+        android:layout_below="@+id/textViewNextMatch"
+        android:background="#8000"
+        android:divider="#FFFFFF"
+        android:dividerHeight="1px" />
 
     <TextView
         android:id="@+id/textViewScore"
@@ -61,7 +69,22 @@
         android:layout_width="match_parent"
         android:layout_height="199dp"
         android:layout_above="@+id/buttonAbout"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="#8000"
+        android:divider="#FFFFFF"
+        android:dividerHeight="1px" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listView2"
+        android:layout_centerHorizontal="true"
+        android:text="Bets"
+        android:background="#8000"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
 
 
 </RelativeLayout>

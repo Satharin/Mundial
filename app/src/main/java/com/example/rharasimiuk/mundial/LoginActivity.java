@@ -10,8 +10,11 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -35,9 +38,21 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         editName = (EditText) findViewById(R.id.editPassword);
         editPassword = (EditText) findViewById(R.id.editName);
+
+        editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    login();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
-    public void login (View view) {
+    public void login () {
 
         if(haveNetworkConnection() == true) {
 

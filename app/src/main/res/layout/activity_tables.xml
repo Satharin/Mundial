@@ -7,36 +7,41 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.rharasimiuk.mundial.TablesActivity"
-    android:background="#457247">
-
+    android:background="@drawable/back">
 
 
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/buttonshape"
         android:onClick="back"
         android:text="Back"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/buttonExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exit"
-        android:onClick="exit"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/buttonshape"
+        android:onClick="exit"
+        android:text="Exit"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button4"
-        android:onClick="getTableA"
         android:layout_toEndOf="@+id/buttonBack"
-        android:text="Group A" />
+        android:background="@drawable/buttonshape"
+        android:onClick="getTableA"
+        android:text="Group A"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button2"
@@ -44,8 +49,10 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/button"
         android:layout_toStartOf="@+id/buttonExit"
+        android:background="@drawable/buttonshape"
         android:onClick="getTableB"
-        android:text="Group B" />
+        android:text="Group B"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button3"
@@ -53,8 +60,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button5"
         android:layout_toEndOf="@+id/buttonBack"
+        android:background="@drawable/buttonshape"
         android:onClick="getTableC"
-        android:text="Group C" />
+        android:text="Group C"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button4"
@@ -62,8 +71,10 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/button2"
         android:layout_alignTop="@+id/button3"
+        android:background="@drawable/buttonshape"
         android:onClick="getTableD"
-        android:text="Group D" />
+        android:text="Group D"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button5"
@@ -71,8 +82,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button9"
         android:layout_toEndOf="@+id/buttonBack"
+        android:background="@drawable/buttonshape"
         android:onClick="getTableE"
-        android:text="Group E" />
+        android:text="Group E"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button6"
@@ -80,8 +93,10 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/button2"
         android:layout_alignTop="@+id/button5"
+        android:background="@drawable/buttonshape"
         android:onClick="getTableF"
-        android:text="Group F" />
+        android:text="Group F"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button9"
@@ -90,8 +105,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="114dp"
         android:layout_toEndOf="@+id/buttonBack"
+        android:background="@drawable/buttonshape"
         android:onClick="getTableG"
-        android:text="Group G" />
+        android:text="Group G"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/button10"
@@ -99,12 +116,15 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/button9"
         android:layout_toStartOf="@+id/buttonExit"
+        android:background="@drawable/buttonshape"
         android:onClick="getTableH"
-        android:text="Group H" />
+        android:text="Group H"
+        android:textColor="#E5E5E5" />
 
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="150dp"
+        android:background="#8000"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="49dp"
@@ -123,6 +143,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text="Points"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -130,6 +151,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text="Balance"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -137,6 +159,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text="GL"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -144,6 +167,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text="GS"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -151,6 +175,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text="M"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -158,12 +183,14 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text="Team"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewNumber0"
                 android:padding="3dip"
                 android:text="Lp."
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -174,6 +201,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -181,6 +209,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -188,6 +217,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -195,6 +225,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -202,6 +233,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -209,12 +241,14 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewNumber1"
                 android:padding="3dip"
                 android:text="1"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -225,6 +259,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -232,6 +267,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -239,6 +275,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -246,6 +283,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -253,6 +291,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -260,12 +299,14 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewNumber2"
                 android:padding="3dip"
                 android:text="2"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -276,6 +317,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -283,6 +325,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -290,6 +333,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -297,6 +341,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -304,6 +349,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -311,12 +357,14 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewNumber3"
                 android:padding="3dip"
                 android:text="3"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -327,6 +375,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -334,6 +383,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -341,6 +391,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -348,6 +399,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -355,6 +407,7 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
@@ -362,12 +415,14 @@
                 android:gravity="right"
                 android:padding="3dip"
                 android:text=""
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/textViewNumber4"
                 android:padding="3dip"
                 android:text="4"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </TableRow>
 
@@ -395,10 +450,12 @@
         android:layout_height="47dp"
         android:layout_alignParentTop="true"
         android:layout_marginEnd="-176dp"
-        android:textSize="20sp"
-        android:gravity="center"
         android:layout_toStartOf="@+id/button2"
-        android:text="GROUP" />
+        android:background="#8000"
+        android:gravity="center"
+        android:text="GROUP"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/button7"
@@ -406,8 +463,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/buttonshape"
         android:onClick="resetTable"
-        android:text="Clear" />
+        android:text="Clear"
+        android:textColor="#E5E5E5" />
 
 
 </RelativeLayout>
