@@ -34,6 +34,8 @@ import java.util.Map;
 
 public class AdminActivity extends ListActivity {
 
+    String[] checkResults;
+
     RequestQueue requestQueue;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class AdminActivity extends ListActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
                 final String id_match = ConfigMatches.id_matches[pos];
+                checkResult(id_match);
 
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -69,8 +72,8 @@ public class AdminActivity extends ListActivity {
                         TextView left = (TextView) dialog.findViewById(R.id.textViewLeft);
                         TextView right = (TextView) dialog.findViewById(R.id.textViewRight);
                         final TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
-                        EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
-                        EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
+                        final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
+                        final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
                         save.setText("Save");
                         close.setText("Close");
@@ -78,18 +81,33 @@ public class AdminActivity extends ListActivity {
                         left.setText(ConfigMatches.teams_a[pos]);
                         right.setText(ConfigMatches.teams_b[pos]);
 
+                        if(!checkResults[0].equals("null"))
+                            current.setText("Score: " + checkResults[0] + ":" + checkResults[1]);
+                        else
+                            current.setText("Score not sent yet.");
+
 
                         save.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
-                                EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
-                                String bet_a = leftEdit.getText().toString();
-                                String bet_b = rightEdit.getText().toString();
-                                updateScore("https://mundial2018.000webhostapp.com/mundial/updateScore.php", bet_a, bet_b, id_match);
-                                Toast.makeText(AdminActivity.this, "Score sent to database.", Toast.LENGTH_LONG).show();
-                                leftEdit.setText("");
-                                rightEdit.setText("");
+
+                                if(leftEdit.getText().toString().trim().length() > 0 && rightEdit.getText().toString().trim().length() > 0) {
+
+                                    EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
+                                    EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
+                                    String result_a = leftEdit.getText().toString();
+                                    String result_b = rightEdit.getText().toString();
+                                    updateScore("https://mundial2018.000webhostapp.com/mundial/updateScore.php", result_a, result_b, id_match);
+                                    Toast.makeText(AdminActivity.this, "Score sent to database.", Toast.LENGTH_LONG).show();
+                                    leftEdit.setText("");
+                                    rightEdit.setText("");
+                                    current.setText("Score: " + result_a + ":" + result_b);
+
+                                }else{
+
+                                    Toast.makeText(AdminActivity.this, "One of EditText fields is empty", Toast.LENGTH_LONG).show();
+
+                                }
 
                             }
                         });
@@ -97,8 +115,13 @@ public class AdminActivity extends ListActivity {
                         update.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                updatePoints(id_match);
-                                Toast.makeText(AdminActivity.this, "Bets analyzed and points updated.", Toast.LENGTH_LONG).show();
+
+                                if(!current.getText().equals("Score not sent yet.")) {
+                                    updatePoints(id_match);
+                                    Toast.makeText(AdminActivity.this, "Bets analyzed and points updated.", Toast.LENGTH_LONG).show();
+                                }else{
+                                    Toast.makeText(AdminActivity.this, "Nothing to update yet. Please send score first.", Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
 
@@ -281,6 +304,55 @@ public class AdminActivity extends ListActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
         getListView().setAdapter(adapter);
+
+    }
+
+    public void checkResult(String id_match) {
+
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
+
+        String url = ConfigResult.DATA_URL + id_match;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadingMatches.dismiss();
+                checkResults = showJSONresult(response);
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(AdminActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private String[] showJSONresult(String json) {
+
+        ConfigResult pj = new ConfigResult(json);
+        pj.ConfigResult();
+
+        String result_aCheck;
+        String result_bCheck;
+
+        if(ConfigResult.results_a != null) {
+
+            result_aCheck = ConfigResult.results_a[0];
+            result_bCheck = ConfigResult.results_b[0];
+
+        }else{
+
+            result_aCheck = null;
+            result_bCheck = null;
+        }
+
+        return new String[] {result_aCheck, result_bCheck};
 
     }
 

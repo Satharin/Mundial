@@ -17,6 +17,7 @@
         android:layout_alignEnd="@+id/newAccount"
         android:layout_alignStart="@+id/newAccount"
         android:background="@drawable/buttonshape"
+        android:onClick="loginButton"
         android:text="Login"
         android:textColor="#E5E5E5" />
 

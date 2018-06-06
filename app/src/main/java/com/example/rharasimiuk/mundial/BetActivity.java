@@ -72,7 +72,6 @@ public class BetActivity extends ListActivity {
                     dialog.setTitle("Bet");
                     dialog.setContentView(R.layout.popup_bet);
                     dialog.show();
-                    //dialog.getWindow().setLayout(600, 400);
                     dialog.setCancelable(false);
                     dialog.setCanceledOnTouchOutside(false);
 
