@@ -42,6 +42,10 @@
             android:name=".TablesActivity"
             android:label="Tables"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".YourBetsActivity"
+            android:label="YourBets"
+            android:screenOrientation="portrait" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

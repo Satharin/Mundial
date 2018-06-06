@@ -6,14 +6,18 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.rharasimiuk.mundial.PointsActivity"
-    android:background="#457247">
+    android:background="@drawable/back">
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="wrap_content"
-        android:layout_height="315dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView2"
         android:layout_centerVertical="true"
+        android:background="#8000"
+        android:divider="#FFFFFF"
+        android:dividerHeight="1px"
         android:longClickable="true"
         android:textAlignment="center" />
 
@@ -23,27 +27,33 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:background="@drawable/buttonshape"
         android:onClick="back"
-        android:text="Back" />
+        android:text="Back"
+        android:textColor="#E5E5E5" />
 
     <Button
         android:id="@+id/buttonExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Exit"
-        android:onClick="exit"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/buttonshape"
+        android:onClick="exit"
+        android:text="Exit"
+        android:textColor="#E5E5E5" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="311dp"
-        android:layout_height="95dp"
+        android:layout_width="match_parent"
+        android:layout_height="126dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:gravity="bottom"
+        android:background="#8000"
+        android:gravity="center_vertical|center_horizontal"
         android:text="Name - Points - Exact results"
         android:textAlignment="center"
+        android:textColor="#FFFFFF"
         android:textSize="20dp" />
 
 

@@ -10,12 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -30,19 +25,73 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class MainActivity extends ListActivity {
+public class YourBetsActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Button adminButton = (Button) findViewById(R.id.buttonAdmin);
+        setContentView(R.layout.activity_your_bets);
 
-        loadLogin();
-        getNextMatch();
+        getYourBets(loadLogin());
 
-        if(!loadLogin().equals("Haras"))
-            adminButton.setVisibility(View.INVISIBLE);
+    }
+
+    public void getYourBets(String login){
+
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+        String url = ConfigYourBets.DATA_URL + login;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadingMatches.dismiss();
+                showJSONyourBets(response);
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(YourBetsActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void showJSONyourBets(String json) {
+
+        ConfigYourBets pj = new ConfigYourBets(json);
+        pj.ConfigYourBets();
+
+        if(ConfigYourBets.teams_a != null) {
+
+            String[] matches = new String[ConfigYourBets.teams_a.length];
+
+            for (int i = 0; i < ConfigYourBets.teams_a.length; i++){
+
+                matches[i] = ConfigYourBets.teams_a[i] + " - " + ConfigYourBets.teams_b[i] + " " +
+                        ConfigYourBets.dates[i] + " " + ConfigYourBets.times[i] + "\n Result: " +
+                        ConfigYourBets.results_a[i] + ":" + ConfigYourBets.results_b[i] +
+                        " Your bet: " + ConfigYourBets.bets_a[i] + ":" + ConfigYourBets.bets_b[i] +
+                        " (" + ConfigYourBets.points[i] + " points)";
+
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+            getListView().setAdapter(adapter);
+
+        }else{
+
+            String[] matches = new String[1];
+            matches[0] = "You did not bet yet.";
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+            getListView().setAdapter(adapter);
+
+        }
 
     }
 
@@ -52,122 +101,6 @@ public class MainActivity extends ListActivity {
         String login = loadGame.getString("login", "");
 
         return login;
-
-    }
-
-    public void goToBet (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), BetActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void goToAdmin (View view) {
-        if(haveNetworkConnection()) {
-
-            if(loadLogin().equals("Haras")) {
-                startActivity(new Intent(getApplicationContext(), AdminActivity.class));
-                finish();
-            }else{
-                Toast.makeText(MainActivity.this,"Only Haras can access here.", Toast.LENGTH_LONG).show();
-            }
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void checkBets (View view){
-
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), CheckBetsActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    public void goToPoints (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), PointsActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void goToTables (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), TablesActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void goToYourBets (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), YourBetsActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void getNextMatch () {
-
-        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
-
-        String url = ConfigNextMatches.DATA_URL + getDateToday() + "&time_match=" + getTimeToday();
-
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                loadingMatches.dismiss();
-                showJSON(response);
-
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
-    }
-
-    private void showJSON(String json) {
-
-        ConfigNextMatches pj = new ConfigNextMatches(json);
-        pj.ConfigNextMatches();
-
-        String[] matches = new String[ConfigNextMatches.teams_a.length];
-
-        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++){
-
-            matches[i] = ConfigNextMatches.teams_a[i] + " - " + ConfigNextMatches.teams_b[i] + " " + ConfigNextMatches.dates[i] + " " + ConfigNextMatches.times[i];
-
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
-        getListView().setAdapter(adapter);
 
     }
 
@@ -191,10 +124,14 @@ public class MainActivity extends ListActivity {
         return localTime;
     }
 
-    public void logout(View view) {
+    public void back(View view) {
 
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
+        if(haveNetworkConnection()) {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+        }else{
+            Toast.makeText(YourBetsActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -258,4 +195,5 @@ public class MainActivity extends ListActivity {
         return haveConnectedWifi || haveConnectedMobile;
 
     }
+
 }
