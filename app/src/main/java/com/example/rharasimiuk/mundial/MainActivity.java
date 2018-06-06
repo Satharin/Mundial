@@ -1,5 +1,6 @@
 package com.example.rharasimiuk.mundial;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,15 +10,21 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,12 +32,19 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class MainActivity extends ListActivity {
+
+    String[] checkBets;
+
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +52,99 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
         Button adminButton = (Button) findViewById(R.id.buttonAdmin);
 
-        loadLogin();
+        requestQueue = Volley.newRequestQueue(MainActivity.this);
+
         getNextMatch();
 
         if(!loadLogin().equals("Haras"))
             adminButton.setVisibility(View.INVISIBLE);
+
+        final String login = loadLogin();
+
+        final ListView grid = (ListView) findViewById(android.R.id.list);
+
+        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
+
+                final String id_match = ConfigNextMatches.id_matches[pos];
+                checkBet(login, id_match);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+
+                    public void run() {
+
+                        final Dialog dialog = new Dialog(MainActivity.this);
+                        dialog.setTitle("Bet");
+                        dialog.setContentView(R.layout.popup_bet);
+                        dialog.show();
+                        dialog.setCancelable(false);
+                        dialog.setCanceledOnTouchOutside(false);
+
+                        Button save = (Button) dialog.findViewById(R.id.buttonSave);
+                        Button close = (Button) dialog.findViewById(R.id.buttonClose);
+                        TextView left = (TextView) dialog.findViewById(R.id.textViewLeft);
+                        TextView right = (TextView) dialog.findViewById(R.id.textViewRight);
+                        final TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
+                        final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
+                        final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
+
+                        checkBet(login, id_match);
+
+                        if(checkBets[0] != null)
+                            current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
+                        else
+                            current.setText("Current bet: No bet yet");
+
+                        save.setText("Save");
+                        close.setText("Close");
+
+                        left.setText(ConfigNextMatches.teams_a[pos]);
+                        right.setText(ConfigNextMatches.teams_b[pos]);
+
+                        save.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                Date matchTime = checkDate(ConfigNextMatches.dates[pos], ConfigNextMatches.times[pos]);
+                                Date currentTime = checkDate(getDateToday(), getTimeToday());
+
+                                String bet_a = leftEdit.getText().toString();
+                                String bet_b = rightEdit.getText().toString();
+
+                                boolean isBefore = currentTime.before(matchTime);
+
+                                if (isBefore) {
+                                    if (checkBets[0] != null)
+                                        updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
+                                    else
+                                        saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                                }
+
+                                current.setText("Current bet: " + bet_a + ":" + bet_b);
+                                Toast.makeText(MainActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                leftEdit.setText("");
+                                rightEdit.setText("");
+                                getNextMatch();
+
+                            }
+                        });
+
+                        close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                    }
+                }, 1000);
+
+            }
+        });
 
     }
 
@@ -131,7 +233,7 @@ public class MainActivity extends ListActivity {
 
         final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigNextMatches.DATA_URL + getDateToday() + "&time_match=" + getTimeToday();
+        String url = ConfigNextMatches.DATA_URL + getDateToday() + "&time_match=" + getTimeToday() + "&login=" + loadLogin();
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -160,14 +262,30 @@ public class MainActivity extends ListActivity {
 
         String[] matches = new String[ConfigNextMatches.teams_a.length];
 
-        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++){
+        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++) {
 
-            matches[i] = ConfigNextMatches.teams_a[i] + " - " + ConfigNextMatches.teams_b[i] + " " + ConfigNextMatches.dates[i] + " " + ConfigNextMatches.times[i];
+            if (!ConfigNextMatches.bets_a[i].equals("-")) {
 
+                matches[i] = ConfigNextMatches.teams_a[i] + " - " + ConfigNextMatches.teams_b[i] + " " +
+                        ConfigNextMatches.dates[i] + " " + ConfigNextMatches.times[i] +
+                        "\nYour bet: " + ConfigNextMatches.bets_a[i] + ":" + ConfigNextMatches.bets_b[i];
+
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+                getListView().setAdapter(adapter);
+
+            }else{
+
+                matches[i] = ConfigNextMatches.teams_a[i] + " - " + ConfigNextMatches.teams_b[i] + " " +
+                        ConfigNextMatches.dates[i] + " " + ConfigNextMatches.times[i] +
+                        "\nNo bet";
+
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+                getListView().setAdapter(adapter);
+
+            }
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
-        getListView().setAdapter(adapter);
 
     }
 
@@ -189,6 +307,127 @@ public class MainActivity extends ListActivity {
         String localTime = time.format(currentLocalTime);
 
         return localTime;
+    }
+
+    public void checkBet(String login, String id_match) {
+
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
+
+        String url = ConfigBet.DATA_URL + login + "&id_match=" + id_match;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadingMatches.dismiss();
+                checkBets = showJSONbet(response);
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private String[] showJSONbet(String json) {
+
+        ConfigBet pj = new ConfigBet(json);
+        pj.ConfigBet();
+
+        String bet_aCheck;
+        String bet_bCheck;
+
+        if(ConfigBet.bets_a != null) {
+
+            bet_aCheck = ConfigBet.bets_a[0];
+            bet_bCheck = ConfigBet.bets_b[0];
+
+        }else{
+
+            bet_aCheck = null;
+            bet_bCheck = null;
+        }
+
+        return new String[] {bet_aCheck, bet_bCheck};
+
+    }
+
+    public Date checkDate(String dateMatch, String timeMatch){
+
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        try {
+            Date matchTime = format.parse(dateMatch + " " + timeMatch);
+            return matchTime;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void saveBets(String url, final String login, final String bet_a, final String bet_b, final String id_match){
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println(response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+                parameters.put("login", login);
+                parameters.put("bet_a", bet_a);
+                parameters.put("bet_b", bet_b);
+                parameters.put("id_match", id_match);
+
+                return parameters;
+            }
+        };
+
+        requestQueue.add(request);
+
+    }
+
+    public void updateBets(String url, final String login, final String bet_a, final String bet_b, final String id_match){
+
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println(response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parameters = new HashMap<>();
+                parameters.put("login", login);
+                parameters.put("bet_a", bet_a);
+                parameters.put("bet_b", bet_b);
+                parameters.put("id_match", id_match);
+
+                return parameters;
+            }
+        };
+
+        requestQueue.add(request);
+
     }
 
     public void logout(View view) {

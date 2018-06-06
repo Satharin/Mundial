@@ -86,6 +86,40 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void loginButton (View view) {
+
+        if(haveNetworkConnection() == true) {
+
+            final String login = editName.getText().toString();
+            final String password = editPassword.getText().toString();
+
+            final ProgressDialog loadingLogin = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+            String url = ConfigLogin.DATA_URL + login + "&password=" + password;
+
+            StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    loadingLogin.dismiss();
+                    showJSON(response, login, password);
+
+                }
+            },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(LoginActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        }else{
+            Toast.makeText(LoginActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     private void showJSON(String json, String login, String password) {
 
         String login2 = "", password2 = "";
