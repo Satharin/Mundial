@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -35,8 +36,13 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button adminButton = (Button) findViewById(R.id.buttonAdmin);
 
+        loadLogin();
         getNextMatch();
+
+        if(!loadLogin().equals("Haras"))
+            adminButton.setVisibility(View.INVISIBLE);
 
     }
 
