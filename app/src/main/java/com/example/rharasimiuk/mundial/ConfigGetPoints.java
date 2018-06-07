@@ -10,7 +10,7 @@ public class ConfigGetPoints {
 
     public static String[] users, points, exact_results;
 
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getPointsRank.php";
+    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getPointsRank.php?login=";
     public static final String KEY_LOGIN = "users";
     public static final String KEY_POINTS = "points";
     public static final String KEY_EXACT_RESULT = "exact_results";

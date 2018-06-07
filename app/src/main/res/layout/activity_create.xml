@@ -19,14 +19,15 @@
         android:textColor="#E5E5E5" />
 
     <EditText
+        android:id="@+id/editTextName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/editTextName"
+        android:layout_below="@+id/textViewName"
+        android:layout_centerHorizontal="true"
         android:background="#ffffff"
-        android:maxLength="20" android:layout_above="@+id/textViewPassword"
-        android:layout_alignStart="@+id/textViewPassword"/>
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:maxLength="20" />
 
     <Button
 
@@ -42,15 +43,12 @@
 
     <TextView
         android:id="@+id/textViewPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="212dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editTextPassword"
-        android:layout_alignEnd="@+id/editTextPassword"
-        android:layout_alignLeft="@+id/editTextPassword"
-        android:layout_alignRight="@+id/editTextPassword"
-        android:layout_alignStart="@+id/editTextPassword"
-        android:text="Password"
+        android:layout_below="@+id/editTextName"
+        android:layout_centerHorizontal="true"
         android:background="#8000"
+        android:text="Password"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
@@ -59,7 +57,7 @@
         android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewConfirm"
+        android:layout_below="@+id/textViewPassword"
         android:layout_centerHorizontal="true"
         android:background="#ffffff"
         android:ems="10"
@@ -70,9 +68,8 @@
         android:id="@+id/editTextConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textViewConfirm"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="87dp"
         android:background="#ffffff"
         android:ems="10"
         android:inputType="textPassword"
@@ -82,26 +79,44 @@
         android:id="@+id/textViewConfirm"
         android:layout_width="213dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editTextConfirm"
+        android:layout_below="@+id/editTextPassword"
         android:layout_centerHorizontal="true"
-        android:text="Confirm password"
         android:background="#8000"
+        android:text="Confirm password"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewName"
-        android:layout_width="wrap_content"
+        android:layout_width="216dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewPassword"
-        android:layout_alignEnd="@+id/editTextName"
-        android:layout_alignStart="@+id/editTextName"
-        android:layout_marginBottom="23dp"
-        android:text="Name"
+        android:layout_centerInParent="true"
         android:background="#8000"
+        android:text="Name"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewGroup"
+        android:layout_width="216dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextConfirm"
+        android:layout_centerHorizontal="true"
+        android:background="#8000"
+        android:text="Group"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <Spinner
+        android:id="@+id/spinnerGroup"
+        android:layout_width="211dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/textViewGroup"
+        android:layout_centerHorizontal="true"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown" />
 
 </RelativeLayout>

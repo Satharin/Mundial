@@ -2,10 +2,16 @@ package com.example.rharasimiuk.mundial;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,6 +32,7 @@ import java.util.Map;
 public class CreateAccountActivity extends AppCompatActivity {
 
     private EditText editName, editTextPassword, editTextConfirm;
+    private Spinner spinner;
 
     RequestQueue requestQueue;
 
@@ -33,11 +40,19 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
+        buttonEffectApply();
+
         requestQueue = Volley.newRequestQueue(getApplicationContext());
 
         editName = (EditText) findViewById(R.id.editTextName);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextConfirm = (EditText) findViewById(R.id.editTextConfirm);
+        spinner = (Spinner)findViewById(R.id.spinnerGroup);
+
+        Spinner dropdown = findViewById(R.id.spinnerGroup);
+        String[] items = new String[]{"Twierdza", "MQA"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
     }
 
     public void createAccount(View view) {
@@ -45,6 +60,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         final String login = editName.getText().toString();
         final String password = editTextPassword.getText().toString();
         final String confirm = editTextConfirm.getText().toString();
+        final String group_name = spinner.getSelectedItem().toString();
 
         //Check if fields are filled
         if(login.equals("")){
@@ -57,13 +73,13 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             final ProgressDialog loadingCreate = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
 
-            String url = ConfigCreate.DATA_URL + login;
+            String url = ConfigCreate.DATA_URL + login + "&group_name=" + group_name;
 
             StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     loadingCreate.dismiss();
-                    showJSON(response, login, password, confirm);
+                    showJSON(response, login, password, confirm, group_name);
 
                 }
             },
@@ -80,7 +96,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     }
 
-    private void showJSON(String json, String login, String password, String confirm) {
+    private void showJSON(String json, String login, String password, String confirm, String group_name) {
 
         login = editName.getText().toString();
         password = editTextPassword.getText().toString();
@@ -104,7 +120,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             editTextConfirm.setText("");
         }else if(password.equals(confirm)&&!password.equals("")){
             Toast.makeText(CreateAccountActivity.this, "Registration completed.", Toast.LENGTH_LONG).show();
-            savePlayer("https://mundial2018.000webhostapp.com/mundial/saveUser.php", login, password);
+            savePlayer("https://mundial2018.000webhostapp.com/mundial/saveUser.php", login, password, group_name);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }else{
@@ -115,7 +131,37 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     }
 
-    public void savePlayer(String url, final String login, final String password){
+    public void buttonEffectApply() {
+        Button back = (Button) findViewById(R.id.exit);
+        Button create = (Button) findViewById(R.id.buttonCreate);
+
+        buttonEffect(back);
+        buttonEffect(create);
+
+    }
+
+    public static void buttonEffect(View button){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(Color.parseColor("#4c4cff"), PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    public void savePlayer(String url, final String login, final String password, final String group_name){
 
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -134,6 +180,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 Map<String, String> parameters = new HashMap<>();
                 parameters.put("login", login);
                 parameters.put("password", password);
+                parameters.put("group_name", group_name);
 
                 return parameters;
             }

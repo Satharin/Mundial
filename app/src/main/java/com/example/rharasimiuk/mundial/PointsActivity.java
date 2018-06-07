@@ -6,11 +6,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -27,15 +32,17 @@ public class PointsActivity extends ListActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_points);
 
-        getNextMatch();
+        buttonEffectApply();
+
+        getNextMatch(loadLogin());
 
     }
 
-    public void getNextMatch () {
+    public void getNextMatch (String login) {
 
         final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigGetPoints.DATA_URL;
+        String url = ConfigGetPoints.DATA_URL + login;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -83,6 +90,45 @@ public class PointsActivity extends ListActivity{
             getListView().setAdapter(adapter);
 
         }
+
+    }
+
+    public void buttonEffectApply() {
+        Button back = (Button) findViewById(R.id.buttonBack);
+        Button exit = (Button) findViewById(R.id.buttonExit);
+
+        buttonEffect(back);
+        buttonEffect(exit);
+
+    }
+
+    public static void buttonEffect(View button){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(Color.parseColor("#4c4cff"), PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    public String loadLogin() {
+
+        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        String login = loadGame.getString("login", "");
+
+        return login;
 
     }
 

@@ -7,19 +7,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.TimeZone;
 
 public class MainActivity extends ListActivity {
-
     String[] checkBets;
 
     RequestQueue requestQueue;
@@ -53,6 +52,8 @@ public class MainActivity extends ListActivity {
         Button adminButton = (Button) findViewById(R.id.buttonAdmin);
 
         requestQueue = Volley.newRequestQueue(MainActivity.this);
+
+        buttonEffectApply();
 
         getNextMatch();
 
@@ -146,6 +147,47 @@ public class MainActivity extends ListActivity {
             }
         });
 
+    }
+
+    public void buttonEffectApply() {
+        Button bet = (Button) findViewById(R.id.buttonBet);
+        Button points = (Button) findViewById(R.id.button11);
+        Button tables = (Button) findViewById(R.id.buttonTable);
+        Button yourBets = (Button) findViewById(R.id.button13);
+        Button checkbets = (Button) findViewById(R.id.button12);
+        Button logout = (Button) findViewById(R.id.buttonAbout);
+        Button exit = (Button) findViewById(R.id.buttonExit);
+        Button admin = (Button) findViewById(R.id.buttonAdmin);
+
+        buttonEffect(bet);
+        buttonEffect(points);
+        buttonEffect(tables);
+        buttonEffect(yourBets);
+        buttonEffect(checkbets);
+        buttonEffect(logout);
+        buttonEffect(exit);
+        buttonEffect(admin);
+    }
+
+    public static void buttonEffect(View button){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(Color.parseColor("#4c4cff"), PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public String loadLogin() {
