@@ -4,11 +4,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +36,8 @@ public class TablesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tables);
+
+        buttonEffectApply();
 
         team1 = (TextView) findViewById(R.id.textViewTeam1);
         m1 = (TextView) findViewById(R.id.textViewM1);
@@ -421,6 +427,54 @@ public class TablesActivity extends AppCompatActivity {
             textViewPoints[i].setText(ConfigTableH.points[i]);
         }
 
+    }
+
+    public void buttonEffectApply() {
+        Button groupA = (Button) findViewById(R.id.buttonA);
+        Button groupB = (Button) findViewById(R.id.buttonB);
+        Button groupC = (Button) findViewById(R.id.buttonC);
+        Button groupD = (Button) findViewById(R.id.buttonD);
+        Button groupE = (Button) findViewById(R.id.buttonE);
+        Button groupF = (Button) findViewById(R.id.buttonF);
+        Button groupG = (Button) findViewById(R.id.buttonG);
+        Button groupH = (Button) findViewById(R.id.buttonH);
+        Button back = (Button) findViewById(R.id.buttonBack);
+        Button exit = (Button) findViewById(R.id.buttonExit);
+        Button clear = (Button) findViewById(R.id.buttonClear);
+
+        buttonEffect(groupA);
+        buttonEffect(groupB);
+        buttonEffect(groupC);
+        buttonEffect(groupD);
+        buttonEffect(groupE);
+        buttonEffect(groupF);
+        buttonEffect(groupG);
+        buttonEffect(groupH);
+        buttonEffect(back);
+        buttonEffect(exit);
+        buttonEffect(clear);
+
+    }
+
+    public static void buttonEffect(View button){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(Color.parseColor("#4c4cff"), PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public void resetTable(View view) {
