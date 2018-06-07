@@ -13,6 +13,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,8 +23,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -50,6 +55,38 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button adminButton = (Button) findViewById(R.id.buttonAdmin);
+        final Button menuButton = (Button) findViewById(R.id.buttonMenu);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(MainActivity.this, menuButton);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        if(item.getTitle().equals("Your bets")){
+                            goToYourBets2();
+                        }else if(item.getTitle().equals("Check bets")){
+                            checkBets2();
+                        }else if(item.getTitle().equals("Points")){
+                            goToPoints2();
+                        }else if(item.getTitle().equals("Tables")){
+                            goToTables2();
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        }); //closing the setOnClickListener method
+
 
         requestQueue = Volley.newRequestQueue(MainActivity.this);
 
@@ -57,7 +94,7 @@ public class MainActivity extends ListActivity {
 
         getNextMatch();
 
-        if(!loadLogin().equals("Haras"))
+        if (!loadLogin().equals("Haras"))
             adminButton.setVisibility(View.INVISIBLE);
 
         final String login = loadLogin();
@@ -93,7 +130,7 @@ public class MainActivity extends ListActivity {
 
                         checkBet(login, id_match);
 
-                        if(checkBets[0] != null)
+                        if (checkBets[0] != null)
                             current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
                         else
                             current.setText("Current bet: No bet yet");
@@ -151,19 +188,13 @@ public class MainActivity extends ListActivity {
 
     public void buttonEffectApply() {
         Button bet = (Button) findViewById(R.id.buttonBet);
-        Button points = (Button) findViewById(R.id.button11);
-        Button tables = (Button) findViewById(R.id.buttonTable);
-        Button yourBets = (Button) findViewById(R.id.button13);
-        Button checkbets = (Button) findViewById(R.id.button12);
         Button logout = (Button) findViewById(R.id.buttonAbout);
         Button exit = (Button) findViewById(R.id.buttonExit);
         Button admin = (Button) findViewById(R.id.buttonAdmin);
+        Button menu = (Button) findViewById(R.id.buttonMenu);
 
         buttonEffect(bet);
-        buttonEffect(points);
-        buttonEffect(tables);
-        buttonEffect(yourBets);
-        buttonEffect(checkbets);
+        buttonEffect(menu);
         buttonEffect(logout);
         buttonEffect(exit);
         buttonEffect(admin);
@@ -238,7 +269,31 @@ public class MainActivity extends ListActivity {
 
     }
 
+    public void checkBets2 (){
+
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), CheckBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
     public void goToPoints (View view) {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), PointsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goToPoints2 () {
         if(haveNetworkConnection()) {
 
             startActivity(new Intent(getApplicationContext(), PointsActivity.class));
@@ -260,7 +315,29 @@ public class MainActivity extends ListActivity {
         }
     }
 
+    public void goToTables2 () {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), TablesActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void goToYourBets (View view) {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), YourBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goToYourBets2 () {
         if(haveNetworkConnection()) {
 
             startActivity(new Intent(getApplicationContext(), YourBetsActivity.class));
