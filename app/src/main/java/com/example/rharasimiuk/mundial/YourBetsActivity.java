@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +57,42 @@ public class YourBetsActivity extends ListActivity {
 
         getYourBets(loadLogin());
         buttonEffectApply();
+
+        final Button menuButton = (Button) findViewById(R.id.buttonMenu);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(YourBetsActivity.this, menuButton);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        if(item.getTitle().equals("Your bets")){
+                            goToYourBets();
+                        }else if(item.getTitle().equals("Check bets")){
+                            goToCheckBets();
+                        }else if(item.getTitle().equals("Points")){
+                            goToPoints();
+                        }else if(item.getTitle().equals("Tables")){
+                            goToTables();
+                        }else if(item.getTitle().equals("Logout")){
+                            logout();
+                        }else if(item.getTitle().equals("Exit")){
+                            exit();
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        }); //closing the setOnClickListener method
 
     }
 
@@ -205,8 +243,8 @@ public class YourBetsActivity extends ListActivity {
     }
 
     public void buttonEffectApply() {
-        Button back = (Button) findViewById(R.id.buttonBack);
-        Button exit = (Button) findViewById(R.id.buttonExit);
+        Button back = (Button) findViewById(R.id.buttonHome);
+        Button exit = (Button) findViewById(R.id.buttonMenu);
 
         buttonEffect(back);
         buttonEffect(exit);
@@ -384,7 +422,7 @@ public class YourBetsActivity extends ListActivity {
 
     }
 
-    public void back(View view) {
+    public void goToHome(View view) {
 
         if(haveNetworkConnection()) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -395,7 +433,7 @@ public class YourBetsActivity extends ListActivity {
 
     }
 
-    public void exit (View view) {
+    public void exit () {
 
         android.app.AlertDialog.Builder exit = new android.app.AlertDialog.Builder(this);
 
@@ -435,6 +473,59 @@ public class YourBetsActivity extends ListActivity {
                 })
                 .create();
         exit.show();
+    }
+
+    public void goToCheckBets (){
+
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), CheckBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(YourBetsActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void goToPoints () {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), PointsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(YourBetsActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goToTables () {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), TablesActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(YourBetsActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goToYourBets () {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), YourBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(YourBetsActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void logout() {
+
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+
     }
 
     private boolean haveNetworkConnection() {

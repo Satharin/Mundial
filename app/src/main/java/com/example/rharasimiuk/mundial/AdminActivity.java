@@ -12,12 +12,14 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,42 @@ public class AdminActivity extends ListActivity {
         requestQueue = Volley.newRequestQueue(AdminActivity.this);
 
         getGroups();
+
+        final Button menuButton = (Button) findViewById(R.id.buttonMenu);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(AdminActivity.this, menuButton);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        if(item.getTitle().equals("Your bets")){
+                            goToYourBets();
+                        }else if(item.getTitle().equals("Check bets")){
+                            goToCheckBets();
+                        }else if(item.getTitle().equals("Points")){
+                            goToPoints();
+                        }else if(item.getTitle().equals("Tables")){
+                            goToTables();
+                        }else if(item.getTitle().equals("Logout")){
+                            logout();
+                        }else if(item.getTitle().equals("Exit")){
+                            exit();
+                        }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        }); //closing the setOnClickListener method
 
         final ListView grid = (ListView) findViewById(android.R.id.list);
 
@@ -356,7 +394,7 @@ public class AdminActivity extends ListActivity {
 
     }
 
-    public void back(View view) {
+    public void goToHome(View view) {
 
         if(haveNetworkConnection()) {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -388,7 +426,7 @@ public class AdminActivity extends ListActivity {
         exit.show();
     }
 
-    public void exit (View view) {
+    public void exit () {
 
         android.app.AlertDialog.Builder exit = new android.app.AlertDialog.Builder(this);
 
@@ -408,6 +446,59 @@ public class AdminActivity extends ListActivity {
                 })
                 .create();
         exit.show();
+    }
+
+    public void goToCheckBets (){
+
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), CheckBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(AdminActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    public void goToPoints () {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), PointsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(AdminActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goToTables () {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), TablesActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(AdminActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goToYourBets () {
+        if(haveNetworkConnection()) {
+
+            startActivity(new Intent(getApplicationContext(), YourBetsActivity.class));
+            finish();
+
+        }else {
+            Toast.makeText(AdminActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void logout() {
+
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+
     }
 
     private boolean haveNetworkConnection() {
