@@ -1,5 +1,7 @@
 package com.example.rharasimiuk.mundial;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,13 +14,16 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -205,9 +210,18 @@ public class LoginActivity extends AppCompatActivity {
     public void about (View view) {
 
         AlertDialog.Builder about = new AlertDialog.Builder(this);
-
-        about.setMessage("                     App made by Haraś.");
-
+        about.setTitle("About");
+        about.setPositiveButton("OK", null);
+        LinearLayout diagLayout = new LinearLayout(this);
+        diagLayout.setOrientation(LinearLayout.VERTICAL);
+        TextView text = new TextView(this);
+        text.setText("\nWorld Cup 2018" +
+                "\nApp developed by Haraś.");
+        text.setPadding(5, 5, 5, 5);
+        text.setGravity(Gravity.CENTER);
+        text.setTextSize(20);
+        diagLayout.addView(text);
+        about.setView(diagLayout);
         about.show();
 
     }
