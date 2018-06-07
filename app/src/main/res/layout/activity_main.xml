@@ -9,12 +9,11 @@
     tools:context="com.example.rharasimiuk.mundial.MainActivity"
     android:background="@drawable/back">
 
-
     <TextView
         android:id="@+id/textViewNextMatch"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginLeft="1dp"
+        android:layout_alignParentStart="true"
         android:background="#8000"
         android:gravity="center_vertical|center_horizontal"
         android:text="Next matches"
@@ -25,32 +24,18 @@
 
     <Button
         android:id="@+id/buttonBet"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="167dp"
-        android:layout_toEndOf="@+id/buttonAbout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="184dp"
         android:width="100dp"
         android:background="@drawable/buttonshape"
         android:onClick="goToBet"
-        android:text="BET"
+        android:text="More matches"
         android:textColor="#E5E5E5"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="291dp" />
-
-    <Button
-        android:id="@+id/buttonTable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/buttonBet"
-        android:layout_toStartOf="@+id/buttonExit"
-        android:width="100dp"
-        android:background="@drawable/buttonshape"
-        android:onClick="goToTables"
-        android:text="Tables"
-        android:textColor="#E5E5E5"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="339dp" />
 
     <Button
         android:id="@+id/buttonAbout"
@@ -81,10 +66,10 @@
         android:layout_alignStart="@+id/textViewNextMatch"
         android:layout_below="@+id/textViewNextMatch"
         android:layout_marginBottom="101dp"
-        android:divider="#FFFFFF"
-        android:dividerHeight="1px"
         android:background="#8000"
-        android:cacheColorHint="#000000" />
+        android:cacheColorHint="#000000"
+        android:divider="#FFFFFF"
+        android:dividerHeight="1px" />
 
     <Button
         android:id="@+id/buttonAdmin"
@@ -98,40 +83,14 @@
         android:textColor="#E5E5E5" />
 
     <Button
-        android:id="@+id/button11"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonMenu"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/buttonBet"
         android:layout_below="@+id/buttonBet"
-        android:layout_marginTop="-167dp"
-        android:width="100dp"
-        android:background="@drawable/buttonshape"
-        android:onClick="goToPoints"
-        android:textColor="#E5E5E5"
-        android:text="Points" />
-
-    <Button
-        android:id="@+id/button12"
-        android:layout_width="104dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonAbout"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="-184dp"
         android:background="@drawable/buttonshape"
-        android:onClick="checkBets"
-        android:text="Check bets"
+        android:text="Menu"
         android:textColor="#E5E5E5" />
-
-    <Button
-        android:id="@+id/button13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonBet"
-        android:layout_marginTop="-167dp"
-        android:layout_toStartOf="@+id/buttonExit"
-        android:width="100dp"
-        android:background="@drawable/buttonshape"
-        android:onClick="goToYourBets"
-        android:textColor="#E5E5E5"
-        android:text="Your bets" />
 
 </RelativeLayout>
