@@ -183,7 +183,7 @@ public class MainActivity extends ListActivity {
                         });
 
                     }
-                }, 1000);
+                }, 1500);
 
             }
         });
