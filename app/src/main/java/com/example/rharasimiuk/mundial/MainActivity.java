@@ -78,6 +78,10 @@ public class MainActivity extends ListActivity {
                             goToPoints2();
                         }else if(item.getTitle().equals("Tables")){
                             goToTables2();
+                        }else if(item.getTitle().equals("Logout")){
+                            logout2();
+                        }else if(item.getTitle().equals("Exit")){
+                            exit2();
                         }
                         return true;
                     }
@@ -188,15 +192,11 @@ public class MainActivity extends ListActivity {
 
     public void buttonEffectApply() {
         Button bet = (Button) findViewById(R.id.buttonBet);
-        Button logout = (Button) findViewById(R.id.buttonAbout);
-        Button exit = (Button) findViewById(R.id.buttonExit);
         Button admin = (Button) findViewById(R.id.buttonAdmin);
         Button menu = (Button) findViewById(R.id.buttonMenu);
 
         buttonEffect(bet);
         buttonEffect(menu);
-        buttonEffect(logout);
-        buttonEffect(exit);
         buttonEffect(admin);
     }
 
@@ -556,7 +556,36 @@ public class MainActivity extends ListActivity {
 
     }
 
+    public void logout2() {
+
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
+
+    }
+
     public void exit (View view) {
+
+        android.app.AlertDialog.Builder exit = new android.app.AlertDialog.Builder(this);
+
+        exit.setMessage("Are you sure you want to exit the application?")
+                .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        System.exit(0);
+                    }
+                })
+                .setPositiveButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        exit.show();
+    }
+
+    public void exit2 () {
 
         android.app.AlertDialog.Builder exit = new android.app.AlertDialog.Builder(this);
 
