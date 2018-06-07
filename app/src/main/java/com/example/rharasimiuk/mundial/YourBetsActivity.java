@@ -226,7 +226,7 @@ public class YourBetsActivity extends ListActivity {
                             });
 
                         }
-                    }, 1000);
+                    }, 1500);
 
                 }
             });

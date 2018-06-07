@@ -175,7 +175,7 @@ public class BetActivity extends ListActivity {
                 });
 
                     }
-                }, 1000);
+                }, 1500);
 
             }
         });
