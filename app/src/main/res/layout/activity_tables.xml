@@ -11,25 +11,24 @@
 
 
     <Button
-        android:id="@+id/buttonBack"
+        android:id="@+id/buttonHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/buttonshape"
-        android:onClick="back"
-        android:text="Back"
+        android:onClick="goToHome"
+        android:text="Home"
         android:textColor="#E5E5E5" />
 
     <Button
-        android:id="@+id/buttonExit"
+        android:id="@+id/buttonMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/buttonshape"
-        android:onClick="exit"
-        android:text="Exit"
+        android:text="Menu"
         android:textColor="#E5E5E5" />
 
     <Button
@@ -37,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonD"
-        android:layout_toEndOf="@+id/buttonBack"
+        android:layout_toEndOf="@+id/buttonHome"
         android:background="@drawable/buttonshape"
         android:onClick="getTableA"
         android:text="Group A"
@@ -48,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/buttonA"
-        android:layout_toStartOf="@+id/buttonExit"
+        android:layout_toStartOf="@+id/buttonMenu"
         android:background="@drawable/buttonshape"
         android:onClick="getTableB"
         android:text="Group B"
@@ -59,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonE"
-        android:layout_toEndOf="@+id/buttonBack"
+        android:layout_toEndOf="@+id/buttonHome"
         android:background="@drawable/buttonshape"
         android:onClick="getTableC"
         android:text="Group C"
@@ -81,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonG"
-        android:layout_toEndOf="@+id/buttonBack"
+        android:layout_toEndOf="@+id/buttonHome"
         android:background="@drawable/buttonshape"
         android:onClick="getTableE"
         android:text="Group E"
@@ -104,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="114dp"
-        android:layout_toEndOf="@+id/buttonBack"
+        android:layout_toEndOf="@+id/buttonHome"
         android:background="@drawable/buttonshape"
         android:onClick="getTableG"
         android:text="Group G"
@@ -115,7 +114,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/buttonG"
-        android:layout_toStartOf="@+id/buttonExit"
+        android:layout_toStartOf="@+id/buttonMenu"
         android:background="@drawable/buttonshape"
         android:onClick="getTableH"
         android:text="Group H"
@@ -484,17 +483,6 @@
         android:text="GROUP"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
-
-    <Button
-        android:id="@+id/buttonClear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/buttonshape"
-        android:onClick="resetTable"
-        android:text="Clear"
-        android:textColor="#E5E5E5" />
 
 
 </RelativeLayout>

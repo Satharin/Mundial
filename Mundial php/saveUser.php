@@ -4,13 +4,10 @@ require_once('dbConnect.php');
 
 $name = $_POST['login'];
 $password = $_POST['password'];
+$group_name = $_POST['group_name'];
  
-$sql = "INSERT INTO Users (login, password) 
-<<<<<<< HEAD
-        VALUES ('$name','$password')";
-=======
-        VALUES ('$login','$password')";
->>>>>>> 8c4ee0362290c6c67a8a048132071055cfd4d92d
+$sql = "INSERT INTO Users (login, password, group_name) 
+        VALUES ('$name','$password', '$group_name')";
   if(mysqli_query($con,$sql)){
     echo 'success';
   }

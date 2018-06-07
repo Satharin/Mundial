@@ -33,26 +33,24 @@
         android:textColor="#E5E5E5" />
 
     <Button
-
         android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/newAccount"
+        android:layout_marginStart="33dp"
         android:background="@drawable/buttonshape"
         android:onClick="exit"
         android:text="Exit"
         android:textColor="#E5E5E5" />
 
     <Button
-
         android:id="@+id/about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/newAccount"
+        android:layout_marginEnd="43dp"
         android:background="@drawable/buttonshape"
         android:onClick="about"
         android:text="About"

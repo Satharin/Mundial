@@ -71,15 +71,15 @@ public class MainActivity extends ListActivity {
                     public boolean onMenuItemClick(MenuItem item) {
 
                         if(item.getTitle().equals("Your bets")){
-                            goToYourBets2();
+                            goToYourBets();
                         }else if(item.getTitle().equals("Check bets")){
-                            checkBets2();
+                            goToCheckBets();
                         }else if(item.getTitle().equals("Points")){
-                            goToPoints2();
+                            goToPoints();
                         }else if(item.getTitle().equals("Tables")){
-                            goToTables2();
+                            goToTables();
                         }else if(item.getTitle().equals("Logout")){
-                            logout2();
+                            logout();
                         }else if(item.getTitle().equals("Exit")){
                             exit2();
                         }
@@ -183,7 +183,7 @@ public class MainActivity extends ListActivity {
                         });
 
                     }
-                }, 1000);
+                }, 1500);
 
             }
         });
@@ -256,7 +256,7 @@ public class MainActivity extends ListActivity {
         }
     }
 
-    public void checkBets (View view){
+    public void goToCheckBets (){
 
         if(haveNetworkConnection()) {
 
@@ -269,20 +269,7 @@ public class MainActivity extends ListActivity {
 
     }
 
-    public void checkBets2 (){
-
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), CheckBetsActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    public void goToPoints (View view) {
+    public void goToPoints () {
         if(haveNetworkConnection()) {
 
             startActivity(new Intent(getApplicationContext(), PointsActivity.class));
@@ -293,18 +280,7 @@ public class MainActivity extends ListActivity {
         }
     }
 
-    public void goToPoints2 () {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), PointsActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void goToTables (View view) {
+    public void goToTables () {
         if(haveNetworkConnection()) {
 
             startActivity(new Intent(getApplicationContext(), TablesActivity.class));
@@ -315,29 +291,7 @@ public class MainActivity extends ListActivity {
         }
     }
 
-    public void goToTables2 () {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), TablesActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void goToYourBets (View view) {
-        if(haveNetworkConnection()) {
-
-            startActivity(new Intent(getApplicationContext(), YourBetsActivity.class));
-            finish();
-
-        }else {
-            Toast.makeText(MainActivity.this,"No network connection.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void goToYourBets2 () {
+    public void goToYourBets () {
         if(haveNetworkConnection()) {
 
             startActivity(new Intent(getApplicationContext(), YourBetsActivity.class));
@@ -549,14 +503,7 @@ public class MainActivity extends ListActivity {
 
     }
 
-    public void logout(View view) {
-
-        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        finish();
-
-    }
-
-    public void logout2() {
+    public void logout() {
 
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
