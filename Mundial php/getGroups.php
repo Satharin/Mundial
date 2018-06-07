@@ -11,7 +11,7 @@
         LEFT JOIN Teams ON Teams.id_team = Matches.team_a
         LEFT JOIN (SELECT Matches.id_match, Teams.name AS team_b, date_match, time_match FROM Matches
         LEFT JOIN Teams ON Teams.id_team = Matches.team_b) as teams_b ON teams_b.id_match = Matches.id_match
-        WHERE Matches.stage = 'group' AND IF(Matches.date_match = '".$date."', (Matches.date_match = '".$date."' AND (Matches.time_match > '".$time."' OR Matches.time_match = '".$time."')),Matches.date_match > '".$date."')
+        WHERE IF(Matches.date_match = '".$date."', (Matches.date_match = '".$date."' AND (Matches.time_match > '".$time."' OR Matches.time_match = '".$time."')),Matches.date_match > '".$date."')
         ORDER BY Matches.date_match, Matches.time_match";
         
         
