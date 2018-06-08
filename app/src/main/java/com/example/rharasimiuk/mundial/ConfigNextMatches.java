@@ -33,7 +33,7 @@ public class ConfigNextMatches {
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = new JSONObject(json);
+            jsonObject = new JSONObject(String.valueOf(json));
             if (!JSON_ARRAY.equals("null")) {
                 matches = jsonObject.getJSONArray(JSON_ARRAY);
 

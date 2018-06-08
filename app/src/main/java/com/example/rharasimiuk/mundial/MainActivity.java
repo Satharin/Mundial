@@ -1,5 +1,6 @@
 package com.example.rharasimiuk.mundial;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -13,8 +14,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
-import android.view.MenuInflater;
+
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,7 +27,6 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -56,12 +56,14 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
         Button adminButton = (Button) findViewById(R.id.buttonAdmin);
         final Button menuButton = (Button) findViewById(R.id.buttonMenu);
-
+        @SuppressLint("RestrictedApi") final ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.CustomPopupTheme);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                PopupMenu popup = new PopupMenu(ctw, menuButton);
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(MainActivity.this, menuButton);
+                //PopupMenu popup = new PopupMenu(MainActivity.this, menuButton);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.menu, popup.getMenu());
@@ -132,6 +134,9 @@ public class MainActivity extends ListActivity {
                         final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                         final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
+                        buttonEffect(save);
+                        buttonEffect(close);
+
                         checkBet(login, id_match);
 
                         if (checkBets[0] != null)
@@ -170,6 +175,11 @@ public class MainActivity extends ListActivity {
                                 Toast.makeText(MainActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
                                 leftEdit.setText("");
                                 rightEdit.setText("");
+                                /*try {
+                                    TimeUnit.SECONDS.sleep(1);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }*/
                                 getNextMatch();
 
                             }
@@ -198,6 +208,7 @@ public class MainActivity extends ListActivity {
         buttonEffect(bet);
         buttonEffect(menu);
         buttonEffect(admin);
+
     }
 
     public static void buttonEffect(View button){

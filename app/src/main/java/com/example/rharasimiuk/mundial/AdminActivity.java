@@ -8,11 +8,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,6 +50,8 @@ public class AdminActivity extends ListActivity {
         requestQueue = Volley.newRequestQueue(AdminActivity.this);
 
         getGroups();
+
+        buttonEffectApply();
 
         final Button menuButton = (Button) findViewById(R.id.buttonMenu);
 
@@ -113,6 +118,10 @@ public class AdminActivity extends ListActivity {
                         final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                         final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
+                        buttonEffect(save);
+                        buttonEffect(close);
+                        buttonEffect(update);
+
                         save.setText("Save");
                         close.setText("Close");
                         update.setText("Update");
@@ -176,6 +185,36 @@ public class AdminActivity extends ListActivity {
         });
 
     }
+    public static void buttonEffect(View button){
+        button.setOnTouchListener(new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        v.getBackground().setColorFilter(Color.parseColor("#4c4cff"), PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        v.getBackground().clearColorFilter();
+                        v.invalidate();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+    public void buttonEffectApply() {
+        Button home = (Button) findViewById(R.id.buttonHome);
+        Button menu = (Button) findViewById(R.id.buttonMenu);
+
+        buttonEffect(home);
+        buttonEffect(menu);
+
+    }
+
 
     public void updateScore(String url, final String bet_a, final String bet_b, final String id_match){
 
