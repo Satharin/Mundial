@@ -1,5 +1,6 @@
 package com.example.rharasimiuk.mundial;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -79,12 +81,12 @@ public class TablesActivity extends AppCompatActivity {
         groupName = (TextView) findViewById(R.id.textViewGroupName);
 
         final Button menuButton = (Button) findViewById(R.id.buttonMenu);
-
+        @SuppressLint("RestrictedApi") final ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.CustomPopupTheme);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(TablesActivity.this, menuButton);
+                PopupMenu popup = new PopupMenu(ctw, menuButton);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.menu, popup.getMenu());

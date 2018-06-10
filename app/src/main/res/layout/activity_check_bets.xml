@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/textViewNextMatch"
-        android:layout_width="382dp"
+        android:layout_width="match_parent"
         android:layout_height="120dp"
         android:layout_marginLeft="1dp"
         android:background="#8000"
@@ -47,21 +47,24 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="132dp"
         android:layout_alignStart="@+id/textViewNextMatch"
         android:layout_below="@+id/textViewNextMatch"
         android:background="#8000"
         android:divider="#FFFFFF"
+        android:layout_above="@+id/textViewScore"
         android:dividerHeight="1px" />
 
     <TextView
         android:id="@+id/textViewScore"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:background="#8000"
         android:gravity="center_vertical|center_horizontal"
         android:text=""
-        android:textSize="15sp" />
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
 
     <ListView
         android:id="@+id/listView2"
@@ -70,6 +73,7 @@
         android:layout_above="@+id/buttonHome"
         android:layout_alignParentStart="true"
         android:background="#8000"
+        android:layout_below="@+id/textView3"
         android:divider="#FFFFFF"
         android:dividerHeight="1px" />
 
@@ -77,7 +81,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/listView2"
+        android:layout_below="@+id/textViewScore"
         android:layout_centerHorizontal="true"
         android:text="Bets"
         android:background="#8000"

@@ -1,5 +1,6 @@
 package com.example.rharasimiuk.mundial;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -13,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -59,12 +62,12 @@ public class YourBetsActivity extends ListActivity {
         buttonEffectApply();
 
         final Button menuButton = (Button) findViewById(R.id.buttonMenu);
-
+        @SuppressLint("RestrictedApi") final ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.CustomPopupTheme);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(YourBetsActivity.this, menuButton);
+                PopupMenu popup = new PopupMenu(ctw, menuButton);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.menu, popup.getMenu());
@@ -152,81 +155,94 @@ public class YourBetsActivity extends ListActivity {
                 @Override
                 public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
-                    final String id_match = ConfigNextMatches.id_matches[pos];
+                    final String id_match = ConfigYourBets.id_matches[pos];
                     checkBet(login, id_match);
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                    Date matchTime = checkDate(ConfigYourBets.dates[pos], ConfigYourBets.times[pos]);
+                    Date currentTime = Calendar.getInstance().getTime();
+                    boolean isBefore = currentTime.before(matchTime);
 
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
+                    if(currentTime.compareTo(matchTime)<=0){
 
-                        public void run() {
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
 
-                            final Dialog dialog = new Dialog(YourBetsActivity.this);
-                            dialog.setTitle("Bet");
-                            dialog.setContentView(R.layout.popup_bet);
-                            dialog.show();
-                            dialog.setCancelable(false);
-                            dialog.setCanceledOnTouchOutside(false);
+                            public void run() {
 
-                            Button save = (Button) dialog.findViewById(R.id.buttonSave);
-                            Button close = (Button) dialog.findViewById(R.id.buttonClose);
-                            TextView left = (TextView) dialog.findViewById(R.id.textViewLeft);
-                            TextView right = (TextView) dialog.findViewById(R.id.textViewRight);
-                            final TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
-                            final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
-                            final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
+                                final Dialog dialog = new Dialog(YourBetsActivity.this);
+                                dialog.setTitle("Bet");
+                                dialog.setContentView(R.layout.popup_bet);
+                                dialog.show();
+                                dialog.setCancelable(false);
+                                dialog.setCanceledOnTouchOutside(false);
 
-                            checkBet(login, id_match);
+                                Button save = (Button) dialog.findViewById(R.id.buttonSave);
+                                Button close = (Button) dialog.findViewById(R.id.buttonClose);
+                                TextView left = (TextView) dialog.findViewById(R.id.textViewLeft);
+                                TextView right = (TextView) dialog.findViewById(R.id.textViewRight);
+                                final TextView current = (TextView) dialog.findViewById(R.id.textViewCurrent);
+                                final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
+                                final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
-                            if(checkBets[0] != null)
-                                current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
-                            else
-                                current.setText("Current bet: No bet yet");
+                                checkBet(login, id_match);
 
-                            save.setText("Save");
-                            close.setText("Close");
+                                if(checkBets[0] != null)
+                                    current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
+                                else
+                                    current.setText("Current bet: No bet yet");
 
-                            left.setText(ConfigNextMatches.teams_a[pos]);
-                            right.setText(ConfigNextMatches.teams_b[pos]);
+                                save.setText("Save");
+                                close.setText("Close");
 
-                            save.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                                left.setText(ConfigNextMatches.teams_a[pos]);
+                                right.setText(ConfigNextMatches.teams_b[pos]);
 
-                                    Date matchTime = checkDate(ConfigNextMatches.dates[pos], ConfigNextMatches.times[pos]);
-                                    Date currentTime = checkDate(getDateToday(), getTimeToday());
+                                save.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
 
-                                    String bet_a = leftEdit.getText().toString();
-                                    String bet_b = rightEdit.getText().toString();
+                                        Date matchTime = checkDate(ConfigYourBets.dates[pos], ConfigYourBets.times[pos]);
+                                        Date currentTime = checkDate(getDateToday(), getTimeToday());
 
-                                    boolean isBefore = currentTime.before(matchTime);
+                                        String bet_a = leftEdit.getText().toString();
+                                        String bet_b = rightEdit.getText().toString();
 
-                                    if (isBefore) {
-                                        if (checkBets[0] != null)
-                                            updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
-                                        else
-                                            saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
-                                    } else {
-                                        Toast.makeText(YourBetsActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                                        boolean isBefore = currentTime.before(matchTime);
+
+                                        if (isBefore) {
+                                            if (checkBets[0] != null) {
+                                                updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
+                                                Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                            }
+                                            else {
+                                                saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
+                                                Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                            }
+                                        } else {
+                                            Toast.makeText(YourBetsActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                                        }
+
+                                        current.setText("Current bet: " + bet_a + ":" + bet_b);
+
+                                        leftEdit.setText("");
+                                        rightEdit.setText("");
+                                        getYourBets(loadLogin());
+
                                     }
+                                });
 
-                                    current.setText("Current bet: " + bet_a + ":" + bet_b);
-                                    Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
-                                    leftEdit.setText("");
-                                    rightEdit.setText("");
-                                    getYourBets(loadLogin());
+                                close.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
 
-                                }
-                            });
-
-                            close.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    dialog.dismiss();
-                                }
-                            });
-
-                        }
-                    }, 1500);
+                            }
+                        }, 1500);
+                    }else{
+                        Toast.makeText(YourBetsActivity.this, "Match already started or finished. You can't bet.", Toast.LENGTH_LONG).show();
+                    }
 
                 }
             });
@@ -285,7 +301,8 @@ public class YourBetsActivity extends ListActivity {
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        String todayDate = dateFormat.format(date);
+        String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        //String todayDate = dateFormat.format(date);
 
         return todayDate;
     }
@@ -352,9 +369,10 @@ public class YourBetsActivity extends ListActivity {
 
     public Date checkDate(String dateMatch, String timeMatch){
 
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        DateFormat format = new SimpleDateFormat("dd-mm-yyyy HH:mm");
+        String dateNow = dateMatch + " " + timeMatch;
         try {
-            Date matchTime = format.parse(dateMatch + " " + timeMatch);
+            Date matchTime = format.parse(dateNow);
             return matchTime;
         } catch (ParseException e) {
             e.printStackTrace();

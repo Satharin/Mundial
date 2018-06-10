@@ -1,5 +1,6 @@
 package com.example.rharasimiuk.mundial;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -14,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.view.ContextThemeWrapper;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -60,12 +62,12 @@ public class BetActivity extends ListActivity {
         getGroups(getDateToday(), getTimeToday());
 
         final Button menuButton = (Button) findViewById(R.id.buttonMenu);
-
+        @SuppressLint("RestrictedApi") final ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.CustomPopupTheme);
         menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(BetActivity.this, menuButton);
+                PopupMenu popup = new PopupMenu(ctw, menuButton);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.menu, popup.getMenu());

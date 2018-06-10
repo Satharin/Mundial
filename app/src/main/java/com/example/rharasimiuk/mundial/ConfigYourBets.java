@@ -8,7 +8,8 @@ import java.util.Arrays;
 
 public class ConfigYourBets {
 
-    public static String[] teams_a, teams_b, bets_a, bets_b, results_a, results_b, dates, times, points;
+    public static String[] teams_a, teams_b, bets_a, bets_b, results_a, results_b, dates, times,
+            points, id_matches;
 
     public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getYourBets.php?login=";
     public static final String KEY_TEAM_A = "team_a";
@@ -20,6 +21,7 @@ public class ConfigYourBets {
     public static final String KEY_DATE_MATCH = "date_match";
     public static final String KEY_TIME_MATCH = "time_match";
     public static final String KEY_POINTS = "Points";
+    public static final String KEY_ID_MATCH = "id_match";
     public static final String JSON_ARRAY = "result";
 
     private JSONArray matches = null;
@@ -48,6 +50,7 @@ public class ConfigYourBets {
                 dates = new String[matches.length()];
                 times = new String[matches.length()];
                 points = new String[matches.length()];
+                id_matches = new String[matches.length()];
 
 
                 for (int i = 0; i < matches.length(); i++) {
@@ -61,6 +64,7 @@ public class ConfigYourBets {
                     dates[i] = jo.getString(KEY_DATE_MATCH);
                     times[i] = jo.getString(KEY_TIME_MATCH);
                     points[i] = jo.getString(KEY_POINTS);
+                    id_matches[i] = jo.getString(KEY_ID_MATCH);
                 }
             } else {
                 if (teams_a != null) {
