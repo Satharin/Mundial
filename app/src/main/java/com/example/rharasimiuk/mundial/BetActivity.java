@@ -134,8 +134,8 @@ public class BetActivity extends ListActivity {
                         else if(checkBets[0].equals("-")){
                             current.setText("Current bet: No bet yet");
                         }else{
-                            current.setText("Current bet: No data");
-                            Toast.makeText(BetActivity.this, "Network too slow. Please refresh this window.", Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                            Toast.makeText(BetActivity.this, "Error while downloading data. Please try again.", Toast.LENGTH_LONG).show();
                         }
 
                     save.setText("Save");
@@ -147,36 +147,39 @@ public class BetActivity extends ListActivity {
                     save.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (leftEdit.getText().toString().trim().length() > 0 && rightEdit.getText().toString().trim().length() > 0) {
+                                Date matchTime = checkDate(ConfigGroups.dates[pos], ConfigGroups.times[pos]);
 
-                            Date matchTime = checkDate(ConfigGroups.dates[pos],ConfigGroups.times[pos]);
+                                String bet_a = leftEdit.getText().toString();
+                                String bet_b = rightEdit.getText().toString();
 
-                            String bet_a = leftEdit.getText().toString();
-                            String bet_b = rightEdit.getText().toString();
+                                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                String dateNow = ConfigGroups.current_dates[pos];
+                                Date currentTime = null;
+                                try {
+                                    currentTime = format.parse(dateNow);
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
 
-                            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                            String dateNow = ConfigGroups.current_dates[pos];
-                            Date currentTime = null;
-                            try {
-                                currentTime = format.parse(dateNow);
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                                assert currentTime != null;
+                                if (currentTime.getTime() < matchTime.getTime()) {
+                                    if (!checkBets[0].equals("null") && !checkBets[0].equals("-"))
+                                        updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
+                                    else
+                                        saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
+                                } else {
+                                    Toast.makeText(BetActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                                }
 
-                            assert currentTime != null;
-                            if(currentTime.getTime() < matchTime.getTime()){
-                                if(checkBets[0] != null)
-                                    updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
-                                else
-                                    saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
+                                current.setText("Current bet: " + bet_a + ":" + bet_b);
+                                Toast.makeText(BetActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                leftEdit.setText("");
+                                rightEdit.setText("");
                             }else{
-                                Toast.makeText(BetActivity.this,"Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(BetActivity.this, "One of text fields is empty.", Toast.LENGTH_LONG).show();
                             }
-
-                            current.setText("Current bet: " + bet_a + ":" + bet_b);
-                            Toast.makeText(BetActivity.this,"Bet successfully added to data base.", Toast.LENGTH_LONG).show();
-                            leftEdit.setText("");
-                            rightEdit.setText("");
-                    }
+                        }
                 });
 
                 close.setOnClickListener(new View.OnClickListener() {

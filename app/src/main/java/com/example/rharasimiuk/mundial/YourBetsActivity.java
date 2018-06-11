@@ -198,54 +198,55 @@ public class YourBetsActivity extends ListActivity {
                                 else if(checkBets[0].equals("-")){
                                     current.setText("Current bet: No bet yet");
                                 }else{
-                                    current.setText("Current bet: No data");
-                                    Toast.makeText(YourBetsActivity.this, "Network too slow. Please refresh this window.", Toast.LENGTH_LONG).show();
+                                    dialog.dismiss();
+                                    Toast.makeText(YourBetsActivity.this, "Error while downloading data. Please try again.", Toast.LENGTH_LONG).show();
                                 }
 
                                 save.setText("Save");
                                 close.setText("Close");
 
-                                left.setText(ConfigNextMatches.teams_a[pos]);
-                                right.setText(ConfigNextMatches.teams_b[pos]);
+                                left.setText(ConfigYourBets.teams_a[pos]);
+                                right.setText(ConfigYourBets.teams_b[pos]);
 
                                 save.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        if (leftEdit.getText().toString().trim().length() > 0 && rightEdit.getText().toString().trim().length() > 0) {
+                                            Date matchTime = checkDate(ConfigYourBets.dates[pos], ConfigYourBets.times[pos]);
 
-                                        Date matchTime = checkDate(ConfigYourBets.dates[pos], ConfigYourBets.times[pos]);
+                                            String bet_a = leftEdit.getText().toString();
+                                            String bet_b = rightEdit.getText().toString();
 
-                                        String bet_a = leftEdit.getText().toString();
-                                        String bet_b = rightEdit.getText().toString();
-
-                                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                        String dateNow = ConfigGroups.current_dates[pos];
-                                        Date currentTime = null;
-                                        try {
-                                            currentTime = format.parse(dateNow);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                        assert currentTime != null;
-                                        if(currentTime.getTime() < matchTime.getTime()){
-                                            if (checkBets[0] != null) {
-                                                updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
-                                                Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                            String dateNow = ConfigYourBets.current_dates[pos];
+                                            Date currentTime = null;
+                                            try {
+                                                currentTime = format.parse(dateNow);
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
                                             }
-                                            else {
-                                                saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
-                                                Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+
+                                            assert currentTime != null;
+                                            if (currentTime.getTime() < matchTime.getTime()) {
+                                                if (!checkBets[0].equals("null") && !checkBets[0].equals("-")) {
+                                                    updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
+                                                    Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                                } else {
+                                                    saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
+                                                    Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                                }
+                                            } else {
+                                                Toast.makeText(YourBetsActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
                                             }
-                                        } else {
-                                            Toast.makeText(YourBetsActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+
+                                            current.setText("Current bet: " + bet_a + ":" + bet_b);
+
+                                            leftEdit.setText("");
+                                            rightEdit.setText("");
+                                            getYourBets(loadLogin());
+                                        }else{
+                                            Toast.makeText(YourBetsActivity.this, "One of text fields is empty.", Toast.LENGTH_LONG).show();
                                         }
-
-                                        current.setText("Current bet: " + bet_a + ":" + bet_b);
-
-                                        leftEdit.setText("");
-                                        rightEdit.setText("");
-                                        getYourBets(loadLogin());
-
                                     }
                                 });
 

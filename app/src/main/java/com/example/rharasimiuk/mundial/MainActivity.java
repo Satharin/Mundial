@@ -144,8 +144,8 @@ public class MainActivity extends ListActivity {
                         else if(checkBets[0].equals("-")){
                             current.setText("Current bet: No bet yet");
                         }else{
-                            current.setText("Current bet: No data");
-                            Toast.makeText(MainActivity.this, "Network too slow. Please refresh this window.", Toast.LENGTH_LONG).show();
+                            dialog.dismiss();
+                            Toast.makeText(MainActivity.this, "Error while downloading data. Please try again.", Toast.LENGTH_LONG).show();
                         }
 
                         save.setText("Save");
@@ -158,36 +158,39 @@ public class MainActivity extends ListActivity {
                             @Override
                             public void onClick(View v) {
 
-                                Date matchTime = checkDate(ConfigNextMatches.dates[pos], ConfigNextMatches.times[pos]);
+                                if(leftEdit.getText().toString().trim().length() > 0 && rightEdit.getText().toString().trim().length() > 0) {
+                                    Date matchTime = checkDate(ConfigNextMatches.dates[pos], ConfigNextMatches.times[pos]);
 
-                                String bet_a = leftEdit.getText().toString();
-                                String bet_b = rightEdit.getText().toString();
+                                    String bet_a = leftEdit.getText().toString();
+                                    String bet_b = rightEdit.getText().toString();
 
-                                DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                                String dateNow = ConfigNextMatches.current_dates[pos];
-                                Date currentTime = null;
-                                try {
-                                    currentTime = format.parse(dateNow);
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
+                                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    String dateNow = ConfigNextMatches.current_dates[pos];
+                                    Date currentTime = null;
+                                    try {
+                                        currentTime = format.parse(dateNow);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    assert currentTime != null;
+                                    if (currentTime.getTime() < matchTime.getTime()) {
+                                        if (!checkBets[0].equals("null") && !checkBets[0].equals("-"))
+                                            updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
+                                        else
+                                            saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    current.setText("Current bet: " + bet_a + ":" + bet_b);
+                                    Toast.makeText(MainActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                    leftEdit.setText("");
+                                    rightEdit.setText("");
+                                    getNextMatch();
+                                }else{
+                                    Toast.makeText(MainActivity.this, "One of text fields is empty.", Toast.LENGTH_LONG).show();
                                 }
-
-                                assert currentTime != null;
-                                if(currentTime.getTime() < matchTime.getTime()){
-                                    if (checkBets[0] != null)
-                                        updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
-                                    else
-                                        saveBets("https://mundial2018.000webhostapp.com/mundial/saveBet.php", login, bet_a, bet_b, id_match);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Match already started. You can't bet.", Toast.LENGTH_LONG).show();
-                                }
-
-                                current.setText("Current bet: " + bet_a + ":" + bet_b);
-                                Toast.makeText(MainActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
-                                leftEdit.setText("");
-                                rightEdit.setText("");
-                                getNextMatch();
-
                             }
                         });
 
