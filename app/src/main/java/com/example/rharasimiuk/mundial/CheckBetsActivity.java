@@ -108,7 +108,7 @@ public class CheckBetsActivity extends ListActivity {
                             score.setText(ConfigCheckBets.teams_a[pos] + " " + ConfigCheckBets.results_a[pos] + " : " + ConfigCheckBets.results_b[pos] + " " + ConfigCheckBets.teams_b[pos]);
 
                         }
-                    }, 1500);
+                    }, 1000);
 
                 }
 

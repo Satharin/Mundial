@@ -47,7 +47,7 @@ import java.util.TimeZone;
 
 public class YourBetsActivity extends ListActivity {
 
-    String[] checkBets;
+    String[] checkBets = new String[2];
 
     RequestQueue requestQueue;
 
@@ -156,13 +156,22 @@ public class YourBetsActivity extends ListActivity {
                 public void onItemClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
 
                     final String id_match = ConfigYourBets.id_matches[pos];
-                    checkBet(login, id_match);
-                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
                     Date matchTime = checkDate(ConfigYourBets.dates[pos], ConfigYourBets.times[pos]);
-                    Date currentTime = Calendar.getInstance().getTime();
-                    boolean isBefore = currentTime.before(matchTime);
 
-                    if(currentTime.compareTo(matchTime)<=0){
+                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    String dateNow = ConfigYourBets.current_dates[pos];
+                    Date currentTime = null;
+                    try {
+                        currentTime = format.parse(dateNow);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    if(currentTime.getTime() < matchTime.getTime()){
+                        checkBets[0] = "null";
+                        checkBets[1] = "null";
+                        checkBet(login, id_match);
 
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
@@ -184,12 +193,14 @@ public class YourBetsActivity extends ListActivity {
                                 final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                                 final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
-                                checkBet(login, id_match);
-
-                                if(checkBets[0] != null)
+                                if (!checkBets[0].equals("-") && !checkBets[0].equals("null"))
                                     current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
-                                else
+                                else if(checkBets[0].equals("-")){
                                     current.setText("Current bet: No bet yet");
+                                }else{
+                                    current.setText("Current bet: No data");
+                                    Toast.makeText(YourBetsActivity.this, "Network too slow. Please refresh this window.", Toast.LENGTH_LONG).show();
+                                }
 
                                 save.setText("Save");
                                 close.setText("Close");
@@ -202,14 +213,21 @@ public class YourBetsActivity extends ListActivity {
                                     public void onClick(View v) {
 
                                         Date matchTime = checkDate(ConfigYourBets.dates[pos], ConfigYourBets.times[pos]);
-                                        Date currentTime = checkDate(getDateToday(), getTimeToday());
 
                                         String bet_a = leftEdit.getText().toString();
                                         String bet_b = rightEdit.getText().toString();
 
-                                        boolean isBefore = currentTime.before(matchTime);
+                                        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                        String dateNow = ConfigGroups.current_dates[pos];
+                                        Date currentTime = null;
+                                        try {
+                                            currentTime = format.parse(dateNow);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
 
-                                        if (isBefore) {
+                                        assert currentTime != null;
+                                        if(currentTime.getTime() < matchTime.getTime()){
                                             if (checkBets[0] != null) {
                                                 updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
                                                 Toast.makeText(YourBetsActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
@@ -239,7 +257,7 @@ public class YourBetsActivity extends ListActivity {
                                 });
 
                             }
-                        }, 1500);
+                        }, 1000);
                     }else{
                         Toast.makeText(YourBetsActivity.this, "Match already started or finished. You can't bet.", Toast.LENGTH_LONG).show();
                     }
@@ -297,27 +315,6 @@ public class YourBetsActivity extends ListActivity {
 
     }
 
-    public String getDateToday(){
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-        //String todayDate = dateFormat.format(date);
-
-        return todayDate;
-    }
-
-    public String getTimeToday(){
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
-        Date currentLocalTime = cal.getTime();
-        DateFormat time = new SimpleDateFormat("HH:mm");
-        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
-
-        String localTime = time.format(currentLocalTime);
-
-        return localTime;
-    }
-
     public void checkBet(String login, String id_match) {
 
         final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
@@ -352,15 +349,15 @@ public class YourBetsActivity extends ListActivity {
         String bet_aCheck;
         String bet_bCheck;
 
-        if(ConfigBet.bets_a != null) {
+        if(!ConfigBet.bets_a[0].equals("null")) {
 
             bet_aCheck = ConfigBet.bets_a[0];
             bet_bCheck = ConfigBet.bets_b[0];
 
         }else{
 
-            bet_aCheck = null;
-            bet_bCheck = null;
+            bet_aCheck = "-";
+            bet_bCheck = "-";
         }
 
         return new String[] {bet_aCheck, bet_bCheck};
@@ -369,7 +366,7 @@ public class YourBetsActivity extends ListActivity {
 
     public Date checkDate(String dateMatch, String timeMatch){
 
-        DateFormat format = new SimpleDateFormat("dd-mm-yyyy HH:mm");
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String dateNow = dateMatch + " " + timeMatch;
         try {
             Date matchTime = format.parse(dateNow);

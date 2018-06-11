@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class ConfigBet {
 
-    public static String[] logins, bets_a, bets_b, id_matches;
+    public static String[] logins, bets_a = new String[1], bets_b, id_matches;
 
     public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/checkBet.php?login=";
     public static final String KEY_LOGIN = "login";
@@ -28,10 +28,11 @@ public class ConfigBet {
     protected void ConfigBet() {
 
         JSONObject jsonObject = null;
+        bets_a[0] = "null";
 
         try {
             jsonObject = new JSONObject(json);
-            if (!JSON_ARRAY.equals("")) {
+            if (!json.equals("{\"result\":[\"null\"]}")) {
                 table = jsonObject.getJSONArray(JSON_ARRAY);
 
                 logins = new String[table.length()];
@@ -49,7 +50,7 @@ public class ConfigBet {
                 }
             } else {
                 if (bets_a != null) {
-                    Arrays.fill(bets_a, null);
+                    Arrays.fill(bets_a, "null");
                 }
             }
 

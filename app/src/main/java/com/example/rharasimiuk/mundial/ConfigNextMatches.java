@@ -8,9 +8,9 @@ import java.util.Arrays;
 
 public class ConfigNextMatches {
 
-    public static String[] teams_a, teams_b, dates, times, bets_a, bets_b, id_matches;
+    public static String[] teams_a, teams_b, dates, times, bets_a, bets_b, id_matches, current_dates;
 
-    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getNextMatches.php?date_match=";
+    public static final String DATA_URL = "https://mundial2018.000webhostapp.com/mundial/getNextMatches.php?login=";
     public static final String KEY_TEAM_A = "team_a";
     public static final String KEY_TEAM_B = "team_b";
     public static final String KEY_DATE_MATCH = "date_match";
@@ -18,6 +18,7 @@ public class ConfigNextMatches {
     public static final String KEY_BET_A = "bet_a";
     public static final String KEY_BET_B = "bet_b";
     public static final String KEY_ID_MATCH = "id_match";
+    public static final String KEY_CURRENT_DATE = "currentdate";
     public static final String JSON_ARRAY = "result";
 
     private JSONArray matches = null;
@@ -44,6 +45,7 @@ public class ConfigNextMatches {
                 bets_a = new String[matches.length()];
                 bets_b = new String[matches.length()];
                 id_matches = new String[matches.length()];
+                current_dates = new String[matches.length()];
 
 
                 for (int i = 0; i < matches.length(); i++) {
@@ -55,6 +57,7 @@ public class ConfigNextMatches {
                     bets_a[i] = jo.getString(KEY_BET_A);
                     bets_b[i] = jo.getString(KEY_BET_B);
                     id_matches[i] = jo.getString(KEY_ID_MATCH);
+                    current_dates[i] = jo.getString(KEY_CURRENT_DATE);
                 }
             } else {
                 if (teams_a != null) {
