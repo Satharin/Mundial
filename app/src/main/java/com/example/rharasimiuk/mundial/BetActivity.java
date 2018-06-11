@@ -47,7 +47,7 @@ import java.util.TimeZone;
 
 public class BetActivity extends ListActivity {
 
-    String[] checkBets;
+    String[] checkBets = new String[2];
 
     RequestQueue requestQueue;
 
@@ -59,7 +59,7 @@ public class BetActivity extends ListActivity {
 
         requestQueue = Volley.newRequestQueue(BetActivity.this);
 
-        getGroups(getDateToday(), getTimeToday());
+        getGroups();
 
         final Button menuButton = (Button) findViewById(R.id.buttonMenu);
         @SuppressLint("RestrictedApi") final ContextThemeWrapper ctw = new ContextThemeWrapper(this, R.style.CustomPopupTheme);
@@ -107,7 +107,8 @@ public class BetActivity extends ListActivity {
 
                 final String id_match = ConfigGroups.id_matches[pos];
                 checkBet(login, id_match);
-
+                checkBets[0] = "null";
+                checkBets[1] = "null";
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
 
@@ -128,12 +129,14 @@ public class BetActivity extends ListActivity {
                     final EditText leftEdit = (EditText) dialog.findViewById(R.id.editTextLeft);
                     final EditText rightEdit = (EditText) dialog.findViewById(R.id.editTextRight);
 
-                    checkBet(login, id_match);
-
-                    if(checkBets[0] != null)
-                        current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
-                    else
-                        current.setText("Current bet: No bet yet");
+                        if (!checkBets[0].equals("-") && !checkBets[0].equals("null"))
+                            current.setText("Current bet: " + checkBets[0] + ":" + checkBets[1]);
+                        else if(checkBets[0].equals("-")){
+                            current.setText("Current bet: No bet yet");
+                        }else{
+                            current.setText("Current bet: No data");
+                            Toast.makeText(BetActivity.this, "Network too slow. Please refresh this window.", Toast.LENGTH_LONG).show();
+                        }
 
                     save.setText("Save");
                     close.setText("Close");
@@ -146,14 +149,21 @@ public class BetActivity extends ListActivity {
                         public void onClick(View v) {
 
                             Date matchTime = checkDate(ConfigGroups.dates[pos],ConfigGroups.times[pos]);
-                            Date currentTime = checkDate(getDateToday(), getTimeToday());
 
                             String bet_a = leftEdit.getText().toString();
                             String bet_b = rightEdit.getText().toString();
 
-                            boolean isBefore = currentTime.before(matchTime);
+                            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                            String dateNow = ConfigGroups.current_dates[pos];
+                            Date currentTime = null;
+                            try {
+                                currentTime = format.parse(dateNow);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
 
-                            if(isBefore){
+                            assert currentTime != null;
+                            if(currentTime.getTime() < matchTime.getTime()){
                                 if(checkBets[0] != null)
                                     updateBets("https://mundial2018.000webhostapp.com/mundial/updateBet.php", login, bet_a, bet_b, id_match);
                                 else
@@ -177,7 +187,7 @@ public class BetActivity extends ListActivity {
                 });
 
                     }
-                }, 1500);
+                }, 1000);
 
             }
         });
@@ -280,26 +290,6 @@ public class BetActivity extends ListActivity {
         exit.show();
     }
 
-    public String getDateToday(){
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        String todayDate = dateFormat.format(date);
-
-        return todayDate;
-    }
-
-    public String getTimeToday(){
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
-        Date currentLocalTime = cal.getTime();
-        DateFormat time = new SimpleDateFormat("HH:mm");
-        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
-
-        String localTime = time.format(currentLocalTime);
-
-        return localTime;
-    }
-
     public String loadLogin() {
 
         SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
@@ -309,11 +299,11 @@ public class BetActivity extends ListActivity {
 
     }
 
-    public void getGroups (String todayDate, String localTime) {
+    public void getGroups () {
 
         final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigGroups.DATA_URL + todayDate + "&time_match=" + localTime;
+        String url = ConfigGroups.DATA_URL;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -387,15 +377,15 @@ public class BetActivity extends ListActivity {
         String bet_aCheck;
         String bet_bCheck;
 
-        if(ConfigBet.bets_a != null) {
+        if(!ConfigBet.bets_a[0].equals("null")) {
 
             bet_aCheck = ConfigBet.bets_a[0];
             bet_bCheck = ConfigBet.bets_b[0];
 
         }else{
 
-            bet_aCheck = null;
-            bet_bCheck = null;
+            bet_aCheck = "-";
+            bet_bCheck = "-";
         }
 
         return new String[] {bet_aCheck, bet_bCheck};
