@@ -100,7 +100,7 @@ public class MainActivity extends ListActivity {
 
         getNextMatch();
 
-        if (!loadLogin().equals("Haras"))
+        if (!loadLogin().equals("Haras") && !loadLogin().equals("Haras_SW"))
             adminButton.setVisibility(View.INVISIBLE);
 
         final String login = loadLogin();

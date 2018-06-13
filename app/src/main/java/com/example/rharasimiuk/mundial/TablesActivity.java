@@ -42,6 +42,7 @@ public class TablesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_tables);
 
         buttonEffectApply();
+        getTableA();
 
         team1 = (TextView) findViewById(R.id.textViewTeam1);
         m1 = (TextView) findViewById(R.id.textViewM1);
@@ -115,6 +116,32 @@ public class TablesActivity extends AppCompatActivity {
                 popup.show(); //showing popup menu
             }
         }); //closing the setOnClickListener method
+
+    }
+
+    public void getTableA () {
+
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+        String url = ConfigTableA.DATA_URL;
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadingMatches.dismiss();
+                showJSONa(response);
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(TablesActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
 
     }
 

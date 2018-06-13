@@ -9,7 +9,6 @@
     android:background="@drawable/back">
 
     <Button
-
         android:id="@+id/login"
         android:layout_width="123dp"
         android:layout_height="wrap_content"

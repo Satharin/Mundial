@@ -62,7 +62,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        editName.setText(loadLogin());
+        editPassword.requestFocus();
         buttonEffectApply();
+    }
+
+    public String loadLogin() {
+
+        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        String login = loadGame.getString("login", "");
+
+        return login;
+
     }
 
     public void buttonEffectApply() {
@@ -226,7 +237,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    //Save player_name
     public void saveLogin(String login) {
 
         SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
