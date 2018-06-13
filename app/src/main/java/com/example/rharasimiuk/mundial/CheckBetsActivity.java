@@ -104,7 +104,8 @@ public class CheckBetsActivity extends ListActivity {
                         public void run() {
 
                             TextView score = (TextView) findViewById(R.id.textViewScore);
-                            checkBets(id_match);
+                            checkBets(id_match, loadLogin());
+                            getGroups();
                             score.setText(ConfigCheckBets.teams_a[pos] + " " + ConfigCheckBets.results_a[pos] + " : " + ConfigCheckBets.results_b[pos] + " " + ConfigCheckBets.teams_b[pos]);
 
                         }
@@ -117,11 +118,11 @@ public class CheckBetsActivity extends ListActivity {
 
     }
 
-    public void checkBets(String idMatch){
+    public void checkBets(String idMatch, String login){
 
         final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigCheckUserBets.DATA_URL + idMatch;
+        String url = ConfigCheckUserBets.DATA_URL + idMatch + "&login=" + login;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
@@ -173,6 +174,15 @@ public class CheckBetsActivity extends ListActivity {
 
     }
 
+    public String loadLogin() {
+
+        android.content.SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        String login = loadGame.getString("login", "");
+
+        return login;
+
+    }
+
     public String getDateToday(){
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -197,7 +207,7 @@ public class CheckBetsActivity extends ListActivity {
 
         final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
 
-        String url = ConfigCheckBets.DATA_URL + getDateToday() + "&time_match=" + getTimeToday();
+        String url = ConfigCheckBets.DATA_URL;
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override

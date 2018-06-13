@@ -73,7 +73,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             final ProgressDialog loadingCreate = ProgressDialog.show(this, "Please wait...", "Fetching...", false, false);
 
-            String url = ConfigCreate.DATA_URL + login + "&group_name=" + group_name;
+            String url = ConfigCreate.DATA_URL + login;
 
             StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
                 @Override
@@ -121,6 +121,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }else if(password.equals(confirm)&&!password.equals("")){
             Toast.makeText(CreateAccountActivity.this, "Registration completed.", Toast.LENGTH_LONG).show();
             savePlayer("https://mundial2018.000webhostapp.com/mundial/saveUser.php", login, password, group_name);
+            saveLogin(login);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }else{
@@ -128,6 +129,15 @@ public class CreateAccountActivity extends AppCompatActivity {
             editTextPassword.setText("");
             editTextConfirm.setText("");
         }
+
+    }
+
+    public void saveLogin(String login) {
+
+        android.content.SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
+        android.content.SharedPreferences.Editor save = saveGame.edit();
+        save.putString("login", login);
+        save.apply();
 
     }
 

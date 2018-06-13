@@ -184,10 +184,13 @@ public class MainActivity extends ListActivity {
                                     }
 
                                     current.setText("Current bet: " + bet_a + ":" + bet_b);
+
                                     Toast.makeText(MainActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                    getNextMatchAfterBet(leftEdit.getText().toString() , rightEdit.getText().toString(), pos);
+                                    dialog.dismiss();
                                     leftEdit.setText("");
                                     rightEdit.setText("");
-                                    getNextMatch();
+
                                 }else{
                                     Toast.makeText(MainActivity.this, "One of text fields is empty.", Toast.LENGTH_LONG).show();
                                 }
@@ -366,6 +369,72 @@ public class MainActivity extends ListActivity {
 
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
                 getListView().setAdapter(adapter);
+
+            }else{
+
+                matches[i] = ConfigNextMatches.teams_a[i] + " - " + ConfigNextMatches.teams_b[i] + " " +
+                        ConfigNextMatches.dates[i] + " " + ConfigNextMatches.times[i] +
+                        "\nNo bet";
+
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+                getListView().setAdapter(adapter);
+
+            }
+        }
+
+    }
+
+    public void getNextMatchAfterBet (final String bet_a, final String bet_b, final int position) {
+
+        final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
+
+        String url = ConfigNextMatches.DATA_URL + loadLogin();
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                loadingMatches.dismiss();
+                showJSONafterBet(response, bet_a, bet_b, position);
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void showJSONafterBet(String json, String bet_a, String bet_b, int position) {
+
+        ConfigNextMatches pj = new ConfigNextMatches(json);
+        pj.ConfigNextMatches();
+
+        String[] matches = new String[ConfigNextMatches.teams_a.length];
+
+        for (int i = 0; i < ConfigNextMatches.teams_a.length; i++) {
+
+            if (!ConfigNextMatches.bets_a[i].equals("-")) {
+
+                if(i == position){
+                    matches[i] = ConfigNextMatches.teams_a[i] + " - " + ConfigNextMatches.teams_b[i] + " " +
+                        ConfigNextMatches.dates[i] + " " + ConfigNextMatches.times[i] +
+                        "\nYour bet: " + bet_a + ":" + bet_b;
+                }else{
+                matches[i] = ConfigNextMatches.teams_a[i] + " - " + ConfigNextMatches.teams_b[i] + " " +
+                        ConfigNextMatches.dates[i] + " " + ConfigNextMatches.times[i] +
+                        "\nYour bet: " + ConfigNextMatches.bets_a[i] + ":" + ConfigNextMatches.bets_b[i];
+
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), R.layout.my_custom_layout, matches);
+                getListView().setAdapter(adapter);
+                }
 
             }else{
 
