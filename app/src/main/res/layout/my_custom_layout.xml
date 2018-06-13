@@ -3,7 +3,7 @@
     android:id="@android:id/text1"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:layout_width="fill_parent"
-    android:textSize="20sp"
+    android:textSize="18sp"
     android:paddingLeft="6dip"
     android:paddingRight="6dip"
     android:gravity="center"

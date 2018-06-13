@@ -243,6 +243,7 @@ public class YourBetsActivity extends ListActivity {
 
                                             leftEdit.setText("");
                                             rightEdit.setText("");
+                                            dialog.dismiss();
                                             getYourBets(loadLogin());
                                         }else{
                                             Toast.makeText(YourBetsActivity.this, "One of text fields is empty.", Toast.LENGTH_LONG).show();

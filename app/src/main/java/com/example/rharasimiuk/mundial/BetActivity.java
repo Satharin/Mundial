@@ -174,6 +174,7 @@ public class BetActivity extends ListActivity {
 
                                 current.setText("Current bet: " + bet_a + ":" + bet_b);
                                 Toast.makeText(BetActivity.this, "Bet successfully added to data base.", Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
                                 leftEdit.setText("");
                                 rightEdit.setText("");
                             }else{
