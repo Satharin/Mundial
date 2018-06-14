@@ -17,7 +17,7 @@
                 $output[]=$e;
                 
                 if(is_null($output)){
-                   $output[]="";}
+                   $output[]="null";}
  
                 print(json_encode(array("result"=>$output)));
  

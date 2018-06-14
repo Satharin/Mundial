@@ -18,8 +18,8 @@ function saveBet()
         $id_match = $_POST['id_match'];
       
  
-       $sql = "INSERT INTO Bets (login, bet_a, bet_b, id_match, points) 
-        VALUES ('$login', '$bet_a', '$bet_b', '$id_match', '0')";
+       $sql = "INSERT INTO Bets (login, bet_a, bet_b, id_match, points, exact_result) 
+        VALUES ('$login', '$bet_a', '$bet_b', '$id_match', '0', '0')";
   
        mysqli_query($con, $sql) or die (mysqli_error($con));
        mysqli_close($con);
