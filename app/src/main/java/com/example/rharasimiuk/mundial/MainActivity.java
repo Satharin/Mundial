@@ -267,7 +267,7 @@ public class MainActivity extends ListActivity {
     public void goToAdmin (View view) {
         if(haveNetworkConnection()) {
 
-            if(loadLogin().equals("Haras")) {
+            if(loadLogin().equals("Haras") || loadLogin().equals("Haras_SW")) {
                 startActivity(new Intent(getApplicationContext(), AdminActivity.class));
                 finish();
             }else{
