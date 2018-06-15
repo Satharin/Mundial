@@ -4,7 +4,8 @@
 		
 		require_once('dbConnect.php');
 		
-		$sql = "SELECT * FROM Group_D ORDER BY points DESC, balance DESC";
+		$sql = "SELECT id_group, team, matches, goals_scored, goals_lost, IF(LOCATE('-',balance2) > 0, CONCAT(REPLACE(balance2,'-',''),'-'), balance2) as balance, points FROM Group_D
+            ORDER BY points DESC, balance2 DESC";
         
 		$r = mysqli_query($con,$sql);
                 
