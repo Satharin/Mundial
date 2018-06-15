@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Czas generowania: 14 Cze 2018, 07:12
+-- Czas generowania: 15 Cze 2018, 07:35
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.0.26
 
@@ -43,36 +43,76 @@ CREATE TABLE `Bets` (
 --
 
 INSERT INTO `Bets` (`id_bet`, `login`, `bet_a`, `bet_b`, `id_match`, `Points`, `exact_result`) VALUES
-(80, 'Haras', 2, 0, 1, 0, 0),
-(81, 'Beki', 0, 0, 1, 0, 0),
-(82, 'koucz', 1, 0, 1, 0, 0),
+(80, 'Haras', 3, 0, 1, 2, 0),
+(81, 'Beki', 1, 0, 1, 2, 0),
+(82, 'koucz', 1, 0, 1, 2, 0),
 (88, 'Haras', 0, 2, 2, 0, 0),
-(89, 'Beki', 1, 1, 2, 0, 0),
-(90, 'Beki', 0, 2, 8, 0, 0),
+(89, 'Beki', 1, 2, 2, 0, 0),
+(90, 'Beki', 2, 1, 8, 0, 0),
 (92, 'Haras', 1, 1, 7, 0, 0),
-(118, 'Rękaw', 2, 0, 1, 0, 0),
-(121, 'Rękaw', 1, 0, 2, 0, 0),
+(118, 'Rękaw', 2, 0, 1, 2, 0),
+(121, 'Rękaw', 1, 2, 2, 0, 0),
 (122, 'Rękaw', 1, 0, 7, 0, 0),
 (123, 'Bordi', 1, 2, 2, 0, 0),
-(138, 'AdamM', 2, 0, 1, 0, 0),
+(138, 'AdamM', 2, 0, 1, 2, 0),
 (141, 'AdamM', 0, 2, 2, 0, 0),
 (142, 'AdamM', 0, 0, 7, 0, 0),
 (143, 'AdamM', 1, 1, 8, 0, 0),
 (144, 'Haras_SW', 2, 2, 7, 0, 0),
 (145, 'Bordi', 0, 2, 7, 0, 0),
 (146, 'AdamM', 3, 0, 13, 0, 0),
-(147, 'Haras_SW', 3, 0, 1, 0, 0),
+(147, 'Haras_SW', 3, 0, 1, 2, 0),
 (148, 'Haras_SW', 1, 2, 2, 0, 0),
-(149, 'Jarek2', 4, 0, 1, 0, 0),
+(149, 'Jarek2', 4, 0, 1, 2, 0),
 (150, 'Jarek2', 1, 2, 2, 0, 0),
 (151, 'Jarek2', 1, 0, 7, 0, 0),
 (152, 'Jarek2', 1, 1, 8, 0, 0),
 (153, 'Jarek2', 1, 2, 13, 0, 0),
-(154, 'vardos', 3, 0, 1, 0, 0),
-(155, 'Bordi', 2, 0, 1, 0, 0),
-(157, 'Buczi', 3, 1, 1, 0, 0),
-(158, 'Gelo PrzeeHooy', 3, 1, 1, 0, 0),
-(159, 'Janex', 3, 0, 1, 0, 0);
+(154, 'vardos', 3, 0, 1, 2, 0),
+(155, 'Bordi', 2, 0, 1, 2, 0),
+(157, 'Buczi', 3, 1, 1, 2, 0),
+(158, 'Gelo PrzeeHooy', 3, 1, 1, 2, 0),
+(159, 'Janex', 3, 0, 1, 2, 0),
+(160, 'Gelo PrzeeHooy', 0, 2, 7, 0, 0),
+(161, 'Gelo PrzeeHooy', 1, 3, 2, 0, 0),
+(162, 'Gelo PrzeeHooy', 1, 2, 8, 0, 0),
+(163, 'Gelo PrzeeHooy', 4, 2, 13, 0, 0),
+(164, 'Beki', 2, 0, 7, 0, 0),
+(165, 'Beki', 4, 0, 13, 0, 0),
+(166, 'Romek', 2, 1, 1, 2, 0),
+(167, 'Stefan', 2, 1, 1, 2, 0),
+(168, 'Stefan', 1, 1, 2, 0, 0),
+(169, 'Stefan', 2, 1, 7, 0, 0),
+(170, 'Stefan', 1, 2, 8, 0, 0),
+(171, 'Stefan', 3, 0, 13, 0, 0),
+(172, 'jordanrafalm', 2, 1, 1, 2, 0),
+(173, 'jordanrafalm', 0, 3, 2, 0, 0),
+(174, 'AdamD', 3, 1, 1, 2, 0),
+(175, 'Escobar', 3, 0, 1, 2, 0),
+(176, 'vardos', 0, 0, 8, 0, 0),
+(177, 'AdamD', 1, 2, 2, 0, 0),
+(178, 'AdamD', 1, 0, 7, 0, 0),
+(179, 'AdamD', 1, 1, 8, 0, 0),
+(180, 'AdamD', 1, 0, 13, 0, 0),
+(181, 'AdamD', 2, 0, 19, 0, 0),
+(182, 'koucz', 1, 2, 2, 0, 0),
+(183, 'koucz', 1, 0, 7, 0, 0),
+(184, 'koucz', 2, 2, 8, 0, 0),
+(185, 'Haras_SW', 0, 1, 8, 0, 0),
+(186, 'Haras', 1, 2, 8, 0, 0),
+(187, 'Gelo PrzeeHooy', 5, 1, 19, 0, 0),
+(188, 'Janex', 0, 2, 2, 0, 0),
+(189, 'Janex', 0, 0, 7, 0, 0),
+(190, 'Janex', 1, 2, 8, 0, 0),
+(191, 'vardos', 1, 3, 2, 0, 0),
+(192, 'vardos', 0, 1, 7, 0, 0),
+(193, 'Romek', 2, 2, 2, 0, 0),
+(194, 'Romek', 1, 1, 7, 0, 0),
+(195, 'Romek', 2, 1, 8, 0, 0),
+(196, 'Escobar', 2, 2, 2, 0, 0),
+(197, 'Escobar', 1, 2, 7, 0, 0),
+(198, 'Escobar', 2, 4, 8, 0, 0),
+(199, 'Bordi', 1, 3, 8, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -86,7 +126,7 @@ CREATE TABLE `Group_A` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -94,11 +134,11 @@ CREATE TABLE `Group_A` (
 -- Zrzut danych tabeli `Group_A`
 --
 
-INSERT INTO `Group_A` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'Russia', 0, 0, 0, 0, 0),
-(2, 'Saudi Arabia', 0, 0, 0, 0, 0),
-(3, 'Egypt', 0, 0, 0, 0, 0),
-(4, 'Uruguay', 0, 0, 0, 0, 0);
+INSERT INTO `Group_A` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'Russia', 1, 5, 0, '5', 3),
+(2, 'Saudi Arabia', 1, 0, 5, '-5', 0),
+(3, 'Egypt', 0, 0, 0, '0', 0),
+(4, 'Uruguay', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -112,7 +152,7 @@ CREATE TABLE `Group_B` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -120,11 +160,11 @@ CREATE TABLE `Group_B` (
 -- Zrzut danych tabeli `Group_B`
 --
 
-INSERT INTO `Group_B` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'Portugal', 0, 0, 0, 0, 0),
-(2, 'Spain', 0, 0, 0, 0, 0),
-(3, 'Marocco', 0, 0, 0, 0, 0),
-(4, 'Iran', 0, 0, 0, 0, 0);
+INSERT INTO `Group_B` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'Portugal', 0, 0, 0, '0', 0),
+(2, 'Spain', 0, 0, 0, '0', 0),
+(3, 'Marocco', 0, 0, 0, '0', 0),
+(4, 'Iran', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -138,7 +178,7 @@ CREATE TABLE `Group_C` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -146,11 +186,11 @@ CREATE TABLE `Group_C` (
 -- Zrzut danych tabeli `Group_C`
 --
 
-INSERT INTO `Group_C` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'France', 0, 0, 0, 0, 0),
-(2, 'Australia', 0, 0, 0, 0, 0),
-(3, 'Peru', 0, 0, 0, 0, 0),
-(4, 'Denmark', 0, 0, 0, 0, 0);
+INSERT INTO `Group_C` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'France', 0, 0, 0, '0', 0),
+(2, 'Australia', 0, 0, 0, '0', 0),
+(3, 'Peru', 0, 0, 0, '0', 0),
+(4, 'Denmark', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -164,7 +204,7 @@ CREATE TABLE `Group_D` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -172,11 +212,11 @@ CREATE TABLE `Group_D` (
 -- Zrzut danych tabeli `Group_D`
 --
 
-INSERT INTO `Group_D` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'Argentina', 0, 0, 0, 0, 0),
-(2, 'Iceland', 0, 0, 0, 0, 0),
-(3, 'Croatia', 0, 0, 0, 0, 0),
-(4, 'Nigeria', 0, 0, 0, 0, 0);
+INSERT INTO `Group_D` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'Argentina', 0, 0, 0, '0', 0),
+(2, 'Iceland', 0, 0, 0, '0', 0),
+(3, 'Croatia', 0, 0, 0, '0', 0),
+(4, 'Nigeria', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -190,7 +230,7 @@ CREATE TABLE `Group_E` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -198,11 +238,11 @@ CREATE TABLE `Group_E` (
 -- Zrzut danych tabeli `Group_E`
 --
 
-INSERT INTO `Group_E` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'Brazil', 0, 0, 0, 0, 0),
-(2, 'Switzerland', 0, 0, 0, 0, 0),
-(3, 'Costa Rica', 0, 0, 0, 0, 0),
-(4, 'Serbia', 0, 0, 0, 0, 0);
+INSERT INTO `Group_E` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'Brazil', 0, 0, 0, '0', 0),
+(2, 'Switzerland', 0, 0, 0, '0', 0),
+(3, 'Costa Rica', 0, 0, 0, '0', 0),
+(4, 'Serbia', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -216,7 +256,7 @@ CREATE TABLE `Group_F` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -224,11 +264,11 @@ CREATE TABLE `Group_F` (
 -- Zrzut danych tabeli `Group_F`
 --
 
-INSERT INTO `Group_F` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'Germany', 0, 0, 0, 0, 0),
-(2, 'Mexico', 0, 0, 0, 0, 0),
-(3, 'Sweden', 0, 0, 0, 0, 0),
-(4, 'South Korea', 0, 0, 0, 0, 0);
+INSERT INTO `Group_F` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'Germany', 0, 0, 0, '0', 0),
+(2, 'Mexico', 0, 0, 0, '0', 0),
+(3, 'Sweden', 0, 0, 0, '0', 0),
+(4, 'South Korea', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -242,7 +282,7 @@ CREATE TABLE `Group_G` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -250,11 +290,11 @@ CREATE TABLE `Group_G` (
 -- Zrzut danych tabeli `Group_G`
 --
 
-INSERT INTO `Group_G` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'Belgium', 0, 0, 0, 0, 0),
-(2, 'Panama', 0, 0, 0, 0, 0),
-(3, 'Tunisia', 0, 0, 0, 0, 0),
-(4, 'England', 0, 0, 0, 0, 0);
+INSERT INTO `Group_G` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'Belgium', 0, 0, 0, '0', 0),
+(2, 'Panama', 0, 0, 0, '0', 0),
+(3, 'Tunisia', 0, 0, 0, '0', 0),
+(4, 'England', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -268,7 +308,7 @@ CREATE TABLE `Group_H` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
+  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -276,11 +316,11 @@ CREATE TABLE `Group_H` (
 -- Zrzut danych tabeli `Group_H`
 --
 
-INSERT INTO `Group_H` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance`, `points`) VALUES
-(1, 'Poland', 0, 0, 0, 0, 0),
-(2, 'Senegal', 0, 0, 0, 0, 0),
-(3, 'Columbia', 0, 0, 0, 0, 0),
-(4, 'Japan', 0, 0, 0, 0, 0);
+INSERT INTO `Group_H` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
+(1, 'Poland', 0, 0, 0, '0', 0),
+(2, 'Senegal', 0, 0, 0, '0', 0),
+(3, 'Columbia', 0, 0, 0, '0', 0),
+(4, 'Japan', 0, 0, 0, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -304,7 +344,7 @@ CREATE TABLE `Matches` (
 --
 
 INSERT INTO `Matches` (`id_match`, `team_a`, `team_b`, `result_a`, `result_b`, `date_match`, `time_match`, `stage`) VALUES
-(1, 1, 2, NULL, NULL, '2018-06-14', '17:00:00', 'group'),
+(1, 1, 2, 5, 0, '2018-06-14', '17:00:00', 'group'),
 (2, 3, 4, NULL, NULL, '2018-06-15', '14:00:00', 'group'),
 (3, 1, 3, NULL, NULL, '2018-06-19', '20:00:00', 'group'),
 (4, 4, 2, NULL, NULL, '2018-06-20', '17:00:00', 'group'),
@@ -423,6 +463,7 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`login`, `password`, `group_name`) VALUES
+('AdamD', 'sam10cup', 'MQA'),
 ('AdamM', 'Samsung44', 'MQA'),
 ('Beki', 'dupa123', 'Twierdza'),
 ('Bordi', 'samsung1@', 'MQA'),
@@ -530,7 +571,7 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT dla tabeli `Bets`
 --
 ALTER TABLE `Bets`
-  MODIFY `id_bet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+  MODIFY `id_bet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
 
 --
 -- Ograniczenia dla zrzutów tabel
