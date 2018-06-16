@@ -106,8 +106,12 @@ public class CheckBetsActivity extends ListActivity {
                             TextView score = (TextView) findViewById(R.id.textViewScore);
                             checkBets(id_match, loadLogin());
                             getGroups();
-                            score.setText(ConfigCheckBets.teams_a[pos] + " " + ConfigCheckBets.results_a[pos] + " : " + ConfigCheckBets.results_b[pos] + " " + ConfigCheckBets.teams_b[pos]);
-
+                            if(!ConfigCheckBets.results_a[pos].equals("null")) {
+                                score.setText(ConfigCheckBets.teams_a[pos] + " " + ConfigCheckBets.results_a[pos]
+                                        + " : " + ConfigCheckBets.results_b[pos] + " " + ConfigCheckBets.teams_b[pos]);
+                            }else{
+                                score.setText(ConfigCheckBets.teams_a[pos] + " - : - " + ConfigCheckBets.teams_b[pos]);
+                            }
                         }
                     }, 1000);
 
@@ -155,8 +159,13 @@ public class CheckBetsActivity extends ListActivity {
 
             for (int i = 0; i < ConfigCheckUserBets.logins.length; i++) {
 
-                matchesUsers[i] = ConfigCheckUserBets.logins[i] + " " + ConfigCheckUserBets.bets_a[i] + " : " + ConfigCheckUserBets.bets_b[i];
-
+                if(!ConfigCheckUserBets.bet_dates[i].equals("null")) {
+                    matchesUsers[i] = ConfigCheckUserBets.logins[i] + " " + ConfigCheckUserBets.bets_a[i] + " : " + ConfigCheckUserBets.bets_b[i] +
+                            "\n Bet time: " + ConfigCheckUserBets.bet_dates[i];
+                }else{
+                    matchesUsers[i] = ConfigCheckUserBets.logins[i] + " " + ConfigCheckUserBets.bets_a[i] + " : " + ConfigCheckUserBets.bets_b[i] +
+                            "\n Bet time: No data";
+                }
             }
 
             final ListView grid2 = (ListView) findViewById(R.id.listView2);
@@ -181,26 +190,6 @@ public class CheckBetsActivity extends ListActivity {
 
         return login;
 
-    }
-
-    public String getDateToday(){
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        String todayDate = dateFormat.format(date);
-
-        return todayDate;
-    }
-
-    public String getTimeToday(){
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+2:00"));
-        Date currentLocalTime = cal.getTime();
-        DateFormat time = new SimpleDateFormat("HH:mm");
-        time.setTimeZone(TimeZone.getTimeZone("GMT+2:00"));
-
-        String localTime = time.format(currentLocalTime);
-
-        return localTime;
     }
 
     public void getGroups() {
