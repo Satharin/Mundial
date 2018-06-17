@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
@@ -542,40 +543,6 @@ public class TablesActivity extends AppCompatActivity {
         });
     }
 
-    /*public void resetTable(View view) {
-
-        team1.setText("");
-        m1.setText("");
-        gs1.setText("");
-        gl1.setText("");
-        balance1.setText("");
-        points1.setText("");
-
-        team2.setText("");
-        m2.setText("");
-        gs2.setText("");
-        gl2.setText("");
-        balance2.setText("");
-        points2.setText("");
-
-        team3.setText("");
-        m3.setText("");
-        gs3.setText("");
-        gl3.setText("");
-        balance3.setText("");
-        points3.setText("");
-
-        team4.setText("");
-        m4.setText("");
-        gs4.setText("");
-        gl4.setText("");
-        balance4.setText("");
-        points4.setText("");
-
-        groupName.setText("GROUP");
-
-    }*/
-
     public void goToHome(View view) {
 
         if(haveNetworkConnection()) {
@@ -657,8 +624,19 @@ public class TablesActivity extends AppCompatActivity {
 
     public void logout() {
 
+        saveLogin("", "");
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
+
+    }
+
+    public void saveLogin(String login, String password) {
+
+        SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
+        SharedPreferences.Editor save = saveGame.edit();
+        save.putString("login", login);
+        save.putString("password", password);
+        save.apply();
 
     }
 

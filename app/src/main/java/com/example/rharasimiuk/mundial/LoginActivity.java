@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         editName = (EditText) findViewById(R.id.editPassword);
         editPassword = (EditText) findViewById(R.id.editName);
+        Button loginButton = (Button) findViewById(R.id.login);
 
         editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -63,7 +64,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         editName.setText(loadLogin());
-        editPassword.requestFocus();
+        editPassword.setText(loadPassword());
+        if(editName.getText().length() > 1 && editPassword.getText().length() > 1)
+        {
+            loginButton.performClick();
+        }
         buttonEffectApply();
     }
 
@@ -73,6 +78,15 @@ public class LoginActivity extends AppCompatActivity {
         String login = loadGame.getString("login", "");
 
         return login;
+
+    }
+
+    public String loadPassword() {
+
+        SharedPreferences loadGame = getSharedPreferences("Save", MODE_PRIVATE);
+        String password = loadGame.getString("password", "");
+
+        return password;
 
     }
 
@@ -196,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Check if name and password exist in database
         if(login2.equals(login) && password2.equals(password)){
-            saveLogin(login);
+            saveLogin(login, password);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }else{
@@ -237,11 +251,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void saveLogin(String login) {
+    public void saveLogin(String login, String password) {
 
         SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
         SharedPreferences.Editor save = saveGame.edit();
         save.putString("login", login);
+        save.putString("password", password);
         save.apply();
 
     }

@@ -303,6 +303,16 @@ public class BetActivity extends ListActivity {
 
     }
 
+    public void saveLogin(String login, String password) {
+
+        SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
+        SharedPreferences.Editor save = saveGame.edit();
+        save.putString("login", login);
+        save.putString("password", password);
+        save.apply();
+
+    }
+
     public void getGroups () {
 
         final ProgressDialog loadingMatches = ProgressDialog.show(this, "Please wait...", "Loading...", false, false);
@@ -504,6 +514,7 @@ public class BetActivity extends ListActivity {
 
     public void logout() {
 
+        saveLogin("", "");
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
 

@@ -537,8 +537,19 @@ public class AdminActivity extends ListActivity {
 
     public void logout() {
 
+        saveLogin("", "");
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
+
+    }
+
+    public void saveLogin(String login, String password) {
+
+        SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
+        SharedPreferences.Editor save = saveGame.edit();
+        save.putString("login", login);
+        save.putString("password", password);
+        save.apply();
 
     }
 

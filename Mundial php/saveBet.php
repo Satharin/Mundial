@@ -18,8 +18,8 @@ function saveBet()
         $id_match = $_POST['id_match'];
       
  
-       $sql = "INSERT INTO Bets (login, bet_a, bet_b, id_match, points, exact_result) 
-        VALUES ('$login', '$bet_a', '$bet_b', '$id_match', '0', '0')";
+       $sql = "INSERT INTO Bets (login, bet_a, bet_b, id_match, points, exact_result, bet_date) 
+        VALUES ('$login', '$bet_a', '$bet_b', '$id_match', '0', '0', (CONVERT_TZ(NOW(), @@session.time_zone, '+02:00')))";
   
        mysqli_query($con, $sql) or die (mysqli_error($con));
        mysqli_close($con);

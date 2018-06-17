@@ -7,7 +7,7 @@
 		
 		require_once('dbConnect.php');
 		
-		$sql = "SELECT Bets.login, bet_a, bet_b FROM Bets
+		$sql = "SELECT Bets.login, bet_a, bet_b, bet_date FROM Bets
 		        LEFT JOIN Users ON Users.login = Bets.login
 				WHERE id_match = '$id_match' AND Users.group_name = 
 				(SELECT group_name FROM Users WHERE login = '$login')";

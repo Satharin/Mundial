@@ -17,7 +17,7 @@ function updateBet()
         $bet_b = $_POST['bet_b'];
         $id_match = $_POST['id_match'];
  
-       $sql = "UPDATE Bets SET bet_a = '$bet_a', bet_b = '$bet_b' 
+       $sql = "UPDATE Bets SET bet_a = '$bet_a', bet_b = '$bet_b' , bet_date = (CONVERT_TZ(NOW(), @@session.time_zone, '+02:00'))
         WHERE login = '$login' AND id_match = '$id_match'";
   
        mysqli_query($con, $sql) or die (mysqli_error($con));

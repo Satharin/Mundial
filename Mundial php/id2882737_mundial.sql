@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Czas generowania: 16 Cze 2018, 08:43
+-- Czas generowania: 17 Cze 2018, 11:35
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.0.26
 
@@ -61,7 +61,7 @@ INSERT INTO `Bets` (`id_bet`, `login`, `bet_a`, `bet_b`, `id_match`, `Points`, `
 (143, 'AdamM', 1, 2, 8, 0, 0, '2018-06-15 15:07:05'),
 (144, 'Haras_SW', 2, 1, 7, 0, 0, '2018-06-15 16:14:03'),
 (145, 'Bordi', 0, 2, 7, 2, 0, NULL),
-(146, 'AdamM', 3, 0, 13, 0, 0, NULL),
+(146, 'AdamM', 3, 0, 13, 2, 0, NULL),
 (147, 'Haras_SW', 3, 0, 1, 2, 0, NULL),
 (148, 'Haras_SW', 0, 2, 2, 2, 0, NULL),
 (149, 'Jarek2', 4, 0, 1, 2, 0, NULL),
@@ -77,15 +77,15 @@ INSERT INTO `Bets` (`id_bet`, `login`, `bet_a`, `bet_b`, `id_match`, `Points`, `
 (160, 'Gelo PrzeeHooy', 0, 2, 7, 2, 0, NULL),
 (161, 'Gelo PrzeeHooy', 1, 3, 2, 2, 0, NULL),
 (162, 'Gelo PrzeeHooy', 1, 2, 8, 0, 0, NULL),
-(163, 'Gelo PrzeeHooy', 4, 2, 13, 0, 0, NULL),
+(163, 'Gelo PrzeeHooy', 4, 2, 13, 2, 0, NULL),
 (164, 'Beki', 2, 0, 7, 0, 0, NULL),
-(165, 'Beki', 4, 0, 13, 0, 0, NULL),
+(165, 'Beki', 4, 0, 13, 2, 0, NULL),
 (166, 'Romek', 2, 1, 1, 2, 0, NULL),
 (167, 'Stefan', 2, 1, 1, 2, 0, NULL),
 (168, 'Stefan', 1, 1, 2, 0, 0, NULL),
 (169, 'Stefan', 2, 1, 7, 0, 0, NULL),
 (170, 'Stefan', 1, 2, 8, 0, 0, NULL),
-(171, 'Stefan', 3, 0, 13, 0, 0, NULL),
+(171, 'Stefan', 3, 0, 13, 2, 0, NULL),
 (172, 'jordanrafalm', 2, 1, 1, 2, 0, NULL),
 (173, 'jordanrafalm', 0, 3, 2, 2, 0, NULL),
 (174, 'AdamD', 3, 1, 1, 2, 0, NULL),
@@ -94,7 +94,7 @@ INSERT INTO `Bets` (`id_bet`, `login`, `bet_a`, `bet_b`, `id_match`, `Points`, `
 (177, 'AdamD', 1, 2, 2, 2, 0, NULL),
 (178, 'AdamD', 1, 0, 7, 0, 0, NULL),
 (179, 'AdamD', 1, 1, 8, 2, 0, NULL),
-(180, 'AdamD', 1, 0, 13, 0, 0, NULL),
+(180, 'AdamD', 1, 0, 13, 2, 0, NULL),
 (181, 'AdamD', 2, 0, 19, 0, 0, NULL),
 (182, 'koucz', 1, 2, 2, 2, 0, NULL),
 (183, 'koucz', 1, 0, 7, 0, 0, NULL),
@@ -117,56 +117,131 @@ INSERT INTO `Bets` (`id_bet`, `login`, `bet_a`, `bet_b`, `id_match`, `Points`, `
 (200, 'Kapi', 0, 1, 2, 5, 1, NULL),
 (204, 'jordanrafalm', 2, 1, 7, 0, 0, NULL),
 (205, 'jordanrafalm', 2, 3, 8, 0, 0, NULL),
-(206, 'vardos', 2, 0, 13, 0, 0, NULL),
+(206, 'vardos', 2, 0, 13, 2, 0, NULL),
 (207, 'vardos', 2, 0, 19, 0, 0, NULL),
 (208, 'vardos', 1, 0, 14, 0, 0, NULL),
-(209, 'vardos', 2, 0, 20, 0, 0, NULL),
-(210, 'vardos', 2, 0, 20, 0, 0, NULL),
+(210, 'vardos', 2, 0, 20, 5, 1, NULL),
 (211, 'Całek', 0, 4, 2, 2, 0, NULL),
 (1000, 'Buczi', 2, 3, 2, 2, 0, NULL),
 (1001, 'Buczi', 2, 1, 7, 0, 0, NULL),
 (1002, 'Buczi', 3, 2, 8, 0, 0, NULL),
-(1003, 'Buczi', 4, 1, 13, 0, 0, NULL),
+(1003, 'Buczi', 4, 1, 13, 2, 0, NULL),
 (1004, 'Buczi', 3, 0, 19, 0, 0, NULL),
-(1005, 'Buczi', 1, 2, 14, 0, 0, NULL),
-(1006, 'AdamD', 0, 1, 14, 0, 0, NULL),
-(1007, 'AdamD', 3, 0, 20, 0, 0, NULL),
+(1005, 'Buczi', 1, 2, 14, 2, 0, NULL),
+(1006, 'AdamD', 0, 1, 14, 5, 1, NULL),
+(1007, 'AdamD', 3, 0, 20, 2, 0, NULL),
 (1008, 'AdamD', 0, 0, 25, 0, 0, NULL),
 (1009, 'AdamD', 2, 0, 31, 0, 0, NULL),
 (1010, 'AdamD', 3, 0, 26, 0, 0, NULL),
 (1011, 'AdamD', 2, 0, 32, 0, 0, NULL),
 (1012, 'AdamD', 1, 0, 37, 0, 0, NULL),
 (1013, 'AdamD', 0, 3, 38, 0, 0, NULL),
-(1015, 'Haras_SW', 3, 0, 13, 0, 0, '2018-06-15 14:50:13'),
+(1015, 'Haras_SW', 3, 0, 13, 2, 0, '2018-06-15 14:50:13'),
 (1016, 'AdamM', 4, 0, 19, 0, 0, '2018-06-15 14:51:16'),
-(1017, 'AdamM', 1, 2, 14, 0, 0, '2018-06-15 14:51:31'),
+(1017, 'AdamM', 1, 2, 14, 2, 0, '2018-06-15 14:51:31'),
 (1018, 'AdamM', 1, 3, 44, 0, 0, '2018-06-15 14:51:51'),
 (1019, 'AdamM', 1, 3, 46, 0, 0, '2018-06-15 14:53:10'),
 (1020, 'AdamM', 0, 2, 47, 0, 0, '2018-06-15 14:53:25'),
-(1021, 'koucz', 3, 0, 13, 0, 0, '2018-06-15 16:00:25'),
+(1021, 'koucz', 3, 0, 13, 2, 0, '2018-06-15 16:00:25'),
 (1022, 'koucz', 2, 0, 19, 0, 0, '2018-06-15 16:01:23'),
 (1023, 'koucz', 0, 0, 14, 0, 0, '2018-06-15 16:01:53'),
-(1024, 'koucz', 3, 1, 20, 0, 0, '2018-06-15 16:02:50'),
+(1024, 'koucz', 3, 1, 20, 2, 0, '2018-06-15 16:02:50'),
 (1025, 'Rękaw', 0, 3, 8, 0, 0, '2018-06-15 16:34:38'),
 (1026, 'Beki', 4, 0, 19, 0, 0, '2018-06-15 18:40:51'),
-(1027, 'Beki', 0, 2, 14, 0, 0, '2018-06-15 18:41:16'),
-(1028, 'Bordi', 3, 0, 13, 0, 0, '2018-06-15 18:51:25'),
-(1029, 'Haras', 2, 0, 13, 0, 0, '2018-06-15 21:56:44'),
-(1030, 'Rękaw', 2, 0, 19, 0, 0, '2018-06-15 22:08:26'),
-(1031, 'Rękaw', 3, 0, 13, 0, 0, '2018-06-15 22:08:46'),
+(1027, 'Beki', 1, 2, 14, 2, 0, '2018-06-16 17:03:56'),
+(1028, 'Bordi', 3, 0, 13, 2, 0, '2018-06-15 18:51:25'),
+(1029, 'Haras', 2, 0, 13, 2, 0, '2018-06-15 21:56:44'),
+(1030, 'Rękaw', 1, 1, 19, 0, 0, '2018-06-16 19:37:14'),
+(1031, 'Rękaw', 3, 0, 13, 2, 0, '2018-06-15 22:08:46'),
 (1032, 'Bordi', 3, 1, 19, 0, 0, '2018-06-15 23:55:01'),
 (1033, 'Bordi', 1, 1, 14, 0, 0, '2018-06-15 23:03:46'),
-(1034, 'Bordi', 2, 1, 20, 0, 0, '2018-06-15 23:55:19'),
+(1034, 'Bordi', 2, 1, 20, 2, 0, '2018-06-15 23:55:19'),
 (1035, 'vardos', 2, 0, 31, 0, 0, '2018-06-16 00:36:32'),
 (1036, 'vardos', 1, 2, 25, 0, 0, '2018-06-16 00:36:39'),
 (1037, 'vardos', 3, 0, 26, 0, 0, '2018-06-16 00:36:48'),
-(1038, 'Buczi', 2, 0, 20, 0, 0, '2018-06-16 06:36:01'),
+(1038, 'Buczi', 2, 0, 20, 5, 1, '2018-06-16 06:36:01'),
 (1039, 'Buczi', 1, 2, 25, 0, 0, '2018-06-16 06:36:31'),
-(1040, 'Janex', 2, 0, 13, 0, 0, '2018-06-16 08:27:31'),
+(1040, 'Janex', 2, 0, 13, 2, 0, '2018-06-16 08:27:31'),
 (1041, 'Janex', 2, 0, 19, 0, 0, '2018-06-16 08:27:41'),
 (1042, 'Janex', 1, 1, 14, 0, 0, '2018-06-16 08:27:51'),
 (1043, 'Janex', 0, 0, 20, 0, 0, '2018-06-16 08:28:02'),
-(1044, 'Janex', 0, 3, 25, 0, 0, '2018-06-16 08:28:17');
+(1044, 'Janex', 0, 3, 25, 0, 0, '2018-06-16 08:28:17'),
+(1045, 'jordanrafalm', 3, 1, 13, 2, 0, '2018-06-16 11:47:59'),
+(1046, 'jordanrafalm', 4, 0, 19, 0, 0, '2018-06-16 11:48:35'),
+(1047, 'Romek', 3, 0, 13, 2, 0, '2018-06-16 11:55:36'),
+(1048, 'Haras_SW', 2, 1, 19, 0, 0, '2018-06-16 11:56:58'),
+(1049, 'Romek', 3, 1, 19, 0, 0, '2018-06-16 12:58:11'),
+(1050, 'Haras_SW', 1, 2, 14, 2, 0, '2018-06-16 14:15:36'),
+(1051, 'Haras_SW', 2, 0, 20, 5, 1, '2018-06-16 20:04:51'),
+(1052, 'Haras', 1, 0, 19, 0, 0, '2018-06-16 14:16:04'),
+(1053, 'Haras', 0, 2, 14, 2, 0, '2018-06-16 14:16:34'),
+(1054, 'Haras', 2, 0, 20, 5, 1, '2018-06-16 14:16:53'),
+(1055, 'jordanrafalm', 1, 1, 14, 0, 0, '2018-06-16 14:17:07'),
+(1056, 'jordanrafalm', 2, 1, 20, 2, 0, '2018-06-16 14:17:41'),
+(1057, 'jordanrafalm', 0, 3, 25, 0, 0, '2018-06-16 14:18:34'),
+(1058, 'jordanrafalm', 3, 1, 31, 0, 0, '2018-06-16 14:19:13'),
+(1059, 'Gelo PrzeeHooy', 0, 2, 14, 2, 0, '2018-06-16 15:02:29'),
+(1060, 'Gelo PrzeeHooy', 1, 3, 20, 0, 0, '2018-06-16 15:02:38'),
+(1061, 'Gelo PrzeeHooy', 1, 2, 25, 0, 0, '2018-06-16 15:03:37'),
+(1062, 'Gelo PrzeeHooy', 4, 1, 31, 0, 0, '2018-06-16 15:03:50'),
+(1063, 'Gelo PrzeeHooy', 4, 0, 26, 0, 0, '2018-06-16 15:04:02'),
+(1064, 'AdamD', 0, 0, 43, 0, 0, '2018-06-16 15:51:52'),
+(1065, 'AdamD', 2, 1, 44, 0, 0, '2018-06-16 15:52:13'),
+(1066, 'AdamD', 2, 0, 3, 0, 0, '2018-06-16 15:52:26'),
+(1067, 'AdamD', 3, 0, 9, 0, 0, '2018-06-16 15:52:38'),
+(1068, 'AdamD', 1, 0, 4, 0, 0, '2018-06-16 15:52:55'),
+(1069, 'AdamD', 0, 4, 10, 0, 0, '2018-06-16 15:53:07'),
+(1070, 'AdamD', 3, 0, 15, 0, 0, '2018-06-16 15:53:19'),
+(1071, 'AdamD', 1, 0, 16, 0, 0, '2018-06-16 15:53:28'),
+(1072, 'AdamD', 2, 2, 21, 0, 0, '2018-06-16 15:53:37'),
+(1073, 'AdamD', 3, 0, 27, 0, 0, '2018-06-16 15:53:44'),
+(1074, 'AdamD', 0, 2, 22, 0, 0, '2018-06-16 15:53:51'),
+(1075, 'AdamD', 0, 2, 28, 0, 0, '2018-06-16 15:54:00'),
+(1076, 'AdamD', 1, 0, 39, 0, 0, '2018-06-16 15:54:12'),
+(1077, 'AdamD', 2, 0, 33, 0, 0, '2018-06-16 15:54:18'),
+(1078, 'AdamD', 1, 1, 34, 0, 0, '2018-06-16 15:54:31'),
+(1079, 'Romek', 0, 2, 14, 2, 0, '2018-06-16 16:58:06'),
+(1080, 'Romek', 3, 1, 20, 2, 0, '2018-06-16 16:58:27'),
+(1081, 'Beki', 1, 1, 20, 0, 0, '2018-06-16 17:04:05'),
+(1082, 'Escobar', 0, 4, 14, 2, 0, '2018-06-16 17:39:52'),
+(1083, 'Escobar', 2, 0, 20, 5, 1, '2018-06-16 17:40:04'),
+(1084, 'Beki', 3, 1, 31, 0, 0, '2018-06-16 18:20:18'),
+(1085, 'Beki', 3, 0, 26, 0, 0, '2018-06-16 18:20:39'),
+(1086, 'AdamM', 2, 1, 20, 2, 0, '2018-06-16 18:51:19'),
+(1087, 'AdamM', 0, 2, 25, 0, 0, '2018-06-16 18:51:30'),
+(1088, 'AdamM', 3, 1, 31, 0, 0, '2018-06-16 18:51:36'),
+(1089, 'AdamM', 4, 0, 26, 0, 0, '2018-06-16 18:51:59'),
+(1090, 'AdamM', 3, 0, 32, 0, 0, '2018-06-16 18:52:07'),
+(1091, 'Rękaw', 3, 1, 20, 2, 0, '2018-06-16 19:40:32'),
+(1092, 'Bordi', 0, 2, 25, 0, 0, '2018-06-16 19:52:40'),
+(1093, 'Bordi', 3, 1, 31, 0, 0, '2018-06-16 19:52:51'),
+(1094, 'Bordi', 3, 0, 26, 0, 0, '2018-06-16 19:53:09'),
+(1095, 'AdamM', 4, 0, 37, 0, 0, '2018-06-17 06:02:56'),
+(1096, 'koucz', 1, 1, 25, 0, 0, '2018-06-17 08:50:51'),
+(1097, 'koucz', 2, 1, 31, 0, 0, '2018-06-17 08:51:08'),
+(1098, 'koucz', 2, 0, 26, 0, 0, '2018-06-17 08:51:19'),
+(1099, 'Romek', 0, 2, 25, 0, 0, '2018-06-17 08:57:30'),
+(1100, 'Romek', 3, 1, 26, 0, 0, '2018-06-17 09:01:16'),
+(1101, 'Romek', 3, 0, 31, 0, 0, '2018-06-17 09:03:32'),
+(1102, 'Rękaw', 0, 0, 25, 0, 0, '2018-06-17 09:15:20'),
+(1103, 'Rękaw', 3, 0, 31, 0, 0, '2018-06-17 09:15:35'),
+(1104, 'Rękaw', 2, 0, 26, 0, 0, '2018-06-17 09:16:01'),
+(1105, 'Haras_SW', 1, 2, 25, 0, 0, '2018-06-17 09:26:00'),
+(1106, 'Buczi', 2, 0, 31, 0, 0, '2018-06-17 09:29:30'),
+(1107, 'Buczi', 3, 0, 26, 0, 0, '2018-06-17 09:29:46'),
+(1108, 'Buczi', 2, 2, 32, 0, 0, '2018-06-17 09:29:58'),
+(1109, 'Buczi', 3, 0, 37, 0, 0, '2018-06-17 09:30:19'),
+(1110, 'Buczi', 2, 1, 44, 0, 0, '2018-06-17 09:30:44'),
+(1111, 'Haras', 1, 2, 25, 0, 0, '2018-06-17 09:33:00'),
+(1112, 'Beki', 1, 1, 25, 0, 0, '2018-06-17 09:47:27'),
+(1113, 'Całek', 2, 0, 25, 0, 0, '2018-06-17 12:10:42'),
+(1114, 'Całek', 4, 0, 31, 0, 0, '2018-06-17 12:10:50'),
+(1115, 'Całek', 1, 1, 26, 0, 0, '2018-06-17 12:10:56'),
+(1116, 'Całek', 2, 1, 32, 0, 0, '2018-06-17 12:11:05'),
+(1117, 'Całek', 4, 0, 37, 0, 0, '2018-06-17 12:11:11'),
+(1118, 'Escobar', 2, 1, 25, 0, 0, '2018-06-17 13:03:21'),
+(1119, 'Escobar', 3, 0, 31, 0, 0, '2018-06-17 13:03:29'),
+(1120, 'Escobar', 3, 0, 26, 0, 0, '2018-06-17 13:03:53');
 
 -- --------------------------------------------------------
 
@@ -180,7 +255,7 @@ CREATE TABLE `Group_A` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -189,10 +264,10 @@ CREATE TABLE `Group_A` (
 --
 
 INSERT INTO `Group_A` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'Russia', 1, 5, 0, '5', 3),
-(2, 'Saudi Arabia', 1, 0, 5, '-5', 0),
-(3, 'Egypt', 1, 0, 1, '-1', 0),
-(4, 'Uruguay', 1, 1, 0, '1', 3);
+(1, 'Russia', 1, 5, 0, 5, 3),
+(2, 'Saudi Arabia', 1, 0, 5, -5, 0),
+(3, 'Egypt', 1, 0, 1, -1, 0),
+(4, 'Uruguay', 1, 1, 0, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -206,7 +281,7 @@ CREATE TABLE `Group_B` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -215,10 +290,10 @@ CREATE TABLE `Group_B` (
 --
 
 INSERT INTO `Group_B` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'Portugal', 0, 0, 0, '0', 0),
-(2, 'Spain', 0, 0, 0, '0', 0),
-(3, 'Marocco', 0, 0, 0, '0', 0),
-(4, 'Iran', 0, 0, 0, '0', 0);
+(1, 'Portugal', 1, 3, 3, 0, 1),
+(2, 'Spain', 1, 3, 3, 0, 1),
+(3, 'Marocco', 1, 0, 1, -1, 0),
+(4, 'Iran', 1, 1, 0, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -232,7 +307,7 @@ CREATE TABLE `Group_C` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -241,10 +316,10 @@ CREATE TABLE `Group_C` (
 --
 
 INSERT INTO `Group_C` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'France', 0, 0, 0, '0', 0),
-(2, 'Australia', 0, 0, 0, '0', 0),
-(3, 'Peru', 0, 0, 0, '0', 0),
-(4, 'Denmark', 0, 0, 0, '0', 0);
+(1, 'France', 1, 2, 1, 1, 3),
+(2, 'Australia', 1, 1, 2, -1, 0),
+(3, 'Peru', 1, 0, 1, -1, 0),
+(4, 'Denmark', 1, 1, 0, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -258,7 +333,7 @@ CREATE TABLE `Group_D` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -267,10 +342,10 @@ CREATE TABLE `Group_D` (
 --
 
 INSERT INTO `Group_D` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'Argentina', 0, 0, 0, '0', 0),
-(2, 'Iceland', 0, 0, 0, '0', 0),
-(3, 'Croatia', 0, 0, 0, '0', 0),
-(4, 'Nigeria', 0, 0, 0, '0', 0);
+(1, 'Argentina', 1, 1, 1, 0, 1),
+(2, 'Iceland', 1, 1, 1, 0, 1),
+(3, 'Croatia', 1, 2, 0, 2, 3),
+(4, 'Nigeria', 1, 0, 2, -2, 0);
 
 -- --------------------------------------------------------
 
@@ -284,7 +359,7 @@ CREATE TABLE `Group_E` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -293,10 +368,10 @@ CREATE TABLE `Group_E` (
 --
 
 INSERT INTO `Group_E` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'Brazil', 0, 0, 0, '0', 0),
-(2, 'Switzerland', 0, 0, 0, '0', 0),
-(3, 'Costa Rica', 0, 0, 0, '0', 0),
-(4, 'Serbia', 0, 0, 0, '0', 0);
+(1, 'Brazil', 0, 0, 0, 0, 0),
+(2, 'Switzerland', 0, 0, 0, 0, 0),
+(3, 'Costa Rica', 0, 0, 0, 0, 0),
+(4, 'Serbia', 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -310,7 +385,7 @@ CREATE TABLE `Group_F` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -319,10 +394,10 @@ CREATE TABLE `Group_F` (
 --
 
 INSERT INTO `Group_F` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'Germany', 0, 0, 0, '0', 0),
-(2, 'Mexico', 0, 0, 0, '0', 0),
-(3, 'Sweden', 0, 0, 0, '0', 0),
-(4, 'South Korea', 0, 0, 0, '0', 0);
+(1, 'Germany', 0, 0, 0, 0, 0),
+(2, 'Mexico', 0, 0, 0, 0, 0),
+(3, 'Sweden', 0, 0, 0, 0, 0),
+(4, 'South Korea', 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -336,7 +411,7 @@ CREATE TABLE `Group_G` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -345,10 +420,10 @@ CREATE TABLE `Group_G` (
 --
 
 INSERT INTO `Group_G` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'Belgium', 0, 0, 0, '0', 0),
-(2, 'Panama', 0, 0, 0, '0', 0),
-(3, 'Tunisia', 0, 0, 0, '0', 0),
-(4, 'England', 0, 0, 0, '0', 0);
+(1, 'Belgium', 0, 0, 0, 0, 0),
+(2, 'Panama', 0, 0, 0, 0, 0),
+(3, 'Tunisia', 0, 0, 0, 0, 0),
+(4, 'England', 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -362,7 +437,7 @@ CREATE TABLE `Group_H` (
   `matches` int(11) DEFAULT NULL,
   `goals_scored` int(11) DEFAULT NULL,
   `goals_lost` int(11) DEFAULT NULL,
-  `balance2` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `balance2` int(11) DEFAULT NULL,
   `points` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -371,10 +446,10 @@ CREATE TABLE `Group_H` (
 --
 
 INSERT INTO `Group_H` (`id_group`, `team`, `matches`, `goals_scored`, `goals_lost`, `balance2`, `points`) VALUES
-(1, 'Poland', 0, 0, 0, '0', 0),
-(2, 'Senegal', 0, 0, 0, '0', 0),
-(3, 'Columbia', 0, 0, 0, '0', 0),
-(4, 'Japan', 0, 0, 0, '0', 0);
+(1, 'Poland', 0, 0, 0, 0, 0),
+(2, 'Senegal', 0, 0, 0, 0, 0),
+(3, 'Columbia', 0, 0, 0, 0, 0),
+(4, 'Japan', 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -410,14 +485,14 @@ INSERT INTO `Matches` (`id_match`, `team_a`, `team_b`, `result_a`, `result_b`, `
 (10, 8, 6, NULL, NULL, '2018-06-20', '20:00:00', 'group'),
 (11, 8, 5, NULL, NULL, '2018-06-25', '20:00:00', 'group'),
 (12, 6, 7, NULL, NULL, '2018-06-25', '20:00:00', 'group'),
-(13, 9, 10, NULL, NULL, '2018-06-16', '12:00:00', 'group'),
-(14, 11, 12, NULL, NULL, '2018-06-16', '18:00:00', 'group'),
+(13, 9, 10, 2, 1, '2018-06-16', '12:00:00', 'group'),
+(14, 11, 12, 0, 1, '2018-06-16', '18:00:00', 'group'),
 (15, 9, 11, NULL, NULL, '2018-06-21', '14:00:00', 'group'),
 (16, 12, 10, NULL, NULL, '2018-06-21', '17:00:00', 'group'),
 (17, 12, 9, NULL, NULL, '2018-06-26', '16:00:00', 'group'),
 (18, 10, 11, NULL, NULL, '2018-06-26', '16:00:00', 'group'),
-(19, 13, 14, NULL, NULL, '2018-06-16', '15:00:00', 'group'),
-(20, 15, 16, NULL, NULL, '2018-06-16', '21:00:00', 'group'),
+(19, 13, 14, 1, 1, '2018-06-16', '15:00:00', 'group'),
+(20, 15, 16, 2, 0, '2018-06-16', '21:00:00', 'group'),
 (21, 13, 15, NULL, NULL, '2018-06-21', '20:00:00', 'group'),
 (22, 16, 14, NULL, NULL, '2018-06-22', '17:00:00', 'group'),
 (23, 16, 13, NULL, NULL, '2018-06-26', '20:00:00', 'group'),
@@ -626,7 +701,7 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT dla tabeli `Bets`
 --
 ALTER TABLE `Bets`
-  MODIFY `id_bet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1045;
+  MODIFY `id_bet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1121;
 
 --
 -- Ograniczenia dla zrzutów tabel

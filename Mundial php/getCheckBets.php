@@ -9,7 +9,7 @@
         LEFT JOIN (SELECT Matches.id_match, Teams.name AS team_b, date_match, time_match FROM Matches
         LEFT JOIN Teams ON Teams.id_team = Matches.team_b) as teams_b ON teams_b.id_match = Matches.id_match
         WHERE (TIMESTAMP(Matches.date_match,Matches.time_match) <= (SELECT CONVERT_TZ(NOW(), @@session.time_zone, '+02:00')))
-        ORDER BY Matches.date_match, Matches.time_match";
+        ORDER BY Matches.date_match DESC, Matches.time_match DESC";
         
 		
 		$r = mysqli_query($con,$sql);

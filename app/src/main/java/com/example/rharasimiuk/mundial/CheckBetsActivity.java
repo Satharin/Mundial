@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
@@ -397,8 +398,19 @@ public class CheckBetsActivity extends ListActivity {
 
     public void logout() {
 
+        saveLogin("", "");
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         finish();
+
+    }
+
+    public void saveLogin(String login, String password) {
+
+        SharedPreferences saveGame = getSharedPreferences("Save", MODE_PRIVATE);
+        SharedPreferences.Editor save = saveGame.edit();
+        save.putString("login", login);
+        save.putString("password", password);
+        save.apply();
 
     }
 
